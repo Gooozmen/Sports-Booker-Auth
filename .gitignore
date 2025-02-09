@@ -1,0 +1,9 @@
+src/.vs/
+src/.idea/
+.vs/
+Output/ 
+src/*/bin/
+src/*/obj/
+Dependencies/*
+# Exclude (keep) a specific file
+!Dependencies/.gitkeep
