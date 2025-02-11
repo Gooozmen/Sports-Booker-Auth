@@ -1,6 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", ".\Presentation\Presentation.csproj", "{416447F1-308C-442B-A32D-5E92525179E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "Presentation\Presentation.csproj", "{416447F1-308C-442B-A32D-5E92525179E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{F14F2BB1-59C1-4042-A2CE-319B8D7290DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{D7180CCC-4D15-4B72-AF2F-1FF879B3D434}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +16,13 @@ Global
 		{416447F1-308C-442B-A32D-5E92525179E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{416447F1-308C-442B-A32D-5E92525179E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{416447F1-308C-442B-A32D-5E92525179E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F14F2BB1-59C1-4042-A2CE-319B8D7290DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F14F2BB1-59C1-4042-A2CE-319B8D7290DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F14F2BB1-59C1-4042-A2CE-319B8D7290DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F14F2BB1-59C1-4042-A2CE-319B8D7290DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7180CCC-4D15-4B72-AF2F-1FF879B3D434}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7180CCC-4D15-4B72-AF2F-1FF879B3D434}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7180CCC-4D15-4B72-AF2F-1FF879B3D434}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7180CCC-4D15-4B72-AF2F-1FF879B3D434}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
