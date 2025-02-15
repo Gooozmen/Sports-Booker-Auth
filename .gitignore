@@ -8,3 +8,4 @@ Dependencies/*
 # Exclude (keep) a specific file
 !Dependencies/.gitkeep
 src/sports-booker-auth.sln.DotSettings.user
+Tests/Tests/obj/*

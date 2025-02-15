@@ -5,7 +5,7 @@ namespace Presentation;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddConfigurationOptions(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection ConfigureOptions(this IServiceCollection services, IConfiguration configuration)
     {
         // Add configuration options
         services.Configure<ConnectionStrings>(configuration.GetSection("ConnectionStrings"));
@@ -13,14 +13,14 @@ public static class DependencyInjection
         return services;
     }
 
-    public static IServiceCollection AddCoreServices(this IServiceCollection services)
+    public static IServiceCollection AddPresentationServices(this IServiceCollection services)
     {
         //Singletons
         services.AddSingleton<IEnvironmentValidator, EnvironmentValidator>();
 
         //Swagger
         services.AddEndpointsApiExplorer();
-        // services.AddSwaggerGen();
+        services.AddSwaggerGen();
 
         return services;
     }
@@ -37,8 +37,8 @@ public static class DependencyInjection
 
     public static IApplicationBuilder UsePresentation(this IApplicationBuilder app)
     {
-        // app.UseSwagger();
-        // app.UseSwaggerUI();
+        app.UseSwagger();
+        app.UseSwaggerUI();
         return app;
     }
 }

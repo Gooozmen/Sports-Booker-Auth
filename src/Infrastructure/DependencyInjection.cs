@@ -1,25 +1,18 @@
 ﻿using Domain.Models;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Infrastructure.Database.Seeds;
 using Infrastructure.Interceptors;
+using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Infrastructure.IdentityManagers;
 
 namespace Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app)
-    {
-        //app.UseMiddleware<ResponseInterceptorMiddleware>();
-        //app.UseMiddleware<RequestIdMiddleware>();
-        return app;
-    }
-
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<ApplicationDbContext>(options =>
@@ -50,8 +43,8 @@ public static class DependencyInjection
         services.AddScoped<ApplicationDbContextInitializer>();
         services.AddScoped<DbChangesInterceptor>();
         
-        // Seeders
-        services.AddScoped<ISeederService, UserSeederService>();
+        //Identity
+        services.AddTransient<IApplicationUserManager, ApplicationUserManager>();
 
         return services;
     }
