@@ -28,11 +28,20 @@ public class SignInController : AuthControllerBase
     [HttpPost("signin")]
     public async Task<IActionResult> ProcessUserRegistrationAsync([FromBody] CreateUserCommand command)
     {
+        if (!ModelState.IsValid)
+        {
+            var errors = ModelState.Values.SelectMany(v => v.Errors)
+                                          .Select(e => e.ErrorMessage)
+                                          .ToList();
+            
+            return BadRequest(_responseBuilder.CreateResponse((int)HttpStatusCode.BadRequest, errors));
+        }
+        
         var identityResult = await _applicationUserCommandHandler.ExecuteCreateAsync(command);
 
         return identityResult.Succeeded switch
         {
-            true => Ok(_responseBuilder.CreateResponse((int)HttpStatusCode.OK, identityResult)),
+            true => Ok(_responseBuilder.CreateResponse((int)HttpStatusCode.Created, identityResult)),
             _ => BadRequest(_responseBuilder.CreateResponse((int)HttpStatusCode.BadRequest, identityResult.Errors))
         };
     }
