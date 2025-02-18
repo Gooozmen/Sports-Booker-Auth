@@ -1,17 +1,14 @@
 ﻿using Domain.Models;
-using Infrastructure.Interceptors;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database;
 
-public class ApplicationDbContext : IdentityDbContext<ApplicationUser,ApplicationRole,Guid,ApplicationUserClaim, 
-                                                      ApplicationUserRole, ApplicationUserLogin,
-                                                      ApplicationRoleClaim, ApplicationUserToken>, 
-                                                      IDbContext
+public class ApplicationDbContext : 
+             IdentityDbContext
+             <ApplicationUser,ApplicationRole,Guid,ApplicationUserClaim,ApplicationUserRole, ApplicationUserLogin, ApplicationRoleClaim, ApplicationUserToken>, 
+             IDbContext
 {
-    private readonly DbChangesInterceptor _interceptor;
     
     public virtual DbSet<AuditLog> Audits { get; set; }
     public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
@@ -22,10 +19,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser,Applicatio
     public virtual DbSet<ApplicationRoleClaim> ApplicationRoleClaims { get; set; }
     public virtual DbSet<ApplicationRole> ApplicationRoles { get; set; }
     
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, DbChangesInterceptor? interceptor = null) 
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
         : base(options)
     {
-        _interceptor = interceptor;
     }
         
     protected override void OnModelCreating(ModelBuilder builder)
@@ -41,9 +37,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser,Applicatio
             Console.WriteLine($"Entity: {entityType.DisplayName()}, Table: {entityType.GetTableName()}, Schema: {entityType.GetSchema()}");
         }
     }
-    
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
-        => optionsBuilder.AddInterceptors(_interceptor);
 }
 
 public interface IDbContext

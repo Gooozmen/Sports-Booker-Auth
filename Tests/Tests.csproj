@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <OutputPath>..\..\Output\TestResults</OutputPath>
+        <OutputPath>..\Output\TestResults</OutputPath>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
         <RestorePackagesPath>..\..\Dependencies\Packages\</RestorePackagesPath>

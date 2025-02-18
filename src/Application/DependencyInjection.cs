@@ -13,7 +13,7 @@ public static class DependencyInjection
         
         //builders
         services.AddTransient<IApplicationUserBuilder, ApplicationUserBuilder>();
-        services.AddTransient<HttpResponseBuilder, HttpResponseBuilder>();
+        services.AddTransient<IHttpResponseBuilder, HttpResponseBuilder>();
         
         //query handlers
         return services;

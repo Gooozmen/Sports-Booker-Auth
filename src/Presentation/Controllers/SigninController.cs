@@ -8,12 +8,12 @@ using Shared.Commands.ApplicationUser;
 
 namespace Presentation.Controllers;
 
-public class SignInController : AuthControllerBase
+public class SigninController : AuthControllerBase
 {
     private readonly IApplicationUserCommandHandler _applicationUserCommandHandler;
     private readonly IHttpResponseBuilder _responseBuilder;
 
-    public SignInController
+    public SigninController
     (
         IApplicationUserCommandHandler userCommandHandler, 
         IHttpResponseBuilder responseBuilder
@@ -25,7 +25,7 @@ public class SignInController : AuthControllerBase
     }
 
     
-    [HttpPost("signin")]
+    [HttpPost]
     public async Task<IActionResult> ProcessUserRegistrationAsync([FromBody] CreateUserCommand command)
     {
         if (!ModelState.IsValid)

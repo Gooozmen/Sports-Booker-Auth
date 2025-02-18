@@ -17,9 +17,5 @@
       <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
       <ProjectReference Include="..\Shared\Shared.csproj" />
     </ItemGroup>
-    
-    <ItemGroup>
-      <Folder Include="QueryHandlers\" />
-    </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 using Application;
+using Domain.Models;
 using Infrastructure;
 using Infrastructure.Database;
 using Presentation;
@@ -12,33 +13,46 @@ builder.Services.ConfigureOptions(builder.Configuration);
 // Register HttpClientFactory
 builder.Services.AddHttpClient();
 
-// Registers controllers and API endpoints
+// Register controllers and API endpoints
 builder.Services.AddControllers();
 
 // Services Registration by Application Layer
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddPresentationServices();
+builder.Services.AddOpenApi();
+builder.Services.AddIdentityApiEndpoints<ApplicationUser>();
 builder.Configuration.AddDefaultConfiguration<Program>();
 
 var app = builder.Build();
 
-var environmentValidation = app.Services.GetRequiredService<IEnvironmentValidator>().IsDevelopment();
+var environmentValidator = app.Services.GetRequiredService<IEnvironmentValidator>();
 
-// Configure middleware pipeline
-app.UseStaticFiles(); // Serve static files (should come early to serve files directly)
-app.UseRouting(); // Enable routing for middleware and endpoints
-app.MapControllers(); // Map controllers to endpoints
-app.UsePresentation();
-
-if (environmentValidation)
+// Ensure correct middleware order
+if (environmentValidator.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
+    app.MapOpenApi();
+
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/openapi/v1.json", "OpenAPI V1"); 
+        options.RoutePrefix = string.Empty;
+    });
+
+    // Run database initializer asynchronously before starting the app
     using (var scope = app.Services.CreateScope())
     {
         var initializer = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitializer>();
         await initializer.InitialiseAsync();
     }
 }
+
+// Middleware pipeline setup
+app.UseRouting();
+app.UseAuthorization();
+app.MapControllers();
+app.UsePresentation();
+
 // Start the application
-app.Run();
+await app.RunAsync();

@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Infrastructure.Interceptors;
 using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -41,7 +40,6 @@ public static class DependencyInjection
         services.AddScoped<IDbContextFactory<ApplicationDbContext>, ApplicationDbContextFactory<ApplicationDbContext>>();
         services.AddTransient<ApplicationDbContext>(provider => provider.GetRequiredService<IDbContextFactory<ApplicationDbContext>>().CreateDbContext());
         services.AddScoped<ApplicationDbContextInitializer>();
-        services.AddScoped<DbChangesInterceptor>();
         
         //Identity
         services.AddTransient<IApplicationUserManager, ApplicationUserManager>();
