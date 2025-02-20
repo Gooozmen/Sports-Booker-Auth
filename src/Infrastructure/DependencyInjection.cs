@@ -1,6 +1,7 @@
 ﻿using Domain.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Infrastructure.Database;
+using Infrastructure.Database.Seeders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Infrastructure.Interfaces;
@@ -43,6 +44,9 @@ public static class DependencyInjection
         
         //Identity
         services.AddTransient<IApplicationUserManager, ApplicationUserManager>();
+        
+        //Seeders
+        services.AddTransient<ISeeder, ApplicationUserSeeder>();
 
         return services;
     }

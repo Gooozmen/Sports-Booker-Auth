@@ -6,14 +6,15 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
     <PropertyGroup>
-        <OutputPath>..\..\Output\</OutputPath>
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-        <RestorePackagesPath>..\..\Dependencies\Packages\</RestorePackagesPath>
+      <OutputPath>..\..\Output\</OutputPath>
+      <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+      <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+      <RestorePackagesPath>..\..\Dependencies\Packages\</RestorePackagesPath>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Domain\Domain.csproj" />
+      <ProjectReference Include="..\Shared\Shared.csproj" />
     </ItemGroup>
 
     <ItemGroup>

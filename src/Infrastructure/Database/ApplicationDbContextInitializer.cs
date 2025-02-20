@@ -1,43 +1,67 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Infrastructure.Database.Seeders;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database;
 
 public class ApplicationDbContextInitializer : IContextInitializer
 {
-    private readonly ApplicationDbContext _context;
 
-    public ApplicationDbContextInitializer(ApplicationDbContext context)
+    private const bool _executeRecreate = true;
+    private const bool _executeSeeds = true;
+    private readonly ApplicationDbContext _context;
+    private readonly IEnumerable<ISeeder> _seeders;
+
+    public ApplicationDbContextInitializer
+    (
+        ApplicationDbContext context,
+        IEnumerable<ISeeder> seeders)
     {
         _context = context;
+        _seeders = seeders;
     }
 
     public async Task InitialiseAsync()
     {
         try
         {
-            var executedrop = true;
-            
-            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development" && executedrop)
+            if (_executeRecreate && IsPgSql())
             {
-                // Drop tables in the correct order based on foreign key dependencies
-                await _context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS AspNetUserRoles"); // Dependent on AspNetUsers and AspNetRoles
-                await _context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS AspNetRoleClaims"); // Dependent on AspNetRoles
-                await _context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS AspNetUserClaims"); // Dependent on AspNetUsers
-                await _context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS AspNetUserLogins"); // Dependent on AspNetUsers
-                await _context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS AspNetUserTokens"); // Dependent on AspNetUsers
-                await _context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS AspNetRoles"); // Parent of AspNetRoleClaims and AspNetUserRoles
-                await _context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS AspNetUsers"); // Parent of AspNetUserRoles, AspNetUserClaims, AspNetUserLogins, and AspNetUserTokens
-                
-                if (_context.Database.IsNpgsql())
-                    await _context.Database.MigrateAsync();
+                await ExecuteDatabaseDropAsync();
+                await ExecuteDatabaseBuildAsync();
             }
             
-            
+            // await _context.Database.MigrateAsync();
+
+            if (_executeSeeds)
+                await ExecuteSeedAsync();
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+    }
+
+    private async Task ExecuteDatabaseDropAsync()
+    {
+        await _context.Database.EnsureDeletedAsync();
+    }
+    
+    private async Task ExecuteDatabaseBuildAsync()
+    {
+        await _context.Database.EnsureCreatedAsync();
+    }
+
+    private bool IsPgSql()
+    {
+        return _context.Database.IsNpgsql();
+    }
+
+    private async Task ExecuteSeedAsync()
+    {
+        var applicationUserSeeder = _seeders.FirstOrDefault(seeder => seeder.GetType() == typeof(ApplicationUserSeeder));
+        if (applicationUserSeeder != null) await applicationUserSeeder.SeedAsync();
+        
+        await _context.SaveChangesAsync();
     }
 }
 

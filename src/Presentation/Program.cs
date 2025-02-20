@@ -21,7 +21,6 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddPresentationServices();
 builder.Services.AddOpenApi();
-builder.Services.AddIdentityApiEndpoints<ApplicationUser>();
 builder.Configuration.AddDefaultConfiguration<Program>();
 
 var app = builder.Build();
