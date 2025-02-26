@@ -62,8 +62,3 @@ public class ApplicationUserSeeder : ISeeder
         }
     }
 }
-
-public interface ISeeder
-{
-    Task SeedAsync();
-}

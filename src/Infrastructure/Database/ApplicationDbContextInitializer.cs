@@ -5,7 +5,6 @@ namespace Infrastructure.Database;
 
 public class ApplicationDbContextInitializer : IContextInitializer
 {
-
     private const bool _executeRecreate = true;
     private const bool _executeSeeds = true;
     private readonly ApplicationDbContext _context;
@@ -60,6 +59,8 @@ public class ApplicationDbContextInitializer : IContextInitializer
     {
         var applicationUserSeeder = _seeders.FirstOrDefault(seeder => seeder.GetType() == typeof(ApplicationUserSeeder));
         if (applicationUserSeeder != null) await applicationUserSeeder.SeedAsync();
+        var applicationRoleSeeder = _seeders.FirstOrDefault(seeder => seeder.GetType() == typeof(ApplicationRoleSeeder));
+        if (applicationRoleSeeder != null) await applicationRoleSeeder.SeedAsync();
         
         await _context.SaveChangesAsync();
     }

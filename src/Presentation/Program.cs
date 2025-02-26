@@ -1,57 +1,34 @@
 using Application;
-using Domain.Models;
 using Infrastructure;
-using Infrastructure.Database;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Presentation;
 using Presentation.Environments;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuration Options
-builder.Services.ConfigureOptions(builder.Configuration);
+builder.Configuration.AddDefaultConfiguration<Program>(); //Load additional configuration before registering services.
+builder.Services.ConfigureOptions(builder.Configuration); //Register configuration options so that strongly-typed settings can be injected.
+builder.Services.AddControllers(); //Register controllers and API endpoints.
 
-// Register HttpClientFactory
-builder.Services.AddHttpClient();
-
-// Register controllers and API endpoints
-builder.Services.AddControllers();
-
-// Services Registration by Application Layer
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddPresentationServices();
+
 builder.Services.AddOpenApi();
-builder.Configuration.AddDefaultConfiguration<Program>();
 
 var app = builder.Build();
 
 var environmentValidator = app.Services.GetRequiredService<IEnvironmentValidator>();
 
-// Ensure correct middleware order
-if (environmentValidator.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-    app.MapOpenApi();
+//If in Development, use developer-friendly middleware.
+await app.UseDevelopEnvironment(environmentValidator);
 
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/openapi/v1.json", "OpenAPI V1"); 
-        options.RoutePrefix = string.Empty;
-    });
-
-    // Run database initializer asynchronously before starting the app
-    using (var scope = app.Services.CreateScope())
-    {
-        var initializer = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitializer>();
-        await initializer.InitialiseAsync();
-    }
-}
-
-// Middleware pipeline setup
-app.UseRouting();
+app.UseRouting();//Configure the middleware pipeline.
+app.UseAuthentication();
 app.UseAuthorization();
-app.MapControllers();
-app.UsePresentation();
+app.MapControllers();//Map controllers to endpoints.
 
-// Start the application
+app.UsePresentation();//Use any custom presentation middleware.
+
 await app.RunAsync();

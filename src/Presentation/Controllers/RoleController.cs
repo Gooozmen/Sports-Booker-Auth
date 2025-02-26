@@ -1,43 +1,36 @@
 using System.Net;
 using Application.Builders;
 using Application.CommandHandlers;
-using Domain.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Commands.ApplicationRole;
 using Shared.Commands.ApplicationUser;
 
 namespace Presentation.Controllers;
 
-public class SigninController : AuthControllerBase
+public class RoleController : AuthControllerBase
 {
-    private readonly IApplicationUserCommandHandler _applicationUserCommandHandler;
+    private readonly IApplicationRoleCommandHandler _applicationRoleCommandHandler;
     private readonly IHttpResponseBuilder _responseBuilder;
-
-    public SigninController
-    (
-        IApplicationUserCommandHandler userCommandHandler, 
-        IHttpResponseBuilder responseBuilder
-    )
+    
+    public RoleController(IApplicationRoleCommandHandler applicationRoleCommandHandler, IHttpResponseBuilder responseBuilder)
     {
-        _applicationUserCommandHandler = userCommandHandler;
+        _applicationRoleCommandHandler = applicationRoleCommandHandler;
         _responseBuilder = responseBuilder;
-        
     }
 
-    
     [HttpPost]
-    public async Task<IActionResult> ProcessUserRegistrationAsync([FromBody] CreateUserCommand command)
+    public async Task<IActionResult> ProcessUserRegistrationAsync([FromBody] CreateRoleCommand command)
     {
         if (!ModelState.IsValid)
         {
             var errors = ModelState.Values.SelectMany(v => v.Errors)
-                                          .Select(e => e.ErrorMessage)
-                                          .ToList();
+                .Select(e => e.ErrorMessage)
+                .ToList();
             
             return BadRequest(_responseBuilder.CreateResponse((int)HttpStatusCode.BadRequest, errors));
         }
         
-        var identityResult = await _applicationUserCommandHandler.ExecuteCreateAsync(command);
+        var identityResult = await _applicationRoleCommandHandler.ExecuteCreateAsync(command);
 
         return identityResult.Succeeded switch
         {
@@ -45,5 +38,5 @@ public class SigninController : AuthControllerBase
             _ => BadRequest(_responseBuilder.CreateResponse((int)HttpStatusCode.BadRequest, identityResult.Errors))
         };
     }
-
+    
 }

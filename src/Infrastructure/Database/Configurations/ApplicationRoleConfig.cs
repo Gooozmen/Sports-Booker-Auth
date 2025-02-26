@@ -29,13 +29,11 @@ public class ApplicationRoleConfig: ActiveBase<ApplicationRole>, IEntityTypeConf
         builder.Property(x => x.NormalizedName)
             .HasColumnName("NormalizedName")
             .HasColumnOrder(3)
-            .HasMaxLength(100)
-            .IsRequired();
+            .HasMaxLength(100);
 
         builder.Property(x => x.ConcurrencyStamp)
             .HasColumnName("ConcurrencyStamp")
-            .HasColumnOrder(4)
-            .IsRequired();
+            .HasColumnOrder(4);
 
         ConfigureActiveProperty(builder,5);
     }

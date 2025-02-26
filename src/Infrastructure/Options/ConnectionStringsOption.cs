@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.Options;
 
-public class ConnectionStrings
+public class ConnectionStringsOption
 {
     public string AuthDb { get; set; }
 }

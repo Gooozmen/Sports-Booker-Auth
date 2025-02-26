@@ -10,8 +10,10 @@ public static class DependencyInjection
     {
         //command handlers
         services.AddTransient<IApplicationUserCommandHandler, ApplicationUserCommandHandler>();
+        services.AddTransient<IApplicationRoleCommandHandler, ApplicationRoleCommandHandler>();
         
         //builders
+        services.AddTransient<IApplicationRoleBuilder, ApplicationRoleBuilder>();
         services.AddTransient<IApplicationUserBuilder, ApplicationUserBuilder>();
         services.AddTransient<IHttpResponseBuilder, HttpResponseBuilder>();
         

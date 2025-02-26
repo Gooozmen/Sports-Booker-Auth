@@ -30,12 +30,6 @@ public class ApplicationDbContext :
         base.OnModelCreating(builder);
         builder.HasAnnotation("Npgsql:DefaultSchema", "Identity");
         builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
-        
-        // Debugging: Print all applied entity types and schemas
-        foreach (var entityType in builder.Model.GetEntityTypes())
-        {
-            Console.WriteLine($"Entity: {entityType.DisplayName()}, Table: {entityType.GetTableName()}, Schema: {entityType.GetSchema()}");
-        }
     }
 }
 
