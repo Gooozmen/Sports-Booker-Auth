@@ -11,9 +11,11 @@ using Shared.Responses;
 
 namespace Tests.Presentation.Controllers;
 
+
 public class AccountControllerTests
 {
     private readonly Mock<IApplicationUserCommandHandler> _mockUserCommandHandler;
+    private readonly Mock<ISignInCommandHandler> _mockSignInCommandHandler;
     private readonly Mock<IHttpResponseBuilder> _mockResponseBuilder;
     private readonly AccountController _controller;
 
@@ -22,9 +24,15 @@ public class AccountControllerTests
         // Mock dependencies
         _mockUserCommandHandler = new Mock<IApplicationUserCommandHandler>();
         _mockResponseBuilder = new Mock<IHttpResponseBuilder>();
+        _mockSignInCommandHandler = new Mock<ISignInCommandHandler>();
 
         // Initialize controller with mocks
-        _controller = new AccountController(_mockUserCommandHandler.Object, _mockResponseBuilder.Object);
+        _controller = new AccountController
+        (
+            _mockUserCommandHandler.Object, 
+            _mockSignInCommandHandler.Object,   
+            _mockResponseBuilder.Object
+        );
     }
 
     [Fact]

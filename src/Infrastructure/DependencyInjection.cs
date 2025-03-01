@@ -3,6 +3,7 @@ using Domain.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Infrastructure.Database;
 using Infrastructure.Database.Seeders;
+using Infrastructure.Factories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Infrastructure.Interfaces;
@@ -20,6 +21,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        
         services.AddDbContext<ApplicationDbContext>(options =>
         {
             options.UseNpgsql
@@ -50,17 +52,26 @@ public static class DependencyInjection
         //Identity
         services.AddTransient<IApplicationUserManager, ApplicationUserManager>();
         services.AddTransient<IApplicationRoleManager, ApplicationRoleManager>();
+        services.AddTransient<IApplicationSignInManager, ApplicationSignInManager>();
+        
+        //Jwt
+        services.AddTransient<ITokenFactory, TokenFactory>();
         
         //Seeders
         services.AddTransient<ISeeder, ApplicationUserSeeder>();
         services.AddTransient<ISeeder, ApplicationRoleSeeder>();
+        
+        
 
         return services;
     }
 
-    public static IServiceCollection ConfigureJWT(this IServiceCollection services, IOptions<JwtOption> jwtOption )
+    public static IServiceCollection ConfigureJwt(this IServiceCollection services)
     {
-        var jwt = jwtOption.Value;
+        var option = services.BuildServiceProvider()
+            .GetRequiredService<IOptions<JwtOption>>();
+        
+        var jwt = option.Value;
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -82,6 +93,15 @@ public static class DependencyInjection
             };
         });
 
+        return services;
+    }
+    
+    public static IServiceCollection ConfigureOptions(this IServiceCollection services, IConfiguration configuration)
+    {
+        // Add configuration options
+        services.Configure<ConnectionStringsOption>(configuration.GetSection("ConnectionStrings"));
+        services.Configure<JwtOption>(configuration.GetSection("Jwt"));
+        
         return services;
     }
 }

@@ -19,4 +19,10 @@ public class ApplicationUserManager : IApplicationUserManager
         IdentityResult result = await _userManager.CreateAsync(user,password);
         return result;
     }
+
+    public async Task<ApplicationUser?> FindByEmailAsync(string email)
+    {
+        var result = await _userManager.FindByEmailAsync(email);
+        return result;
+    }
 }

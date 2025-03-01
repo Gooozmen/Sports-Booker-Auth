@@ -11,6 +11,7 @@ public static class DependencyInjection
         //command handlers
         services.AddTransient<IApplicationUserCommandHandler, ApplicationUserCommandHandler>();
         services.AddTransient<IApplicationRoleCommandHandler, ApplicationRoleCommandHandler>();
+        services.AddTransient<ISignInCommandHandler, SignInCommandHandler>();
         
         //builders
         services.AddTransient<IApplicationRoleBuilder, ApplicationRoleBuilder>();

@@ -17,19 +17,10 @@ public class RoleController : AuthControllerBase
         _applicationRoleCommandHandler = applicationRoleCommandHandler;
         _responseBuilder = responseBuilder;
     }
-
+ 
     [HttpPost]
     public async Task<IActionResult> ProcessUserRegistrationAsync([FromBody] CreateRoleCommand command)
     {
-        if (!ModelState.IsValid)
-        {
-            var errors = ModelState.Values.SelectMany(v => v.Errors)
-                .Select(e => e.ErrorMessage)
-                .ToList();
-            
-            return BadRequest(_responseBuilder.CreateResponse((int)HttpStatusCode.BadRequest, errors));
-        }
-        
         var identityResult = await _applicationRoleCommandHandler.ExecuteCreateAsync(command);
 
         return identityResult.Succeeded switch

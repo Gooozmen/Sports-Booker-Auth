@@ -41,6 +41,9 @@ public static class HttpStatusDescriptions
         502 => "Bad Gateway",
         503 => "Service Unavailable",
         504 => "Gateway Timeout",
+        
+        600 => "Model State Invalid",
+        601 => "User Not Registered",
 
         _ => "Unknown Status Code"
     };

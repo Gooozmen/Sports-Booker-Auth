@@ -41,5 +41,9 @@ public enum HttpStatusCodes
     NotImplemented = 501,
     BadGateway = 502,
     ServiceUnavailable = 503,
-    GatewayTimeout = 504
+    GatewayTimeout = 504,
+    
+    //Custom
+    ModelStateInvalid = 600,
+    UserNotRegistered = 601
 }

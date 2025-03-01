@@ -2,41 +2,37 @@ using System.Net;
 using Application.Builders;
 using Application.CommandHandlers;
 using Domain.Models;
+using Infrastructure.IdentityManagers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Commands.ApplicationUser;
 
 namespace Presentation.Controllers;
 
+[AllowAnonymous]
 public class AccountController : AuthControllerBase
 {
     private readonly IApplicationUserCommandHandler _applicationUserCommandHandler;
+    private readonly ISignInCommandHandler _signInCommandHandler;
     private readonly IHttpResponseBuilder _responseBuilder;
 
     public AccountController
     (
         IApplicationUserCommandHandler userCommandHandler, 
+        ISignInCommandHandler signInCommandHandler,
         IHttpResponseBuilder responseBuilder
     )
     {
         _applicationUserCommandHandler = userCommandHandler;
+        _signInCommandHandler = signInCommandHandler;
         _responseBuilder = responseBuilder;
         
     }
-
     
     [HttpPost("Register")]
     public async Task<IActionResult> ProcessUserRegistrationAsync([FromBody] CreateUserCommand command)
     {
-        if (!ModelState.IsValid)
-        {
-            var errors = ModelState.Values.SelectMany(v => v.Errors)
-                                          .Select(e => e.ErrorMessage)
-                                          .ToList();
-            
-            return BadRequest(_responseBuilder.CreateResponse((int)HttpStatusCode.BadRequest, errors));
-        }
-        
         var identityResult = await _applicationUserCommandHandler.ExecuteCreateAsync(command);
 
         return identityResult.Succeeded switch
@@ -47,9 +43,19 @@ public class AccountController : AuthControllerBase
     }
 
     [HttpPost("Login")]
-    public async Task<IActionResult> ProcessUserLoginAsync([FromBody] LoginUserCommand command)
+    public async Task<IActionResult> ProcessUserLoginAsync([FromBody] PasswordSignInCommand command)
     {
-        return null;
-    }
+        var signInResult = await _signInCommandHandler.ExecutePasswordSignInAsync(command);
 
+        if (signInResult.IsNotAllowed)
+            return BadRequest(_responseBuilder.CreateResponse((int)HttpStatusCode.BadRequest, signInResult));
+        
+        else if (signInResult.Succeeded)
+            return Ok(_responseBuilder.CreateResponse((int)HttpStatusCode.OK, signInResult));
+
+        else
+            return StatusCode(500, "Internal Server Error");
+            
+        
+    }
 }

@@ -13,15 +13,6 @@ namespace Presentation;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection ConfigureOptions(this IServiceCollection services, IConfiguration configuration)
-    {
-        // Add configuration options
-        services.Configure<ConnectionStringsOption>(configuration.GetSection("ConnectionStrings"));
-        services.Configure<JwtOption>(configuration.GetSection("Jwt"));
-        
-        return services;
-    }
-
     public static IServiceCollection AddPresentationServices(this IServiceCollection services)
     {
         //Singletons
@@ -37,7 +28,7 @@ public static class DependencyInjection
                 .RequireAuthenticatedUser()
                 .Build();
         });
-
+        
         services.ConfigureApplicationCookie(options =>
         {
             options.LoginPath = "/Account/Login";
@@ -45,6 +36,7 @@ public static class DependencyInjection
         
         return services;
     }
+    
     public static IConfigurationBuilder AddDefaultConfiguration<T>(this IConfigurationBuilder configurationBuilder) where T : class
     {
         // Add appsettings.json
@@ -84,7 +76,7 @@ public static class DependencyInjection
     private static void ConfigureOpenApi(this WebApplication app)
     {
         // Map the OpenAPI endpoint for Swagger.
-        app.MapOpenApi();
+        app.MapOpenApi().AllowAnonymous();
         // Configure Swagger UI to expose API documentation.
         app.UseSwaggerUI(options =>
         {

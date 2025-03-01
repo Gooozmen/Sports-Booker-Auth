@@ -1,29 +1,33 @@
 ﻿using Infrastructure.Database.Seeders;
+using Infrastructure.Options;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Infrastructure.Database;
 
 public class ApplicationDbContextInitializer : IContextInitializer
 {
-    private const bool _executeRecreate = true;
-    private const bool _executeSeeds = true;
+    private readonly EntityFrameworkOption _entityFrameworkOption;
     private readonly ApplicationDbContext _context;
     private readonly IEnumerable<ISeeder> _seeders;
 
     public ApplicationDbContextInitializer
     (
         ApplicationDbContext context,
+        IOptions<EntityFrameworkOption> option,
         IEnumerable<ISeeder> seeders)
     {
         _context = context;
         _seeders = seeders;
+        _entityFrameworkOption = option.Value;
+        
     }
 
     public async Task InitialiseAsync()
     {
         try
         {
-            if (_executeRecreate && IsPgSql())
+            if (_entityFrameworkOption.ExecuteRebuild && IsPgSql())
             {
                 await ExecuteDatabaseDropAsync();
                 await ExecuteDatabaseBuildAsync();
@@ -31,7 +35,7 @@ public class ApplicationDbContextInitializer : IContextInitializer
             
             // await _context.Database.MigrateAsync();
 
-            if (_executeSeeds)
+            if (_entityFrameworkOption.ExecuteRebuild)
                 await ExecuteSeedAsync();
         }
         catch (Exception ex)

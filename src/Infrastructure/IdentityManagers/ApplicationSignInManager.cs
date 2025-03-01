@@ -12,11 +12,7 @@ public class ApplicationSignInManager : IApplicationSignInManager
     {
         _signInManager = signInManager;
     }
-
-
-    /// <summary>
-    /// Verifies if application user model is authenticated
-    /// </summary>
+    
     public bool IsSignInAsync(ClaimsPrincipal user)
     {
         var result = _signInManager.IsSignedIn(user);
