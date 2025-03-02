@@ -1,9 +1,13 @@
+using Application.Builders;
+using Application.Decorators;
 using Castle.Components.DictionaryAdapter.Xml;
 using Infrastructure.Factories;
 using Infrastructure.IdentityManagers;
 using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Shared.Commands.ApplicationUser;
+using Shared.Responses;
+using Shared.Wrappers;
 
 namespace Application.CommandHandlers;
 
@@ -11,25 +15,30 @@ public class SignInCommandHandler
 (
     IApplicationSignInManager signInManager,
     IApplicationUserManager userManager,
+    ISignInResultDecorator signInDecorator,
     ITokenFactory tokenFactory
 ) 
     : ISignInCommandHandler
 {
-    public async Task<SignInResult> ExecutePasswordSignInAsync(PasswordSignInCommand command)
+    public async Task<SignInWrapper> ExecutePasswordSignInAsync(PasswordSignInCommand command)
     {
-        var dataModel = await userManager.FindByEmailAsync(command.Email);
+        string token = string.Empty;
         
-        if (dataModel is null) return SignInResult.NotAllowed;
+        var dataModel = await userManager.FindByEmailAsync(command.Email);
+
+        if (dataModel is null) 
+            return signInDecorator.NotAllowed();
         
         var result = await signInManager.PasswordSignInAsync(dataModel, command.Password, false, false);
         
-        // if(result.Succeeded) tokenFactory.GenerateToken(dataModel);
+        if(result.Succeeded) 
+            token = tokenFactory.GenerateToken(dataModel);
         
-        return result;
+        return signInDecorator.Success(token);
     }
 }
 
 public interface ISignInCommandHandler
 {
-    Task<SignInResult> ExecutePasswordSignInAsync(PasswordSignInCommand command);
+    Task<SignInWrapper> ExecutePasswordSignInAsync(PasswordSignInCommand command);
 }

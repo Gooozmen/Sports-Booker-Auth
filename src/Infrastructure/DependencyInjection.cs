@@ -40,10 +40,9 @@ public static class DependencyInjection
 
         // Db Context
         services.AddIdentity<ApplicationUser, ApplicationRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddUserStore<UserStore<ApplicationUser, ApplicationRole, ApplicationDbContext, Guid>>() // Match your custom user and role types
-                .AddRoleStore<RoleStore<ApplicationRole, ApplicationDbContext, Guid>>() // Match your custom role type
-                .AddDefaultTokenProviders();
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
+
 
         services.AddScoped<IDbContextFactory<ApplicationDbContext>, ApplicationDbContextFactory<ApplicationDbContext>>();
         services.AddTransient<ApplicationDbContext>(provider => provider.GetRequiredService<IDbContextFactory<ApplicationDbContext>>().CreateDbContext());
@@ -101,6 +100,7 @@ public static class DependencyInjection
         // Add configuration options
         services.Configure<ConnectionStringsOption>(configuration.GetSection("ConnectionStrings"));
         services.Configure<JwtOption>(configuration.GetSection("Jwt"));
+        services.Configure<EntityFrameworkOption>(configuration.GetSection("EntityFramework"));
         
         return services;
     }
