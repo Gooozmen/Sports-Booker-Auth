@@ -1,9 +1,11 @@
+using Application.Interfaces;
 using Domain.Models;
 using Shared.Commands.ApplicationRole;
 
 namespace Application.Builders;
 
-public class ApplicationRoleBuilder : IApplicationRoleBuilder
+
+public class ApplicationRoleBuilder : IBuilder<CreateRoleCommand, ApplicationRole>
 {
     public ApplicationRole Apply(CreateRoleCommand cmd)
     {
@@ -14,9 +16,4 @@ public class ApplicationRoleBuilder : IApplicationRoleBuilder
             Active = true
         };
     }
-}
-
-public interface IApplicationRoleBuilder
-{
-    ApplicationRole Apply(CreateRoleCommand cmd);
 }

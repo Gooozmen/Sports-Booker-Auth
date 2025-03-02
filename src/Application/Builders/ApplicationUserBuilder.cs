@@ -1,9 +1,10 @@
+using Application.Interfaces;
 using Domain.Models;
 using Shared.Commands.ApplicationUser;
 
 namespace Application.Builders;
 
-public class ApplicationUserBuilder : IApplicationUserBuilder
+public class ApplicationUserBuilder : IBuilder<CreateUserCommand, ApplicationUser>
 {
     public ApplicationUser Apply(CreateUserCommand cmd)
     {
@@ -15,9 +16,4 @@ public class ApplicationUserBuilder : IApplicationUserBuilder
             Active = true
         };
     }
-}
-
-public interface IApplicationUserBuilder
-{
-    ApplicationUser Apply(CreateUserCommand cmd);
 }

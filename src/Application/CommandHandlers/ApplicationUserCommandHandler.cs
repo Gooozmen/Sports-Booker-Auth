@@ -1,4 +1,6 @@
 using Application.Builders;
+using Application.Interfaces;
+using Domain.Models;
 using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Shared.Commands.ApplicationUser;
@@ -8,12 +10,12 @@ namespace Application.CommandHandlers;
 public class ApplicationUserCommandHandler : IApplicationUserCommandHandler
 {
     private readonly IApplicationUserManager _applicationUserManager;
-    private readonly IApplicationUserBuilder _userBuilder;
+    private readonly IBuilder<CreateUserCommand,ApplicationUser> _userBuilder;
     
     public ApplicationUserCommandHandler
     (
         IApplicationUserManager applicationUserManager,
-        IApplicationUserBuilder userBuilder
+        IBuilder<CreateUserCommand,ApplicationUser> userBuilder
     )
     {
         _applicationUserManager = applicationUserManager;

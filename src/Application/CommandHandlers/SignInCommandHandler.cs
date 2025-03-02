@@ -1,12 +1,9 @@
-using Application.Builders;
 using Application.Decorators;
-using Castle.Components.DictionaryAdapter.Xml;
-using Infrastructure.Factories;
-using Infrastructure.IdentityManagers;
+using Application.Interfaces;
 using Infrastructure.Interfaces;
-using Microsoft.AspNetCore.Identity;
+using Shared.Commands;
 using Shared.Commands.ApplicationUser;
-using Shared.Responses;
+using Shared.Interfaces;
 using Shared.Wrappers;
 
 namespace Application.CommandHandlers;
@@ -18,7 +15,7 @@ public class SignInCommandHandler
     ISignInResultDecorator signInDecorator,
     ITokenFactory tokenFactory
 ) 
-    : ISignInCommandHandler
+    : ICommandHandler<ICommand, Object>
 {
     public async Task<SignInWrapper> ExecutePasswordSignInAsync(PasswordSignInCommand command)
     {
@@ -36,9 +33,14 @@ public class SignInCommandHandler
         
         return signInDecorator.Success(token);
     }
-}
 
-public interface ISignInCommandHandler
-{
-    Task<SignInWrapper> ExecutePasswordSignInAsync(PasswordSignInCommand command);
+    public async Task<Object> Handle(ICommand command)
+    {
+        return command switch
+        {
+            PasswordSignInCommand cmd => await ExecutePasswordSignInAsync(cmd),
+            _ => new NotDefinedCommand()
+        };
+    }
+
 }

@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Domain.Models;
+using Infrastructure.Interfaces;
 using Infrastructure.Options;
 
 namespace Infrastructure.Factories;
@@ -41,11 +42,5 @@ public class TokenFactory : ITokenFactory
         return result;
     }
 }
-
-public interface ITokenFactory
-{
-    string GenerateToken(ApplicationUser user);
-}
-
 
 

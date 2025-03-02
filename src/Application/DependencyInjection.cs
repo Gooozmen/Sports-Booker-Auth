@@ -1,7 +1,12 @@
 using Application.Builders;
 using Application.CommandHandlers;
 using Application.Decorators;
+using Application.Interfaces;
+using Domain.Models;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Commands.ApplicationRole;
+using Shared.Commands.ApplicationUser;
+using Shared.Interfaces;
 
 namespace Application;
 
@@ -11,12 +16,12 @@ public static class DependencyInjection
     {
         //command handlers
         services.AddTransient<IApplicationUserCommandHandler, ApplicationUserCommandHandler>();
-        services.AddTransient<IApplicationRoleCommandHandler, ApplicationRoleCommandHandler>();
+        services.AddTransient<ICommandHandler<ICommand,object>, ApplicationRoleCommandHandler>();
         services.AddTransient<ISignInCommandHandler, SignInCommandHandler>();
         
         //builders
-        services.AddTransient<IApplicationRoleBuilder, ApplicationRoleBuilder>();
-        services.AddTransient<IApplicationUserBuilder, ApplicationUserBuilder>();
+        services.AddScoped<IBuilder<CreateRoleCommand, ApplicationRole>, ApplicationRoleBuilder>();
+        services.AddScoped<IBuilder<CreateUserCommand,ApplicationUser>, ApplicationUserBuilder>();
         services.AddTransient<IHttpResponseBuilder, HttpResponseBuilder>();
         
         //Decorators

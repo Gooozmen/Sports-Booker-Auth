@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,7 +10,6 @@ public class ApplicationDbContext :
              <ApplicationUser,ApplicationRole,Guid,ApplicationUserClaim,ApplicationUserRole, ApplicationUserLogin, ApplicationRoleClaim, ApplicationUserToken>, 
              IDbContext
 {
-    
     public virtual DbSet<AuditLog> Audits { get; set; }
     public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
     public virtual DbSet<ApplicationUserRole> ApplicationUserRoles { get; set; }
@@ -31,9 +31,5 @@ public class ApplicationDbContext :
         builder.HasAnnotation("Npgsql:DefaultSchema", "Identity");
         builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
-}
-
-public interface IDbContext
-{
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+    
 }

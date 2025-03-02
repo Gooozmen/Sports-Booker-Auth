@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Infrastructure.IdentityManagers;
 using Infrastructure.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

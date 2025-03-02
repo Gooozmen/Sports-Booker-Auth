@@ -1,9 +1,10 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Shared.Interfaces;
 
 namespace Shared.Commands.ApplicationUser;
 
-public class PasswordSignInCommand
+public class PasswordSignInCommand : ICommand
 {
     [Required]
     [EmailAddress]

@@ -1,5 +1,6 @@
 using Application.Builders;
 using Application.CommandHandlers;
+using Application.Interfaces;
 using Domain.Models;
 using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -13,14 +14,14 @@ namespace Tests.Application.CommandHandlers;
 public class ApplicationUserCommandHandlerTests
 {
     private readonly Mock<IApplicationUserManager> _mockApplicationUserManager;
-    private readonly Mock<IApplicationUserBuilder> _mockUserBuilder;
+    private readonly Mock<IBuilder<CreateUserCommand,ApplicationUser>> _mockUserBuilder;
     private readonly ApplicationUserCommandHandler _handler;
 
     public ApplicationUserCommandHandlerTests()
     {
         // Create mock instances
         _mockApplicationUserManager = new Mock<IApplicationUserManager>();
-        _mockUserBuilder = new Mock<IApplicationUserBuilder>();
+        _mockUserBuilder = new Mock<IBuilder<CreateUserCommand, ApplicationUser>>();
 
         // Pass mocks to the command handler
         _handler = new ApplicationUserCommandHandler(_mockApplicationUserManager.Object, _mockUserBuilder.Object);

@@ -1,35 +1,42 @@
-using Application.Builders;
+using Application.Interfaces;
 using Domain.Models;
 using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Shared.Commands;
 using Shared.Commands.ApplicationRole;
+using Shared.Interfaces;
 
 namespace Application.CommandHandlers;
 
-public class ApplicationRoleCommandHandler : IApplicationRoleCommandHandler
+public class ApplicationRoleCommandHandler : BaseCommandHandler<ICommand>
 {
     private readonly IApplicationRoleManager _roleManager;
-    private readonly IApplicationRoleBuilder _roleBuilder;
+    private readonly IBuilder<CreateRoleCommand,ApplicationRole> _roleBuilder;
     
     public ApplicationRoleCommandHandler
     (
         IApplicationRoleManager roleManager, 
-        IApplicationRoleBuilder roleBuilder
+        IBuilder<CreateRoleCommand,ApplicationRole> roleBuilder
     )
     {
         _roleManager = roleManager;
         _roleBuilder = roleBuilder;
     }
     
-    public async Task<IdentityResult> ExecuteCreateAsync(CreateRoleCommand cmd)
+    public async Task<Object> Handle(ICommand command)
+    {
+        return command switch
+        {
+            CreateRoleCommand createRoleCommand => await ExecuteCreateAsync(createRoleCommand),
+            _ => new NotDefinedCommand()
+        };
+    }
+    
+    private async Task<IdentityResult> ExecuteCreateAsync(CreateRoleCommand cmd)
     {
         var dataModel = _roleBuilder.Apply(cmd);
         var result = await _roleManager.CreateRoleAsync(dataModel);
         return result;
     }
-}
-
-public interface IApplicationRoleCommandHandler
-{
-    Task<IdentityResult> ExecuteCreateAsync( CreateRoleCommand cmd);
+    
 }

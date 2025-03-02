@@ -47,15 +47,10 @@ public class AccountController : AuthControllerBase
     {
         var result = await _signInCommandHandler.ExecutePasswordSignInAsync(command);
 
-        if (result.IsNotAllowed)
-            return BadRequest(_responseBuilder.CreateResponse((int)HttpStatusCode.BadRequest, result));
-        
-        else if (result.Succeeded)
-            return Ok(_responseBuilder.CreateResponse((int)HttpStatusCode.OK, result));
-
-        else
-            return StatusCode(500, "Internal Server Error");
-            
-        
+        return result.Succeeded switch
+        {
+            true => Ok(_responseBuilder.CreateResponse((int)HttpStatusCode.OK, result)),
+            false => BadRequest(_responseBuilder.CreateResponse((int)HttpStatusCode.Unauthorized, result)),
+        };
     }
 }
