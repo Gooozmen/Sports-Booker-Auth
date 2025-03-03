@@ -1,11 +1,13 @@
 using System.Net;
 using Application.Builders;
-using Application.CommandHandlers;
+using Domain.Models;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Presentation.Controllers;
-using Shared.Commands.ApplicationUser;
+using Shared.Commands;
 using Shared.Enums;
 using Shared.Responses;
 
@@ -14,23 +16,26 @@ namespace Tests.Presentation.Controllers;
 
 public class AccountControllerTests
 {
-    private readonly Mock<IApplicationUserCommandHandler> _mockUserCommandHandler;
-    private readonly Mock<ISignInCommandHandler> _mockSignInCommandHandler;
+    private readonly Mock<IRequestHandler<CreateUserCommand,IdentityResult>> _mockUserCommandHandler;
+    private readonly Mock<IRequestHandler<PasswordSignInCommand,SignInResponseBase>> _mockSignInCommandHandler;
     private readonly Mock<IHttpResponseBuilder> _mockResponseBuilder;
+    private readonly Mock<ISender> _mockSender;
+    private readonly Mock<IApplicationUserBuilder> _mockUserBuilder;
     private readonly AccountController _controller;
 
     public AccountControllerTests()
     {
         // Mock dependencies
-        _mockUserCommandHandler = new Mock<IApplicationUserCommandHandler>();
+        _mockUserCommandHandler = new Mock<IRequestHandler<CreateUserCommand,IdentityResult>>();
         _mockResponseBuilder = new Mock<IHttpResponseBuilder>();
-        _mockSignInCommandHandler = new Mock<ISignInCommandHandler>();
+        _mockSignInCommandHandler = new Mock<IRequestHandler<PasswordSignInCommand,SignInResponseBase>>();
+        _mockSender = new Mock<ISender>();
+        _mockUserBuilder = new Mock<IApplicationUserBuilder>();
 
         // Initialize controller with mocks
         _controller = new AccountController
         (
-            _mockUserCommandHandler.Object, 
-            _mockSignInCommandHandler.Object,   
+            _mockSender.Object,
             _mockResponseBuilder.Object
         );
     }
@@ -39,11 +44,12 @@ public class AccountControllerTests
     public async Task ProcessUserRegistrationAsync_ShouldReturnOk_WhenUserCreationSucceeds()
     {
         // Arrange
-        var command = new CreateUserCommand { Email = "test@example.com", Password = "Secure123!" };
+        var command = new CreateUserCommand { Email = "test@example.com", Password = "Secure12@@13!" };
+        var dataModel = new ApplicationUser { Email = command.Email, UserName = command.Email, Active = true };
         var successResult = IdentityResult.Success;
 
         _mockUserCommandHandler
-            .Setup(u => u.ExecuteCreateAsync(command))
+            .Setup(u => u.Handle(command,CancellationToken.None))
             .ReturnsAsync(successResult);
 
         _mockResponseBuilder
@@ -55,6 +61,10 @@ public class AccountControllerTests
                 Data = IdentityResult.Success,
                 IsSuccess = true
             });
+
+        _mockUserBuilder
+            .Setup(u => u.Apply(command))
+            .Returns(dataModel);
 
         // Act
         var result = await _controller.ProcessUserRegistrationAsync(command);
@@ -99,7 +109,7 @@ public class AccountControllerTests
         var failedResult = IdentityResult.Failed(new IdentityError { Description = "User creation failed" });
 
         _mockUserCommandHandler
-            .Setup(u => u.ExecuteCreateAsync(command))
+            .Setup(u => u.Handle(command,CancellationToken.None))
             .ReturnsAsync(failedResult);
 
         _mockResponseBuilder
