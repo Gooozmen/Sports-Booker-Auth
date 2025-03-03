@@ -3,7 +3,7 @@ using Shared.Interfaces;
 
 namespace Shared.Commands.ApplicationRole;
 
-public class CreateRoleCommand : ICommand
+public sealed record CreateRoleCommand : ICommand
 {
     [Required]
     [Length(3,10)]

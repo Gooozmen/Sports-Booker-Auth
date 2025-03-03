@@ -7,9 +7,9 @@ namespace Application.Builders;
 public class HttpResponseBuilder : IHttpResponseBuilder
 {
 
-    public ResponseBase<T> CreateResponse<T>(int statusCode,T data, string message = "")
+    public ControllerResponse<T> CreateResponse<T>(int statusCode,T data, string message = "")
     {
-        return new ResponseBase<T>
+        return new ControllerResponse<T>
         {
             IsSuccess = SetSuccess(statusCode),
             Data = data,
@@ -28,5 +28,5 @@ public class HttpResponseBuilder : IHttpResponseBuilder
 
 public interface IHttpResponseBuilder
 {
-    ResponseBase<T> CreateResponse<T>(int statusCode, T data, string message = "");
+    ControllerResponse<T> CreateResponse<T>(int statusCode, T data, string message = "");
 }

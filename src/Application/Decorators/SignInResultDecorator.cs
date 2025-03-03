@@ -1,30 +1,30 @@
-using Shared.Wrappers;
+using Shared.Responses;
 
 namespace Application.Decorators;
 
 public class SignInResultDecorator : ISignInResultDecorator
 {
-    public SignInWrapper Success(string data) =>
-        new SignInWrapper(true, false, false, false, data);
+    public PasswordSignInResponse Success(string data) =>
+        new PasswordSignInResponse(true, false, false, false, data);
 
-    public SignInWrapper LockedOut() => 
-        new SignInWrapper(false, true, false, false, "User is locked out");
+    public PasswordSignInResponse LockedOut() => 
+        new PasswordSignInResponse(false, true, false, false, "User is locked out");
 
-    public SignInWrapper NotAllowed() =>
-        new SignInWrapper(false, false, true, false, "User is not allowed to sign in");
+    public PasswordSignInResponse NotAllowed() =>
+        new PasswordSignInResponse(false, false, true, false, "User is not allowed to sign in");
 
-    public SignInWrapper TwoFactorRequired() =>
-        new SignInWrapper(false, false, false, true, "Two-factor authentication is required");
+    public PasswordSignInResponse TwoFactorRequired() =>
+        new PasswordSignInResponse(false, false, false, true, "Two-factor authentication is required");
 
-    public SignInWrapper Failed(string data = "Invalid credentials") =>
-        new SignInWrapper(false, false, false, false, data);
+    public PasswordSignInResponse Failed(string data = "Invalid credentials") =>
+        new PasswordSignInResponse(false, false, false, false, data);
 }
 
 public interface ISignInResultDecorator
 {
-    SignInWrapper Success(string data);
-    SignInWrapper LockedOut();
-    SignInWrapper NotAllowed();
-    SignInWrapper TwoFactorRequired();
-    SignInWrapper Failed(string data = "Invalid credentials");
+    PasswordSignInResponse Success(string data);
+    PasswordSignInResponse LockedOut();
+    PasswordSignInResponse NotAllowed();
+    PasswordSignInResponse TwoFactorRequired();
+    PasswordSignInResponse Failed(string data = "Invalid credentials");
 }

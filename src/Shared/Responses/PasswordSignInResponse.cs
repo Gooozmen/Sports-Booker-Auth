@@ -1,8 +1,8 @@
-namespace Shared.Wrappers;
+namespace Shared.Responses;
 
-public class SignInWrapper
+public class PasswordSignInResponse
 {
-    public SignInWrapper(bool succeeded, bool isLockedOut, bool isNotAllowed, bool requiresTwoFactor, string data)
+    public PasswordSignInResponse(bool succeeded, bool isLockedOut, bool isNotAllowed, bool requiresTwoFactor, string data)
     {
         Succeeded = succeeded;
         IsLockedOut = isLockedOut;

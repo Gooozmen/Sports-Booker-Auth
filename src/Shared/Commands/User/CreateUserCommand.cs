@@ -3,7 +3,7 @@ using Shared.Interfaces;
 
 namespace Shared.Commands.ApplicationUser;
 
-public class CreateUserCommand : ICommand
+public sealed record CreateUserCommand : ICommand
 {
     [Required]
     [EmailAddress]

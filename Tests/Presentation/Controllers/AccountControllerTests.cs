@@ -48,7 +48,7 @@ public class AccountControllerTests
 
         _mockResponseBuilder
             .Setup(r => r.CreateResponse((int)HttpStatusCode.Created,successResult, null))
-            .Returns(new ResponseBase<IdentityResult>
+            .Returns(new ControllerResponse<IdentityResult>
             {
                 Message = HttpStatusDescriptions.GetDescription((int)HttpStatusCode.Created),
                 StatusCode = (int)HttpStatusCode.Created,
@@ -75,7 +75,7 @@ public class AccountControllerTests
 
         _mockResponseBuilder
             .Setup(r => r.CreateResponse((int)HttpStatusCode.BadRequest, expectedErrors,null))
-            .Returns(new ResponseBase<List<string>>
+            .Returns(new ControllerResponse<List<string>>
             {
                 IsSuccess = false,
                 Message = HttpStatusDescriptions.GetDescription((int)HttpStatusCode.BadRequest),
@@ -104,7 +104,7 @@ public class AccountControllerTests
 
         _mockResponseBuilder
             .Setup(r => r.CreateResponse((int)HttpStatusCode.BadRequest, failedResult.Errors,null))
-            .Returns( new ResponseBase<IEnumerable<IdentityError>>
+            .Returns( new ControllerResponse<IEnumerable<IdentityError>>
             {
                 Message = HttpStatusDescriptions.GetDescription((int)HttpStatusCode.BadRequest),
                 StatusCode = (int)HttpStatusCode.BadRequest,

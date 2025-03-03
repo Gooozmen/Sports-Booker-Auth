@@ -2,11 +2,13 @@ using Application.Builders;
 using Application.CommandHandlers;
 using Application.Decorators;
 using Application.Interfaces;
+using Application.Mediators;
 using Domain.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Commands.ApplicationRole;
 using Shared.Commands.ApplicationUser;
-using Shared.Interfaces;
+using Shared.Responses;
 
 namespace Application;
 
@@ -15,9 +17,14 @@ public static class DependencyInjection
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         //command handlers
-        services.AddTransient<IApplicationUserCommandHandler, ApplicationUserCommandHandler>();
-        services.AddTransient<ICommandHandler<ICommand,object>, ApplicationRoleCommandHandler>();
-        services.AddTransient<ISignInCommandHandler, SignInCommandHandler>();
+            //Create Handlers
+        services.AddScoped<ICommandHandler<CreateRoleCommand, IdentityResult>,CreateRoleCommandHandler>();
+        services.AddScoped<ICommandHandler<CreateUserCommand, IdentityResult>,CreateUserCommandHandler>();
+        services.AddScoped<ICommandHandler<PasswordSignInCommand, PasswordSignInResponse>,PasswordSignInCommandHandler>();
+            //query handlers
+            
+        //mediator
+        services.AddScoped<ICommandMediator, CommandMediator>();
         
         //builders
         services.AddScoped<IBuilder<CreateRoleCommand, ApplicationRole>, ApplicationRoleBuilder>();
@@ -27,7 +34,6 @@ public static class DependencyInjection
         //Decorators
         services.AddTransient<ISignInResultDecorator,SignInResultDecorator>();
         
-        //query handlers
         return services;
     }
 }

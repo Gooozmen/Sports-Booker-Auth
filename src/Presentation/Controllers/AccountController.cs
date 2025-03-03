@@ -1,44 +1,33 @@
 using System.Net;
 using Application.Builders;
 using Application.CommandHandlers;
+using Application.Interfaces;
 using Domain.Models;
 using Infrastructure.IdentityManagers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Commands.ApplicationUser;
 
 namespace Presentation.Controllers;
 
 [AllowAnonymous]
-public class AccountController : AuthControllerBase
-{
-    private readonly IApplicationUserCommandHandler _applicationUserCommandHandler;
-    private readonly ISignInCommandHandler _signInCommandHandler;
-    private readonly IHttpResponseBuilder _responseBuilder;
-
-    public AccountController
+public class AccountController 
     (
-        IApplicationUserCommandHandler userCommandHandler, 
-        ISignInCommandHandler signInCommandHandler,
         IHttpResponseBuilder responseBuilder
-    )
-    {
-        _applicationUserCommandHandler = userCommandHandler;
-        _signInCommandHandler = signInCommandHandler;
-        _responseBuilder = responseBuilder;
-        
-    }
+    ) : AuthControllerBase(responseBuilder)
+{
     
     [HttpPost("Register")]
     public async Task<IActionResult> ProcessUserRegistrationAsync([FromBody] CreateUserCommand command)
     {
-        var identityResult = await _applicationUserCommandHandler.ExecuteCreateAsync(command);
+        var identityResult = await  .ExecuteCreateAsync(command);
 
         return identityResult.Succeeded switch
         {
-            true => Ok(_responseBuilder.CreateResponse((int)HttpStatusCode.Created, identityResult)),
-            _ => BadRequest(_responseBuilder.CreateResponse((int)HttpStatusCode.BadRequest, identityResult.Errors))
+            true => Ok(ResponseBuilder.CreateResponse((int)HttpStatusCode.Created, identityResult)),
+            _ => BadRequest(ResponseBuilder.CreateResponse((int)HttpStatusCode.BadRequest, identityResult.Errors))
         };
     }
 
@@ -49,8 +38,8 @@ public class AccountController : AuthControllerBase
 
         return result.Succeeded switch
         {
-            true => Ok(_responseBuilder.CreateResponse((int)HttpStatusCode.OK, result)),
-            false => BadRequest(_responseBuilder.CreateResponse((int)HttpStatusCode.Unauthorized, result)),
+            true => Ok(ResponseBuilder.CreateResponse((int)HttpStatusCode.OK, result)),
+            false => BadRequest(ResponseBuilder.CreateResponse((int)HttpStatusCode.Unauthorized, result)),
         };
     }
 }

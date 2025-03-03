@@ -11,20 +11,20 @@ using Shared.Commands.ApplicationUser;
 namespace Tests.Application.CommandHandlers;
 
 
-public class ApplicationUserCommandHandlerTests
+public class CreateUserCommandHandlerTests
 {
     private readonly Mock<IApplicationUserManager> _mockApplicationUserManager;
     private readonly Mock<IBuilder<CreateUserCommand,ApplicationUser>> _mockUserBuilder;
-    private readonly ApplicationUserCommandHandler _handler;
+    private readonly CreateUserCommandHandler _handler;
 
-    public ApplicationUserCommandHandlerTests()
+    public CreateUserCommandHandlerTests()
     {
         // Create mock instances
         _mockApplicationUserManager = new Mock<IApplicationUserManager>();
         _mockUserBuilder = new Mock<IBuilder<CreateUserCommand, ApplicationUser>>();
 
         // Pass mocks to the command handler
-        _handler = new ApplicationUserCommandHandler(_mockApplicationUserManager.Object, _mockUserBuilder.Object);
+        _handler = new CreateUserCommandHandler(_mockApplicationUserManager.Object, _mockUserBuilder.Object);
     }
 
     [Fact]

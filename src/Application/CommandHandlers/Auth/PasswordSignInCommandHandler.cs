@@ -1,23 +1,22 @@
 using Application.Decorators;
 using Application.Interfaces;
 using Infrastructure.Interfaces;
-using Shared.Commands;
 using Shared.Commands.ApplicationUser;
-using Shared.Interfaces;
-using Shared.Wrappers;
+using Shared.Responses;
 
 namespace Application.CommandHandlers;
 
-public class SignInCommandHandler
+public class PasswordSignInCommandHandler
 (
     IApplicationSignInManager signInManager,
     IApplicationUserManager userManager,
     ISignInResultDecorator signInDecorator,
     ITokenFactory tokenFactory
 ) 
-    : ICommandHandler<ICommand, Object>
+    : ICommandHandler<PasswordSignInCommand, PasswordSignInResponse>
 {
-    public async Task<SignInWrapper> ExecutePasswordSignInAsync(PasswordSignInCommand command)
+    
+    public async Task<PasswordSignInResponse> Handle(PasswordSignInCommand command, CancellationToken cancellationToken)
     {
         string token = string.Empty;
         
@@ -33,14 +32,5 @@ public class SignInCommandHandler
         
         return signInDecorator.Success(token);
     }
-
-    public async Task<Object> Handle(ICommand command)
-    {
-        return command switch
-        {
-            PasswordSignInCommand cmd => await ExecutePasswordSignInAsync(cmd),
-            _ => new NotDefinedCommand()
-        };
-    }
-
 }
+
