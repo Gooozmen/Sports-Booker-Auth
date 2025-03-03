@@ -1,5 +1,3 @@
-using Shared.Enums;
-
 namespace Shared.Responses;
 
 public class ControllerResponse<T>

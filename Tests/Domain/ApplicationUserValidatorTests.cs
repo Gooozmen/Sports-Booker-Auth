@@ -1,6 +1,6 @@
-using FluentValidation.TestHelper;
 using Domain.Models;
 using Domain.Validators;
+using FluentValidation.TestHelper;
 
 namespace Tests.Domain;
 
@@ -18,9 +18,9 @@ public class ApplicationUserValidatorTests
     {
         var user = new ApplicationUser { Id = Guid.Empty }; // Empty ID
         var result = _validator.TestValidate(user);
-        
+
         result.ShouldHaveValidationErrorFor(x => x.Id)
-              .WithErrorMessage("Id is required.");
+            .WithErrorMessage("Id is required.");
     }
 
     [Fact]
@@ -29,7 +29,7 @@ public class ApplicationUserValidatorTests
         var user = new ApplicationUser { UserName = "" };
         var result = _validator.TestValidate(user);
         result.ShouldHaveValidationErrorFor(x => x.UserName)
-              .WithErrorMessage("UserName is required.");
+            .WithErrorMessage("UserName is required.");
     }
 
     [Fact]
@@ -38,7 +38,7 @@ public class ApplicationUserValidatorTests
         var user = new ApplicationUser { UserName = new string('A', 257) }; // 257 characters
         var result = _validator.TestValidate(user);
         result.ShouldHaveValidationErrorFor(x => x.UserName)
-              .WithErrorMessage("UserName cannot exceed 256 characters.");
+            .WithErrorMessage("UserName cannot exceed 256 characters.");
     }
 
     [Fact]
@@ -47,7 +47,7 @@ public class ApplicationUserValidatorTests
         var user = new ApplicationUser { Email = "" };
         var result = _validator.TestValidate(user);
         result.ShouldHaveValidationErrorFor(x => x.Email)
-              .WithErrorMessage("Email is required.");
+            .WithErrorMessage("Email is required.");
     }
 
     [Fact]
@@ -56,7 +56,7 @@ public class ApplicationUserValidatorTests
         var user = new ApplicationUser { Email = "invalid-email" };
         var result = _validator.TestValidate(user);
         result.ShouldHaveValidationErrorFor(x => x.Email)
-              .WithErrorMessage("Invalid email format.");
+            .WithErrorMessage("Invalid email format.");
     }
 
     [Fact]
@@ -73,7 +73,7 @@ public class ApplicationUserValidatorTests
         var user = new ApplicationUser { PasswordHash = "" };
         var result = _validator.TestValidate(user);
         result.ShouldHaveValidationErrorFor(x => x.PasswordHash)
-              .WithErrorMessage("PasswordHash is required.");
+            .WithErrorMessage("PasswordHash is required.");
     }
 
     [Fact]
@@ -82,7 +82,7 @@ public class ApplicationUserValidatorTests
         var user = new ApplicationUser { PhoneNumber = "invalid_phone" };
         var result = _validator.TestValidate(user);
         result.ShouldHaveValidationErrorFor(x => x.PhoneNumber)
-              .WithErrorMessage("Invalid phone number format.");
+            .WithErrorMessage("Invalid phone number format.");
     }
 
     [Fact]
@@ -99,7 +99,7 @@ public class ApplicationUserValidatorTests
         var user = new ApplicationUser { AccessFailedCount = -1 };
         var result = _validator.TestValidate(user);
         result.ShouldHaveValidationErrorFor(x => x.AccessFailedCount)
-              .WithErrorMessage("AccessFailedCount cannot be negative.");
+            .WithErrorMessage("AccessFailedCount cannot be negative.");
     }
 
     [Fact]

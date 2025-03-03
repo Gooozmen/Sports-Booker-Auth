@@ -1,15 +1,14 @@
 using Domain.Models;
-using Infrastructure.Database.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Database.EntityConfig;
 
-public class ApplicationUserTokenConfig: IEntityTypeConfiguration<ApplicationUserToken>
+public class ApplicationUserTokenConfig : IEntityTypeConfiguration<ApplicationUserToken>
 {
     public void Configure(EntityTypeBuilder<ApplicationUserToken> builder)
     {
-        builder.ToTable("AspNetUserTokens","Identity");
+        builder.ToTable("AspNetUserTokens", "Identity");
 
         // Composite primary key
         builder.HasKey(x => new { x.UserId, x.LoginProvider, x.Name });

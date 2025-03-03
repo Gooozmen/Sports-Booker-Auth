@@ -6,14 +6,12 @@ using Shared.Commands;
 
 namespace Application.CommandHandlers;
 
-public class CreateRoleCommandHandler
-    (
-        IApplicationRoleManager roleManager,
-        IApplicationRoleBuilder roleBuilder
-    )
+public class CreateRoleCommandHandler(
+    IApplicationRoleManager roleManager,
+    IApplicationRoleBuilder roleBuilder
+)
     : IRequestHandler<CreateRoleCommand, IdentityResult>
 {
-    
     public async Task<IdentityResult> Handle(CreateRoleCommand command, CancellationToken cancellationToken)
     {
         var dataModel = roleBuilder.Apply(command);

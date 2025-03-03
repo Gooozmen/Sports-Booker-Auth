@@ -2,33 +2,32 @@ using Domain.Models;
 using FluentAssertions;
 using Infrastructure.IdentityManagers;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Moq;
 
 namespace Tests.Infra.IdentityManagers;
 
 public class ApplicationRoleManagerTests
 {
-    private readonly Mock<RoleManager<ApplicationRole>> _mockRoleManager;
     private readonly ApplicationRoleManager _applicationRoleManager;
-    
+    private readonly Mock<RoleManager<ApplicationRole>> _mockRoleManager;
+
     public ApplicationRoleManagerTests()
     {
         var roleStore = new Mock<IRoleStore<ApplicationRole>>();
-        
+
         _mockRoleManager = new Mock<RoleManager<ApplicationRole>>(
-            roleStore.Object, 
+            roleStore.Object,
             null, null, null, null
         );
 
         _applicationRoleManager = new ApplicationRoleManager(_mockRoleManager.Object);
     }
-    
+
     [Fact]
     public async Task CreateRoleAsync_ShouldReturnSuccess_WhenRoleIsCreated()
     {
         // Arrange
-        var role = new ApplicationRole{ Name = "userRole", Active = true};
+        var role = new ApplicationRole { Name = "userRole", Active = true };
 
         _mockRoleManager.Setup(rm => rm.CreateAsync(role))
             .ReturnsAsync(IdentityResult.Success);
@@ -45,7 +44,7 @@ public class ApplicationRoleManagerTests
     public async Task CreateRoleAsync_ShouldReturnFailure_WhenRoleCreationFails()
     {
         // Arrange
-        var role = new ApplicationRole{ Name = "userRole", Active = true};
+        var role = new ApplicationRole { Name = "userRole", Active = true };
 
         var identityErrors = new[] { new IdentityError { Description = "Error creating Role" } };
         var failedResult = IdentityResult.Failed(identityErrors);
@@ -61,7 +60,7 @@ public class ApplicationRoleManagerTests
         result.Errors.Should().ContainSingle()
             .Which.Description
             .Should().Be("Error creating Role");
-        
+
         _mockRoleManager.Verify(rm => rm.CreateAsync(role), Times.Once);
     }
 }

@@ -5,12 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Database.Configurations;
 
-public class ApplicationRoleClaimConfig: ActiveBase<ApplicationRoleClaim>, IEntityTypeConfiguration<ApplicationRoleClaim>
+public class ApplicationRoleClaimConfig : ActiveBase<ApplicationRoleClaim>,
+    IEntityTypeConfiguration<ApplicationRoleClaim>
 {
-     public void Configure(EntityTypeBuilder<ApplicationRoleClaim> builder)
+    public void Configure(EntityTypeBuilder<ApplicationRoleClaim> builder)
     {
         // Table name
-        builder.ToTable("AspNetRoleClaims","Identity");
+        builder.ToTable("AspNetRoleClaims", "Identity");
 
         // Primary key
         builder.HasKey(x => x.Id);
@@ -37,8 +38,8 @@ public class ApplicationRoleClaimConfig: ActiveBase<ApplicationRoleClaim>, IEnti
             .HasColumnOrder(4)
             .IsRequired()
             .HasMaxLength(100); // Assuming a max length for ClaimValue
-        
-        ConfigureActiveProperty(builder,5);
+
+        ConfigureActiveProperty(builder, 5);
 
         // Foreign key relationship
         builder.HasOne<ApplicationRole>()

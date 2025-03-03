@@ -7,32 +7,29 @@ using Shared.Responses;
 
 namespace Application.CommandHandlers;
 
-public class PasswordSignInCommandHandler
-(
+public class PasswordSignInCommandHandler(
     IApplicationSignInManager signInManager,
     IApplicationUserManager userManager,
     IPasswordSignInResponseFactory responseFactory,
     ITokenFactory tokenFactory
-) 
-    : IRequestHandler<PasswordSignInCommand,SignInResponseBase>
+)
+    : IRequestHandler<PasswordSignInCommand, SignInResponseBase>
 {
-    
     public async Task<SignInResponseBase> Handle(PasswordSignInCommand command, CancellationToken cancellationToken)
     {
-        string token = string.Empty;
-        SignInResult result = new SignInResult();
-        
+        var token = string.Empty;
+        var result = new SignInResult();
+
         var dataModel = await userManager.FindByEmailAsync(command.Email);
 
         if (dataModel is null)
             return responseFactory.Create();
-        
+
         result = await signInManager.PasswordSignInAsync(dataModel, command.Password, false, false);
-        
-        if(result.Succeeded) 
+
+        if (result.Succeeded)
             token = tokenFactory.GenerateToken(dataModel);
-        
+
         return responseFactory.Create(result, token);
     }
 }
-

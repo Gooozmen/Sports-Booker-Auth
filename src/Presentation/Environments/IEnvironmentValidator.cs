@@ -1,4 +1,5 @@
 ﻿namespace Presentation.Environments;
+
 public interface IEnvironmentValidator
 {
     bool IsDevelopment();
@@ -7,4 +8,3 @@ public interface IEnvironmentValidator
     bool IsEnvironment(string environmentName);
     void LogEnvironment();
 }
-

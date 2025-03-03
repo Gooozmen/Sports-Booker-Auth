@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Database.Configurations;
 
-public class ApplicationRoleConfig: ActiveBase<ApplicationRole>, IEntityTypeConfiguration<ApplicationRole>
+public class ApplicationRoleConfig : ActiveBase<ApplicationRole>, IEntityTypeConfiguration<ApplicationRole>
 {
     public void Configure(EntityTypeBuilder<ApplicationRole> builder)
     {
-        builder.ToTable("AspNetRoles","Identity");
+        builder.ToTable("AspNetRoles", "Identity");
 
         // Primary key
         builder.HasKey(x => x.Id);
@@ -35,6 +35,6 @@ public class ApplicationRoleConfig: ActiveBase<ApplicationRole>, IEntityTypeConf
             .HasColumnName("ConcurrencyStamp")
             .HasColumnOrder(4);
 
-        ConfigureActiveProperty(builder,5);
+        ConfigureActiveProperty(builder, 5);
     }
 }

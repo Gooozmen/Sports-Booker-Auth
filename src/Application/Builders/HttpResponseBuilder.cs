@@ -5,8 +5,7 @@ namespace Application.Builders;
 
 public class HttpResponseBuilder : IHttpResponseBuilder
 {
-
-    public ControllerResponse<T> CreateResponse<T>(int statusCode,T data, string message = "")
+    public ControllerResponse<T> CreateResponse<T>(int statusCode, T data, string message = "")
     {
         return new ControllerResponse<T>
         {
@@ -17,12 +16,14 @@ public class HttpResponseBuilder : IHttpResponseBuilder
         };
     }
 
-    private bool SetSuccess(int httpStatusCode) =>
-                httpStatusCode switch
-                {
-                    >= 200 and < 300 => true, // Success range
-                    _ => false               // Failure range
-                };
+    private bool SetSuccess(int httpStatusCode)
+    {
+        return httpStatusCode switch
+        {
+            >= 200 and < 300 => true, // Success range
+            _ => false // Failure range
+        };
+    }
 }
 
 public interface IHttpResponseBuilder

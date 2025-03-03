@@ -1,4 +1,5 @@
 ﻿namespace Presentation.Environments;
+
 public class EnvironmentValidator : IEnvironmentValidator
 {
     private readonly IWebHostEnvironment _environment;
@@ -9,16 +10,28 @@ public class EnvironmentValidator : IEnvironmentValidator
     }
 
     // Check if the current environment is Development
-    public bool IsDevelopment() => _environment.IsDevelopment();
+    public bool IsDevelopment()
+    {
+        return _environment.IsDevelopment();
+    }
 
     // Check if the current environment is Staging
-    public bool IsStaging() => _environment.IsStaging();
+    public bool IsStaging()
+    {
+        return _environment.IsStaging();
+    }
 
     // Check if the current environment is Production
-    public bool IsProduction() => _environment.IsProduction();
+    public bool IsProduction()
+    {
+        return _environment.IsProduction();
+    }
 
     // Check for a custom environment
-    public bool IsEnvironment(string environmentName) => _environment.IsEnvironment(environmentName);
+    public bool IsEnvironment(string environmentName)
+    {
+        return _environment.IsEnvironment(environmentName);
+    }
 
     // Log or validate environment (example usage)
     public void LogEnvironment()

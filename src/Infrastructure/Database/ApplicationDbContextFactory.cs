@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Database;
+
 public class ApplicationDbContextFactory<TContext> : IDbContextFactory<TContext> where TContext : DbContext
 {
     private readonly IServiceProvider _provider;
@@ -19,5 +20,3 @@ public class ApplicationDbContextFactory<TContext> : IDbContextFactory<TContext>
         return ActivatorUtilities.CreateInstance<TContext>(_provider);
     }
 }
-
-

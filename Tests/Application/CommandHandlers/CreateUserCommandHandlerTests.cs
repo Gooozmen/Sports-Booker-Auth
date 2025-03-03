@@ -6,15 +6,13 @@ using Microsoft.AspNetCore.Identity;
 using Moq;
 using Shared.Commands;
 
-
 namespace Tests.Application.CommandHandlers;
-
 
 public class CreateUserCommandHandlerTests
 {
+    private readonly CreateUserCommandHandler _handler;
     private readonly Mock<IApplicationUserManager> _mockApplicationUserManager;
     private readonly Mock<IApplicationUserBuilder> _mockUserBuilder;
-    private readonly CreateUserCommandHandler _handler;
 
     public CreateUserCommandHandlerTests()
     {
@@ -30,14 +28,16 @@ public class CreateUserCommandHandlerTests
     public async Task ExecuteCreateAsync_ShouldReturnSuccess_WhenUserIsCreated()
     {
         // Arrange
-        var command = new CreateUserCommand { Email = "test@example.com", Password = "Secure123!",PhoneNumber = "1234-2343"};
-        var userModel = new ApplicationUser { UserName = command.Email, Email = command.Email, PhoneNumber = command.PhoneNumber };
+        var command = new CreateUserCommand
+            { Email = "test@example.com", Password = "Secure123!", PhoneNumber = "1234-2343" };
+        var userModel = new ApplicationUser
+            { UserName = command.Email, Email = command.Email, PhoneNumber = command.PhoneNumber };
 
         _mockUserBuilder.Setup(b => b.Apply(command)).Returns(userModel);
 
         _mockApplicationUserManager
             .Setup(m => m.CreateUserAsync(userModel, command.Password))
-            .ReturnsAsync(IdentityResult.Success); 
+            .ReturnsAsync(IdentityResult.Success);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
@@ -45,7 +45,8 @@ public class CreateUserCommandHandlerTests
         // Assert
         Assert.True(result.Succeeded);
         _mockUserBuilder.Verify(b => b.Apply(command), Times.Once); // Ensure Apply() was called once
-        _mockApplicationUserManager.Verify(m => m.CreateUserAsync(userModel, command.Password), Times.Once); // Ensure CreateUserAsync() was called once
+        _mockApplicationUserManager.Verify(m => m.CreateUserAsync(userModel, command.Password),
+            Times.Once); // Ensure CreateUserAsync() was called once
     }
 
     [Fact]
@@ -59,7 +60,7 @@ public class CreateUserCommandHandlerTests
 
         _mockApplicationUserManager
             .Setup(m => m.CreateUserAsync(userModel, command.Password))
-            .ReturnsAsync(IdentityResult.Failed(new IdentityError { Description = "User creation failed" })); 
+            .ReturnsAsync(IdentityResult.Failed(new IdentityError { Description = "User creation failed" }));
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
@@ -78,9 +79,9 @@ public class CreateUserCommandHandlerTests
 
         _mockApplicationUserManager
             .Setup(m => m.CreateUserAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
-            .ThrowsAsync(new System.Exception("Unexpected error")); 
+            .ThrowsAsync(new Exception("Unexpected error"));
 
         // Act & Assert
-        await Assert.ThrowsAsync<System.Exception>(() => _handler.Handle(command,CancellationToken.None));
+        await Assert.ThrowsAsync<Exception>(() => _handler.Handle(command, CancellationToken.None));
     }
 }

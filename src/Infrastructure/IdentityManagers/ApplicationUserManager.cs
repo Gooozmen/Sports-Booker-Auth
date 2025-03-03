@@ -1,7 +1,6 @@
-using Microsoft.AspNetCore.Identity;
 using Domain.Models;
-using Infrastructure.Database;
 using Infrastructure.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.IdentityManagers;
 
@@ -14,9 +13,9 @@ public class ApplicationUserManager : IApplicationUserManager
         _userManager = userManager;
     }
 
-    public async Task<IdentityResult> CreateUserAsync(ApplicationUser user,string password)
+    public async Task<IdentityResult> CreateUserAsync(ApplicationUser user, string password)
     {
-        IdentityResult result = await _userManager.CreateAsync(user,password);
+        var result = await _userManager.CreateAsync(user, password);
         return result;
     }
 

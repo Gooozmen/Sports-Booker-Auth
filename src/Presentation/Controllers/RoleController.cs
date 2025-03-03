@@ -6,13 +6,11 @@ using Shared.Commands;
 
 namespace Presentation.Controllers;
 
-public class RoleController
-    (
-        ISender sender,
-        IHttpResponseBuilder responseBuilder
-    ) : AuthControllerBase(responseBuilder)
+public class RoleController(
+    ISender sender,
+    IHttpResponseBuilder responseBuilder
+) : AuthControllerBase(responseBuilder)
 {
- 
     [HttpPost]
     public async Task<IActionResult> ProcessUserRegistrationAsync([FromBody] CreateRoleCommand command)
     {
@@ -20,9 +18,8 @@ public class RoleController
 
         return result switch
         {
-            {Succeeded: true} => Ok(responseBuilder.CreateResponse((int)HttpStatusCode.Created, result)),
+            { Succeeded: true } => Ok(responseBuilder.CreateResponse((int)HttpStatusCode.Created, result)),
             _ => BadRequest(responseBuilder.CreateResponse((int)HttpStatusCode.BadRequest, result.Errors))
         };
     }
-    
 }

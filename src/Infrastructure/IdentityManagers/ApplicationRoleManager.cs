@@ -12,10 +12,10 @@ public class ApplicationRoleManager : IApplicationRoleManager
     {
         _roleManager = roleManager;
     }
-    
+
     public async Task<IdentityResult> CreateRoleAsync(ApplicationRole role)
     {
-        IdentityResult identityResult = await _roleManager.CreateAsync(role);
+        var identityResult = await _roleManager.CreateAsync(role);
         return identityResult;
     }
 }

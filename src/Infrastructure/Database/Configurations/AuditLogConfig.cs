@@ -8,7 +8,7 @@ public class AuditLogConfig : IEntityTypeConfiguration<AuditLog>
 {
     public void Configure(EntityTypeBuilder<AuditLog> builder)
     {
-        builder.ToTable("AuditLog","Audit");
+        builder.ToTable("AuditLog", "Audit");
 
         builder.HasKey(a => a.Id);
 
@@ -56,4 +56,3 @@ public class AuditLogConfig : IEntityTypeConfiguration<AuditLog>
             .HasColumnType("jsonb");
     }
 }
-

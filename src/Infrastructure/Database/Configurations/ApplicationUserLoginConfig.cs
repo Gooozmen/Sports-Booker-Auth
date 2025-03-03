@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Database.Configurations;
 
-public class ApplicationUserLoginConfig:IEntityTypeConfiguration<ApplicationUserLogin>
+public class ApplicationUserLoginConfig : IEntityTypeConfiguration<ApplicationUserLogin>
 {
     public void Configure(EntityTypeBuilder<ApplicationUserLogin> builder)
     {
         // Table name
-        builder.ToTable("AspNetUserLogins","Identity");
+        builder.ToTable("AspNetUserLogins", "Identity");
 
         // Primary key
         builder.HasKey(x => new { x.LoginProvider, x.ProviderKey });

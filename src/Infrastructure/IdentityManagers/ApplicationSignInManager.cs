@@ -8,22 +8,22 @@ namespace Infrastructure.IdentityManagers;
 public class ApplicationSignInManager : IApplicationSignInManager
 {
     private readonly SignInManager<ApplicationUser> _signInManager;
-    
+
     public ApplicationSignInManager(SignInManager<ApplicationUser> signInManager)
     {
         _signInManager = signInManager;
     }
-    
+
     public bool IsSignInAsync(ClaimsPrincipal user)
     {
         var result = _signInManager.IsSignedIn(user);
         return result;
     }
 
-    public async Task<SignInResult> PasswordSignInAsync(ApplicationUser user, 
-                                                        string password, 
-                                                        bool isPersistent,
-                                                        bool lockoutOnFailure)
+    public async Task<SignInResult> PasswordSignInAsync(ApplicationUser user,
+        string password,
+        bool isPersistent,
+        bool lockoutOnFailure)
     {
         var result = await _signInManager.PasswordSignInAsync(user, password, isPersistent, lockoutOnFailure);
         return result;
@@ -33,6 +33,4 @@ public class ApplicationSignInManager : IApplicationSignInManager
     {
         await _signInManager.SignInAsync(user, isPersistent);
     }
-    
-    
 }

@@ -1,12 +1,5 @@
 ﻿using Infrastructure.Database;
-using Presentation.Environments;
-using Infrastructure.Options;
-using Application;
-using Domain.Models;
-using Infrastructure;
-using Infrastructure.Database;
 using Microsoft.AspNetCore.Authorization;
-using Presentation;
 using Presentation.Environments;
 
 namespace Presentation;
@@ -21,26 +14,24 @@ public static class DependencyInjection
         //Swagger
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
-        
+
         services.AddAuthorization(options =>
         {
             options.FallbackPolicy = new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
                 .Build();
         });
-        
-        services.ConfigureApplicationCookie(options =>
-        {
-            options.LoginPath = "/Account/Login";
-        });
-        
+
+        services.ConfigureApplicationCookie(options => { options.LoginPath = "/Account/Login"; });
+
         return services;
     }
-    
-    public static IConfigurationBuilder AddDefaultConfiguration<T>(this IConfigurationBuilder configurationBuilder) where T : class
+
+    public static IConfigurationBuilder AddDefaultConfiguration<T>(this IConfigurationBuilder configurationBuilder)
+        where T : class
     {
         // Add appsettings.json
-        configurationBuilder.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+        configurationBuilder.AddJsonFile("appsettings.json", true, true);
 
         // Add user secrets
         configurationBuilder.AddUserSecrets<T>();
@@ -54,9 +45,9 @@ public static class DependencyInjection
         app.UseSwaggerUI();
         return app;
     }
-    
+
     /// <summary>
-    /// Configures development-only middleware and runs the database initializer.
+    ///     Configures development-only middleware and runs the database initializer.
     /// </summary>
     /// <param name="app">The WebApplication instance.</param>
     /// <param name="environmentValidator">Service to validate the current environment.</param>
@@ -94,5 +85,4 @@ public static class DependencyInjection
         // Initialize the database asynchronously.
         await initializer.InitialiseAsync();
     }
-    
 }

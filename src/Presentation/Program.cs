@@ -8,10 +8,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMediatR();
 
 builder.Configuration.AddDefaultConfiguration<Program>(); //Load additional configuration before registering services.
-builder.Services.ConfigureOptions(builder.Configuration); //Register configuration options so that strongly-typed settings can be injected.
+builder.Services.ConfigureOptions(builder
+    .Configuration); //Register configuration options so that strongly-typed settings can be injected.
 builder.Services.ConfigureJwt();
 
-builder.Services.AddControllers(o => { o.Filters.Add<ModelStateInterceptor>(); });//Register controllers and API endpoints.
+builder.Services.AddControllers(o =>
+{
+    o.Filters.Add<ModelStateInterceptor>();
+}); //Register controllers and API endpoints.
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddPresentationServices();
@@ -23,7 +27,7 @@ var environmentValidator = app.Services.GetRequiredService<IEnvironmentValidator
 
 //If in Development, use developer-friendly middleware.
 await app.UseDevelopEnvironment(environmentValidator);
-app.UseRouting();//Configure the middleware pipeline.
+app.UseRouting(); //Configure the middleware pipeline.
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -34,7 +38,7 @@ app.UseSwaggerUI(options =>
     options.RoutePrefix = string.Empty; // Serve Swagger UI at the app's root.
 });
 
-app.MapControllers();//Map controllers to endpoints.
-app.UsePresentation();//Use any custom presentation middleware.
+app.MapControllers(); //Map controllers to endpoints.
+app.UsePresentation(); //Use any custom presentation middleware.
 
 await app.RunAsync();

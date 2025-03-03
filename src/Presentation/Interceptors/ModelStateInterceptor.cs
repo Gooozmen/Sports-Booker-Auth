@@ -1,8 +1,7 @@
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Shared.Responses;
 using Shared.Enums;
+using Shared.Responses;
 
 namespace Presentation.Interceptors;
 
@@ -24,9 +23,8 @@ public class ModelStateInterceptor : ActionFilterAttribute
                 Message = HttpStatusDescriptions.GetDescription((int)HttpStatusCodes.ModelStateInvalid),
                 StatusCode = (int)HttpStatusCodes.ModelStateInvalid
             };
-            
+
             context.Result = new BadRequestObjectResult(failedResponse);
         }
     }
 }
-

@@ -10,23 +10,22 @@ public class PasswordSignInResponseFactory : IPasswordSignInResponseFactory
     {
         return source switch
         {
-            { Succeeded: true } => new SignInSuccess(source,token),
+            { Succeeded: true } => new SignInSuccess(source, token),
             _ => ValidateFailure(source)
         };
     }
 
     public SignInResponseBase Create()
     {
-        return Create(null,string.Empty);
+        return Create(null, string.Empty);
     }
 
     private SignInResponseBase ValidateFailure(SignInResult? source)
     {
-        return source is null ? new SignInFailed(false,false,false,true) : new SignInFailed(source);
+        return source is null ? new SignInFailed(false, false, false, true) : new SignInFailed(source);
     }
 }
 
 public interface IPasswordSignInResponseFactory : IFactory<SignInResult, SignInResponseBase, string>
 {
 }
-

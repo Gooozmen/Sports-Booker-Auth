@@ -7,8 +7,8 @@ namespace Infrastructure.Database;
 
 public class ApplicationDbContextInitializer : IContextInitializer
 {
-    private readonly EntityFrameworkOption _entityFrameworkOption;
     private readonly ApplicationDbContext _context;
+    private readonly EntityFrameworkOption _entityFrameworkOption;
     private readonly IEnumerable<ISeeder> _seeders;
 
     public ApplicationDbContextInitializer
@@ -20,7 +20,6 @@ public class ApplicationDbContextInitializer : IContextInitializer
         _context = context;
         _seeders = seeders;
         _entityFrameworkOption = option.Value;
-        
     }
 
     public async Task InitialiseAsync()
@@ -32,7 +31,7 @@ public class ApplicationDbContextInitializer : IContextInitializer
                 await ExecuteDatabaseDropAsync();
                 await ExecuteDatabaseBuildAsync();
             }
-            
+
             // await _context.Database.MigrateAsync();
 
             if (_entityFrameworkOption.ExecuteRebuild)
@@ -48,7 +47,7 @@ public class ApplicationDbContextInitializer : IContextInitializer
     {
         await _context.Database.EnsureDeletedAsync();
     }
-    
+
     private async Task ExecuteDatabaseBuildAsync()
     {
         await _context.Database.EnsureCreatedAsync();
@@ -61,11 +60,13 @@ public class ApplicationDbContextInitializer : IContextInitializer
 
     private async Task ExecuteSeedAsync()
     {
-        var applicationUserSeeder = _seeders.FirstOrDefault(seeder => seeder.GetType() == typeof(ApplicationUserSeeder));
+        var applicationUserSeeder =
+            _seeders.FirstOrDefault(seeder => seeder.GetType() == typeof(ApplicationUserSeeder));
         if (applicationUserSeeder != null) await applicationUserSeeder.SeedAsync();
-        var applicationRoleSeeder = _seeders.FirstOrDefault(seeder => seeder.GetType() == typeof(ApplicationRoleSeeder));
+        var applicationRoleSeeder =
+            _seeders.FirstOrDefault(seeder => seeder.GetType() == typeof(ApplicationRoleSeeder));
         if (applicationRoleSeeder != null) await applicationRoleSeeder.SeedAsync();
-        
+
         await _context.SaveChangesAsync();
     }
 }

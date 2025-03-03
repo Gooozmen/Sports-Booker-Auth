@@ -9,13 +9,11 @@ using Shared.Responses;
 namespace Presentation.Controllers;
 
 [AllowAnonymous]
-public class AccountController 
-    (   
-        ISender sender,
-        IHttpResponseBuilder responseBuilder
-    ) : AuthControllerBase(responseBuilder)
+public class AccountController(
+    ISender sender,
+    IHttpResponseBuilder responseBuilder
+) : AuthControllerBase(responseBuilder)
 {
-    
     [HttpPost("Register")]
     public async Task<IActionResult> ProcessUserRegistrationAsync([FromBody] CreateUserCommand command)
     {
@@ -23,8 +21,8 @@ public class AccountController
 
         return result switch
         {
-            {Succeeded: true} => Ok(ResponseBuilder.CreateResponse((int)HttpStatusCode.Created, result)),
-            _=> BadRequest(ResponseBuilder.CreateResponse((int)HttpStatusCode.BadRequest, result))
+            { Succeeded: true } => Ok(ResponseBuilder.CreateResponse((int)HttpStatusCode.Created, result)),
+            _ => BadRequest(ResponseBuilder.CreateResponse((int)HttpStatusCode.BadRequest, result))
         };
     }
 
@@ -36,7 +34,7 @@ public class AccountController
         return result switch
         {
             SignInSuccess => Ok(ResponseBuilder.CreateResponse((int)HttpStatusCode.OK, result)),
-             _ => BadRequest(ResponseBuilder.CreateResponse((int)HttpStatusCode.Unauthorized, result)),
+            _ => BadRequest(ResponseBuilder.CreateResponse((int)HttpStatusCode.Unauthorized, result))
         };
     }
 }

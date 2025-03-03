@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Database.Configurations;
 
-public class ApplicationUserConfig: ActiveBase<ApplicationUser>, IEntityTypeConfiguration<ApplicationUser>
+public class ApplicationUserConfig : ActiveBase<ApplicationUser>, IEntityTypeConfiguration<ApplicationUser>
 {
     public void Configure(EntityTypeBuilder<ApplicationUser> builder)
     {
         // Table name
-        builder.ToTable("AspNetUsers","Identity");
+        builder.ToTable("AspNetUsers", "Identity");
 
         // Primary key
         builder.HasKey(x => x.Id);
@@ -87,7 +87,7 @@ public class ApplicationUserConfig: ActiveBase<ApplicationUser>, IEntityTypeConf
         builder.Property(x => x.AccessFailedCount)
             .HasColumnName("AccessFailedCount")
             .HasColumnOrder(15);
-        
-        ConfigureActiveProperty(builder,16);
+
+        ConfigureActiveProperty(builder, 16);
     }
 }

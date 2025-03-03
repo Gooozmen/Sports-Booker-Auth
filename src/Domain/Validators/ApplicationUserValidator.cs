@@ -1,5 +1,5 @@
-using FluentValidation;
 using Domain.Models;
+using FluentValidation;
 
 namespace Domain.Validators;
 
@@ -47,5 +47,3 @@ public class ApplicationUserValidator : AbstractValidator<ApplicationUser>
             .GreaterThanOrEqualTo(0).WithMessage("AccessFailedCount cannot be negative.");
     }
 }
-
-

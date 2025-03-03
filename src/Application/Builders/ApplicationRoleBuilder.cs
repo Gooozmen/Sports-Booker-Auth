@@ -4,7 +4,6 @@ using Shared.Commands;
 
 namespace Application.Builders;
 
-
 public class ApplicationRoleBuilder : IApplicationRoleBuilder
 {
     public ApplicationRole Apply(CreateRoleCommand cmd)
@@ -19,4 +18,5 @@ public class ApplicationRoleBuilder : IApplicationRoleBuilder
 }
 
 public interface IApplicationRoleBuilder : IBuilder<CreateRoleCommand, ApplicationRole>
-{ }
+{
+}

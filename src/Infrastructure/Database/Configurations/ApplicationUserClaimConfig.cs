@@ -1,17 +1,16 @@
-
-
 using Domain.Models;
-using Microsoft.EntityFrameworkCore;
 using Infrastructure.Database.Base;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Database.Configurations;
 
-public class ApplicationUserClaimConfig: ActiveBase<ApplicationUserClaim>, IEntityTypeConfiguration<ApplicationUserClaim>
+public class ApplicationUserClaimConfig : ActiveBase<ApplicationUserClaim>,
+    IEntityTypeConfiguration<ApplicationUserClaim>
 {
     public void Configure(EntityTypeBuilder<ApplicationUserClaim> builder)
     {
-        builder.ToTable("AspNetUserClaims","Identity");
+        builder.ToTable("AspNetUserClaims", "Identity");
 
         // Primary key
         builder.HasKey(x => x.Id);
@@ -37,8 +36,8 @@ public class ApplicationUserClaimConfig: ActiveBase<ApplicationUserClaim>, IEnti
             .HasColumnOrder(4)
             .HasMaxLength(100)
             .IsRequired(); // Assuming a max length for ClaimValue
-        
-        ConfigureActiveProperty(builder,5);
+
+        ConfigureActiveProperty(builder, 5);
 
         // Foreign key relationship
         builder.HasOne<ApplicationUser>()

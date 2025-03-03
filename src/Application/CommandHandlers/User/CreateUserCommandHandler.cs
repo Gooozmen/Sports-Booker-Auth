@@ -14,7 +14,7 @@ public class CreateUserCommandHandler(
     public async Task<IdentityResult> Handle(CreateUserCommand command, CancellationToken cancellationToken)
     {
         var dataModel = userBuilder.Apply(command);
-        var result = await applicationUserManager.CreateUserAsync(dataModel,command.Password);
+        var result = await applicationUserManager.CreateUserAsync(dataModel, command.Password);
         return result;
     }
 }

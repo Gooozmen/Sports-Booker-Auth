@@ -8,13 +8,13 @@ namespace Tests.Infra.IdentityManagers;
 
 public class ApplicationUserManagerTests
 {
-    private readonly Mock<UserManager<ApplicationUser>> _mockUserManager;
     private readonly ApplicationUserManager _applicationUserManager;
+    private readonly Mock<UserManager<ApplicationUser>> _mockUserManager;
 
     public ApplicationUserManagerTests()
     {
         _mockUserManager = new Mock<UserManager<ApplicationUser>>(
-            Mock.Of<IUserStore<ApplicationUser>>(), 
+            Mock.Of<IUserStore<ApplicationUser>>(),
             null, null, null, null, null, null, null, null
         );
 
@@ -58,9 +58,9 @@ public class ApplicationUserManagerTests
         // Assert
         result.Succeeded.Should().BeFalse();
         result.Errors.Should().ContainSingle()
-              .Which.Description
-              .Should().Be("Error creating user");
-        
+            .Which.Description
+            .Should().Be("Error creating user");
+
         _mockUserManager.Verify(um => um.CreateAsync(user, password), Times.Once);
     }
 }
