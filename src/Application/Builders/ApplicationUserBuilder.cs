@@ -4,7 +4,7 @@ using Shared.Commands;
 
 namespace Application.Builders;
 
-public class ApplicationUserBuilder : IBuilder<CreateUserCommand, ApplicationUser>
+public class ApplicationUserBuilder : IApplicationUserBuilder
 {
     public ApplicationUser Apply(CreateUserCommand cmd)
     {
@@ -16,4 +16,8 @@ public class ApplicationUserBuilder : IBuilder<CreateUserCommand, ApplicationUse
             Active = true
         };
     }
+}
+
+public interface IApplicationUserBuilder : IBuilder<CreateUserCommand, ApplicationUser>
+{
 }

@@ -1,6 +1,6 @@
 using Application.Builders;
 using Domain.Models;
-using Shared.Commands.ApplicationUser;
+using Shared.Commands;
 
 namespace Tests.Application.Builders;
 
@@ -17,7 +17,7 @@ public class ApplicationUserBuilderTests
     public void BuilderShouldReturnApplicationUserModel()
     {
         //arrange
-        var cmd = new CreateUserCommand();
+        var cmd = new CreateUserCommand{Email = "pepito@gmail.com", Password = "123456"};
 
         //act
         var result = _applicationUserBuilder.Apply(cmd);
@@ -49,7 +49,7 @@ public class ApplicationUserBuilderTests
     public void PhoneNumberSholdBeNullIfNotDefined()
     {
         //arrange
-        var cmd = new CreateUserCommand {};
+        var cmd = new CreateUserCommand {Email = "pepito@gmail.com", Password = "123456"};
 
         //act
         var result = _applicationUserBuilder.Apply(cmd);

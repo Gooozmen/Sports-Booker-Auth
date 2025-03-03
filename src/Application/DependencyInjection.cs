@@ -1,10 +1,6 @@
 using Application.Builders;
-using Application.CommandHandlers;
-using Application.Decorators;
-using Application.Interfaces;
-using Domain.Models;
+using Application.Factories;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Commands;
 
 namespace Application;
 
@@ -18,12 +14,13 @@ public static class DependencyInjection
             
         
         //builders
-        services.AddScoped<IBuilder<CreateRoleCommand, ApplicationRole>, ApplicationRoleBuilder>();
-        services.AddScoped<IBuilder<CreateUserCommand,ApplicationUser>, ApplicationUserBuilder>();
+        services.AddScoped<IApplicationRoleBuilder, ApplicationRoleBuilder>();
+        services.AddScoped<IApplicationUserBuilder, ApplicationUserBuilder>();
         services.AddTransient<IHttpResponseBuilder, HttpResponseBuilder>();
         
-        //Decorators
-        services.AddTransient<ISignInResultDecorator,SignInResultDecorator>();
+        //factories
+        services.AddTransient<IPasswordSignInResponseFactory, PasswordSignInResponseFactory>();
+        
         
         return services;
     }
