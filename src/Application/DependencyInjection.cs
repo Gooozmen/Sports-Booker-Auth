@@ -1,6 +1,10 @@
+using System.Reflection;
 using Application.Builders;
 using Application.Factories;
+using Application.Interfaces;
+using Domain.Models;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Commands;
 
 namespace Application;
 
@@ -25,12 +29,12 @@ public static class DependencyInjection
         return services;
     }
     
-    public static IServiceCollection AddMediatR<T>(this IServiceCollection services) where T : class
+    public static IServiceCollection AddMediatR(this IServiceCollection services)
     {
         //Mediator => MediatR
         services.AddMediatR(config =>
         {
-            config.RegisterServicesFromAssemblies(typeof(T).Assembly);
+            config.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());
         });
 
         return services;

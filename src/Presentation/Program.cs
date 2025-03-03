@@ -1,12 +1,11 @@
 using Application;
 using Infrastructure;
-using Infrastructure.Options;
-using Microsoft.Extensions.Options;
 using Presentation;
 using Presentation.Environments;
 using Presentation.Interceptors;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddMediatR();
 
 builder.Configuration.AddDefaultConfiguration<Program>(); //Load additional configuration before registering services.
 builder.Services.ConfigureOptions(builder.Configuration); //Register configuration options so that strongly-typed settings can be injected.
@@ -17,7 +16,6 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddPresentationServices();
 builder.Services.AddOpenApi();
-builder.Services.AddMediatR<Program>();
 
 var app = builder.Build();
 

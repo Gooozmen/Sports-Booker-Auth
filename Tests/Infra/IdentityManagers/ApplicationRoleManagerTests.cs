@@ -2,6 +2,7 @@ using Domain.Models;
 using FluentAssertions;
 using Infrastructure.IdentityManagers;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Moq;
 
 namespace Tests.Infra.IdentityManagers;
@@ -13,9 +14,11 @@ public class ApplicationRoleManagerTests
     
     public ApplicationRoleManagerTests()
     {
+        var roleStore = new Mock<IRoleStore<ApplicationRole>>();
+        
         _mockRoleManager = new Mock<RoleManager<ApplicationRole>>(
-            Mock.Of<IRoleStore<ApplicationRole>>(), 
-            null, null, null, null, null, null, null, null
+            roleStore.Object, 
+            null, null, null, null
         );
 
         _applicationRoleManager = new ApplicationRoleManager(_mockRoleManager.Object);
