@@ -1,4 +1,3 @@
-using System.Net;
 using Shared.Enums;
 using Shared.Responses;
 
