@@ -1,32 +1,27 @@
 using System.Net;
 using Application.Builders;
-using Application.CommandHandlers;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Commands.ApplicationRole;
-using Shared.Commands.ApplicationUser;
+using Shared.Commands;
 
 namespace Presentation.Controllers;
 
-public class RoleController : AuthControllerBase
+public class RoleController
+    (
+        ISender sender,
+        IHttpResponseBuilder responseBuilder
+    ) : AuthControllerBase(responseBuilder)
 {
-    private readonly IApplicationRoleCommandHandler _applicationRoleCommandHandler;
-    private readonly IHttpResponseBuilder _responseBuilder;
-    
-    public RoleController(IApplicationRoleCommandHandler applicationRoleCommandHandler, IHttpResponseBuilder responseBuilder)
-    {
-        _applicationRoleCommandHandler = applicationRoleCommandHandler;
-        _responseBuilder = responseBuilder;
-    }
  
     [HttpPost]
     public async Task<IActionResult> ProcessUserRegistrationAsync([FromBody] CreateRoleCommand command)
     {
-        var identityResult = await _applicationRoleCommandHandler.ExecuteCreateAsync(command);
+        var result = await sender.Send(command);
 
-        return identityResult.Succeeded switch
+        return result switch
         {
-            true => Ok(_responseBuilder.CreateResponse((int)HttpStatusCode.Created, identityResult)),
-            _ => BadRequest(_responseBuilder.CreateResponse((int)HttpStatusCode.BadRequest, identityResult.Errors))
+            {Succeeded: true} => Ok(responseBuilder.CreateResponse((int)HttpStatusCode.Created, result)),
+            _ => BadRequest(responseBuilder.CreateResponse((int)HttpStatusCode.BadRequest, result.Errors))
         };
     }
     

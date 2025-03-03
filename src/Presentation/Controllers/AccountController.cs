@@ -1,20 +1,17 @@
 using System.Net;
 using Application.Builders;
-using Application.CommandHandlers;
-using Application.Interfaces;
-using Domain.Models;
-using Infrastructure.IdentityManagers;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Commands.ApplicationUser;
+using Shared.Commands;
+using Shared.Responses;
 
 namespace Presentation.Controllers;
 
 [AllowAnonymous]
 public class AccountController 
-    (
+    (   
+        ISender sender,
         IHttpResponseBuilder responseBuilder
     ) : AuthControllerBase(responseBuilder)
 {
@@ -22,24 +19,24 @@ public class AccountController
     [HttpPost("Register")]
     public async Task<IActionResult> ProcessUserRegistrationAsync([FromBody] CreateUserCommand command)
     {
-        var identityResult = await  .ExecuteCreateAsync(command);
+        var result = await sender.Send(command);
 
-        return identityResult.Succeeded switch
+        return result switch
         {
-            true => Ok(ResponseBuilder.CreateResponse((int)HttpStatusCode.Created, identityResult)),
-            _ => BadRequest(ResponseBuilder.CreateResponse((int)HttpStatusCode.BadRequest, identityResult.Errors))
+            {Succeeded: true} => Ok(ResponseBuilder.CreateResponse((int)HttpStatusCode.Created, result)),
+            _=> BadRequest(ResponseBuilder.CreateResponse((int)HttpStatusCode.BadRequest, result))
         };
     }
 
     [HttpPost("Login")]
     public async Task<IActionResult> ProcessUserLoginAsync([FromBody] PasswordSignInCommand command)
     {
-        var result = await _signInCommandHandler.ExecutePasswordSignInAsync(command);
+        var result = await sender.Send(command);
 
-        return result.Succeeded switch
+        return result switch
         {
-            true => Ok(ResponseBuilder.CreateResponse((int)HttpStatusCode.OK, result)),
-            false => BadRequest(ResponseBuilder.CreateResponse((int)HttpStatusCode.Unauthorized, result)),
+            SignInSuccess => Ok(ResponseBuilder.CreateResponse((int)HttpStatusCode.OK, result)),
+             _ => BadRequest(ResponseBuilder.CreateResponse((int)HttpStatusCode.Unauthorized, result)),
         };
     }
 }
