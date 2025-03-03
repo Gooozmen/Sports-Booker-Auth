@@ -1,17 +1,18 @@
 using Application.Interfaces;
 using Domain.Models;
 using Infrastructure.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Shared.Commands.ApplicationRole;
+using Shared.Commands;
 
 namespace Application.CommandHandlers;
 
 public class CreateRoleCommandHandler
-(
-    IApplicationRoleManager roleManager,
-    IBuilder<CreateRoleCommand, ApplicationRole> roleBuilder
-)
-    : ICommandHandler<CreateRoleCommand, IdentityResult>
+    (
+        IApplicationRoleManager roleManager,
+        IBuilder<CreateRoleCommand, ApplicationRole> roleBuilder
+    )
+    : IRequestHandler<CreateRoleCommand, IdentityResult>
 {
     
     public async Task<IdentityResult> Handle(CreateRoleCommand command, CancellationToken cancellationToken)

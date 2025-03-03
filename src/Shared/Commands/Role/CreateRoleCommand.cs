@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using MediatR;
 using Shared.Interfaces;
+using Shared.Responses.Role;
 
-namespace Shared.Commands.ApplicationRole;
+namespace Shared.Commands;
 
-public sealed record CreateRoleCommand : ICommand
+public sealed record CreateRoleCommand : IRequest<CreateRoleResponse>, ICommand
 {
-    [Required]
     [Length(3,10)]
-    public string Name { get; set; }
+    public required string Name { get; set; }
 }

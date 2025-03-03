@@ -1,6 +1,6 @@
 using Application.Interfaces;
 using Domain.Models;
-using Shared.Commands.ApplicationRole;
+using Shared.Commands;
 
 namespace Application.Builders;
 

@@ -3,7 +3,7 @@ using Application.Interfaces;
 using Domain.Models;
 using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using Shared.Commands.ApplicationUser;
+using Shared.Commands;
 
 namespace Application.CommandHandlers;
 

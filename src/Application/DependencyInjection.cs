@@ -2,13 +2,9 @@ using Application.Builders;
 using Application.CommandHandlers;
 using Application.Decorators;
 using Application.Interfaces;
-using Application.Mediators;
 using Domain.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Commands.ApplicationRole;
-using Shared.Commands.ApplicationUser;
-using Shared.Responses;
+using Shared.Commands;
 
 namespace Application;
 
@@ -18,13 +14,8 @@ public static class DependencyInjection
     {
         //command handlers
             //Create Handlers
-        services.AddScoped<ICommandHandler<CreateRoleCommand, IdentityResult>,CreateRoleCommandHandler>();
-        services.AddScoped<ICommandHandler<CreateUserCommand, IdentityResult>,CreateUserCommandHandler>();
-        services.AddScoped<ICommandHandler<PasswordSignInCommand, PasswordSignInResponse>,PasswordSignInCommandHandler>();
             //query handlers
             
-        //mediator
-        services.AddScoped<ICommandMediator, CommandMediator>();
         
         //builders
         services.AddScoped<IBuilder<CreateRoleCommand, ApplicationRole>, ApplicationRoleBuilder>();
@@ -34,6 +25,17 @@ public static class DependencyInjection
         //Decorators
         services.AddTransient<ISignInResultDecorator,SignInResultDecorator>();
         
+        return services;
+    }
+    
+    public static IServiceCollection AddMediatR<T>(this IServiceCollection services) where T : class
+    {
+        //Mediator => MediatR
+        services.AddMediatR(config =>
+        {
+            config.RegisterServicesFromAssemblies(typeof(T).Assembly);
+        });
+
         return services;
     }
 }

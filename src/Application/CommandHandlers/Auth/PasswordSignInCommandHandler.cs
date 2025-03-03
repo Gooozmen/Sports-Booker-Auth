@@ -1,7 +1,8 @@
 using Application.Decorators;
 using Application.Interfaces;
 using Infrastructure.Interfaces;
-using Shared.Commands.ApplicationUser;
+using MediatR;
+using Shared.Commands;
 using Shared.Responses;
 
 namespace Application.CommandHandlers;
@@ -13,7 +14,7 @@ public class PasswordSignInCommandHandler
     ISignInResultDecorator signInDecorator,
     ITokenFactory tokenFactory
 ) 
-    : ICommandHandler<PasswordSignInCommand, PasswordSignInResponse>
+    : IRequestHandler<PasswordSignInCommand,PasswordSignInResponse>
 {
     
     public async Task<PasswordSignInResponse> Handle(PasswordSignInCommand command, CancellationToken cancellationToken)

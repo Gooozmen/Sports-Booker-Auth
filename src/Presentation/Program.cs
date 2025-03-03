@@ -17,7 +17,7 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddPresentationServices();
 builder.Services.AddOpenApi();
-
+builder.Services.AddMediatR<Program>();
 
 var app = builder.Build();
 

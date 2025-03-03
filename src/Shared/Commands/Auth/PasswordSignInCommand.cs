@@ -1,15 +1,15 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Shared.Interfaces;
+using MediatR;
+using Shared.Responses;
 
-namespace Shared.Commands.ApplicationUser;
+namespace Shared.Commands;
 
-public class PasswordSignInCommand : ICommand
+public sealed record PasswordSignInCommand : IRequest<PasswordSignInResponse>, ICommand
 {
-    [Required]
     [EmailAddress]
-    public string Email { get; set; }
-    [Required]
+    public required string Email { get; set; }
     [PasswordPropertyText]
-    public string Password { get; set; }
+    public required string Password { get; set; }
 }
