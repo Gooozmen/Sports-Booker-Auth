@@ -1,9 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Shared.Interfaces;
+using Shared.Responses;
 
 namespace Shared.Commands;
 
-public sealed record CreateUserCommand : ICommand
+public sealed record CreateUserCommand : IRequest<IdentityResult> ,ICommand
 {
     [EmailAddress]
     public required string Email { get; set; }

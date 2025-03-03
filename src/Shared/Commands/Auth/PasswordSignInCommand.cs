@@ -6,7 +6,7 @@ using Shared.Responses;
 
 namespace Shared.Commands;
 
-public sealed record PasswordSignInCommand : IRequest<PasswordSignInResponse>, ICommand
+public sealed record PasswordSignInCommand : IRequest<SignInResponseBase>, ICommand
 {
     [EmailAddress]
     public required string Email { get; set; }

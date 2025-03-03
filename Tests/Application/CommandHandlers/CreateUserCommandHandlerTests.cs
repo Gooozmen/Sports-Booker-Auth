@@ -1,11 +1,10 @@
 using Application.Builders;
 using Application.CommandHandlers;
-using Application.Interfaces;
 using Domain.Models;
 using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Moq;
-using Shared.Commands.ApplicationUser;
+using Shared.Commands;
 
 
 namespace Tests.Application.CommandHandlers;
@@ -14,14 +13,14 @@ namespace Tests.Application.CommandHandlers;
 public class CreateUserCommandHandlerTests
 {
     private readonly Mock<IApplicationUserManager> _mockApplicationUserManager;
-    private readonly Mock<IBuilder<CreateUserCommand,ApplicationUser>> _mockUserBuilder;
+    private readonly Mock<IApplicationUserBuilder> _mockUserBuilder;
     private readonly CreateUserCommandHandler _handler;
 
     public CreateUserCommandHandlerTests()
     {
         // Create mock instances
         _mockApplicationUserManager = new Mock<IApplicationUserManager>();
-        _mockUserBuilder = new Mock<IBuilder<CreateUserCommand, ApplicationUser>>();
+        _mockUserBuilder = new Mock<IApplicationUserBuilder>();
 
         // Pass mocks to the command handler
         _handler = new CreateUserCommandHandler(_mockApplicationUserManager.Object, _mockUserBuilder.Object);
@@ -41,7 +40,7 @@ public class CreateUserCommandHandlerTests
             .ReturnsAsync(IdentityResult.Success); 
 
         // Act
-        var result = await _handler.ExecuteCreateAsync(command);
+        var result = await _handler.Handle(command, CancellationToken.None);
 
         // Assert
         Assert.True(result.Succeeded);
@@ -63,7 +62,7 @@ public class CreateUserCommandHandlerTests
             .ReturnsAsync(IdentityResult.Failed(new IdentityError { Description = "User creation failed" })); 
 
         // Act
-        var result = await _handler.ExecuteCreateAsync(command);
+        var result = await _handler.Handle(command, CancellationToken.None);
 
         // Assert
         Assert.False(result.Succeeded);
@@ -82,6 +81,6 @@ public class CreateUserCommandHandlerTests
             .ThrowsAsync(new System.Exception("Unexpected error")); 
 
         // Act & Assert
-        await Assert.ThrowsAsync<System.Exception>(() => _handler.ExecuteCreateAsync(command));
+        await Assert.ThrowsAsync<System.Exception>(() => _handler.Handle(command,CancellationToken.None));
     }
 }

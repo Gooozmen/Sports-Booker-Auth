@@ -1,7 +1,7 @@
-using Application.Builders;
 using Application.Interfaces;
 using Domain.Models;
 using Infrastructure.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Shared.Commands;
 
@@ -10,7 +10,7 @@ namespace Application.CommandHandlers;
 public class CreateUserCommandHandler(
     IApplicationUserManager applicationUserManager,
     IBuilder<CreateUserCommand, ApplicationUser> userBuilder)
-    : ICommandHandler<CreateUserCommand, IdentityResult>
+    : IRequestHandler<CreateUserCommand, IdentityResult>
 {
     public async Task<IdentityResult> Handle(CreateUserCommand command, CancellationToken cancellationToken)
     {

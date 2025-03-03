@@ -1,5 +1,4 @@
-using Application.Interfaces;
-using Domain.Models;
+using Application.Builders;
 using Infrastructure.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -10,7 +9,7 @@ namespace Application.CommandHandlers;
 public class CreateRoleCommandHandler
     (
         IApplicationRoleManager roleManager,
-        IBuilder<CreateRoleCommand, ApplicationRole> roleBuilder
+        IApplicationRoleBuilder roleBuilder
     )
     : IRequestHandler<CreateRoleCommand, IdentityResult>
 {

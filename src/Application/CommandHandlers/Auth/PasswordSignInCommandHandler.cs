@@ -1,7 +1,7 @@
-using Application.Decorators;
-using Application.Interfaces;
+using Application.Factories;
 using Infrastructure.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Shared.Commands;
 using Shared.Responses;
 
@@ -11,27 +11,28 @@ public class PasswordSignInCommandHandler
 (
     IApplicationSignInManager signInManager,
     IApplicationUserManager userManager,
-    ISignInResultDecorator signInDecorator,
+    IPasswordSignInResponseFactory responseFactory,
     ITokenFactory tokenFactory
 ) 
-    : IRequestHandler<PasswordSignInCommand,PasswordSignInResponse>
+    : IRequestHandler<PasswordSignInCommand,SignInResponseBase>
 {
     
-    public async Task<PasswordSignInResponse> Handle(PasswordSignInCommand command, CancellationToken cancellationToken)
+    public async Task<SignInResponseBase> Handle(PasswordSignInCommand command, CancellationToken cancellationToken)
     {
         string token = string.Empty;
+        SignInResult result = new SignInResult();
         
         var dataModel = await userManager.FindByEmailAsync(command.Email);
 
-        if (dataModel is null) 
-            return signInDecorator.NotAllowed();
+        if (dataModel is null)
+            return responseFactory.Create();
         
-        var result = await signInManager.PasswordSignInAsync(dataModel, command.Password, false, false);
+        result = await signInManager.PasswordSignInAsync(dataModel, command.Password, false, false);
         
         if(result.Succeeded) 
             token = tokenFactory.GenerateToken(dataModel);
         
-        return signInDecorator.Success(token);
+        return responseFactory.Create(result, token);
     }
 }
 

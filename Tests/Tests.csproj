@@ -33,4 +33,8 @@
       <ProjectReference Include="..\src\Presentation\Presentation.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Presentation\" />
+    </ItemGroup>
+
 </Project>
