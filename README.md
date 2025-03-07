@@ -1,3 +1,4 @@
+```
 /src
  ├── Domain
  │   ├── Entities
@@ -9,3 +10,5 @@
  ├── Application (Use Cases)
  ├── Infrastructure (Persistence, EF Core, etc.)
  ├── Presentation (Controllers, APIs)
+       # Documentation files
+```
