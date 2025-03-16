@@ -4,9 +4,9 @@ using Shared.Enums;
 
 namespace Shared.Wrappers;
 
-public class ApplicationUserQuery(int propertyType) : PropertyTypeBase(propertyType)
+public class UserQuery(int propertyType) : PropertyTypeBase(propertyType)
 {
-    public ApplicationUserQuery(string email, string password) : this((int)IdentityPropertyTypes.UserEmail)
+    public UserQuery(string email, string password) : this((int)IdentityPropertyTypes.UserEmail)
     {
         Email = email;
         Password = password;

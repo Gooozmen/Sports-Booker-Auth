@@ -1,10 +1,11 @@
 using Microsoft.Extensions.Caching.Distributed;
 using Infrastructure.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
+using Shared.Interfaces;
 
 namespace Infrastructure.Abstractions;
 
-public abstract class CacheServiceBase<TManager, TEntity> where TManager : IManager
+public abstract class CacheServiceBase<TManager, TEntity> where TManager : IQueryableManager<TEntity>
 {
     private readonly IMemoryCache _memoryCache;
     private readonly IUnitOfWork _unitOfWork;
@@ -20,6 +21,11 @@ public abstract class CacheServiceBase<TManager, TEntity> where TManager : IMana
     public async Task<TEntity?> GetFromCacheAsync(Guid key)
     {
         string entityKey = $"{typeof(TEntity).FullName}-{key}";
+        
+        var entity = _memoryCache.Get<TEntity>(entityKey);
+        
+        if (entity is null)
+            _manager.
         
         return _memoryCache.GetOrCreateAsync<TEntity>(
             key,

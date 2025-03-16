@@ -21,7 +21,7 @@ public class PasswordSignInCommandHandler(
     public async Task<SignInResponseBase> Handle(PasswordSignInCommand command, CancellationToken cancellationToken)
     {
         var token = string.Empty;
-        var userQuery = new ApplicationUserQuery(command.Email, command.Password);
+        var userQuery = new UserQuery(command.Email, command.Password);
         var dataModel = await userManager.GetAsync(userQuery);
 
         if (dataModel is null)

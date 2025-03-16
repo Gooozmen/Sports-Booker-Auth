@@ -21,7 +21,7 @@ public class ApplicationUserManager : IApplicationUserManager
         return result;
     }
 
-    public async Task<ApplicationUser?> GetAsync(ApplicationUserQuery query)
+    public async Task<ApplicationUser?> GetAsync(UserQuery query)
     {
         return query.GetPropertyType() switch
         {
@@ -35,6 +35,6 @@ public class ApplicationUserManager : IApplicationUserManager
 
 public interface IApplicationUserManager :
     ICommandManager<ApplicationUserWrapper,IdentityResult>,
-    IQueryableManager<ApplicationUser,ApplicationUserQuery>
+    IQueryableManager<ApplicationUser,UserQuery>
 {
 }
