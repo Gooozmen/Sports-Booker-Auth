@@ -6,6 +6,7 @@ using Infrastructure.Factories;
 using Infrastructure.IdentityManagers;
 using Infrastructure.Interfaces;
 using Infrastructure.Options;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -50,9 +51,12 @@ public static class DependencyInjection
         services.AddScoped<ApplicationDbContextInitializer>();
 
         //Identity
-        services.AddTransient<IApplicationUserManager, ApplicationUserManager>();
-        services.AddTransient<IApplicationRoleManager, ApplicationRoleManager>();
-        services.AddTransient<IApplicationSignInManager, ApplicationSignInManager>();
+        services.AddScoped<IApplicationUserManager, ApplicationUserManager>();
+        services.AddScoped<IApplicationRoleManager, ApplicationRoleManager>();
+        services.AddScoped<IApplicationSignInManager, ApplicationSignInManager>();
+        
+        //Unit Of Work for Managers
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         //Jwt
         services.AddTransient<ITokenFactory, TokenFactory>();
