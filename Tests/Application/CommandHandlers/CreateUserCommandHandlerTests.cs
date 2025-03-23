@@ -1,8 +1,9 @@
 using Application.Builders;
 using Application.CommandHandlers;
 using Domain.Models;
-using Infrastructure.Interfaces;
+using Infrastructure.IdentityManagers;
 using Microsoft.AspNetCore.Identity;
+using Shared.Wrappers;
 using Moq;
 using Shared.Commands;
 
@@ -32,11 +33,12 @@ public class CreateUserCommandHandlerTests
             { Email = "test@example.com", Password = "Secure123!", PhoneNumber = "1234-2343" };
         var userModel = new ApplicationUser
             { UserName = command.Email, Email = command.Email, PhoneNumber = command.PhoneNumber };
+        var wrapper = new ApplicationUserWrapper{ ApplicationUser = userModel, Password = command.Password };
 
         _mockUserBuilder.Setup(b => b.Apply(command)).Returns(userModel);
 
         _mockApplicationUserManager
-            .Setup(m => m.CreateUserAsync(userModel, command.Password))
+            .Setup(m => m.CreateAsync(wrapper))
             .ReturnsAsync(IdentityResult.Success);
 
         // Act
@@ -45,7 +47,7 @@ public class CreateUserCommandHandlerTests
         // Assert
         Assert.True(result.Succeeded);
         _mockUserBuilder.Verify(b => b.Apply(command), Times.Once); // Ensure Apply() was called once
-        _mockApplicationUserManager.Verify(m => m.CreateUserAsync(userModel, command.Password),
+        _mockApplicationUserManager.Verify(m => m.CreateAsync(wrapper),
             Times.Once); // Ensure CreateUserAsync() was called once
     }
 
@@ -55,11 +57,12 @@ public class CreateUserCommandHandlerTests
         // Arrange
         var command = new CreateUserCommand { Email = "test@example.com", Password = "Secure123!" };
         var userModel = new ApplicationUser { UserName = command.Email, Email = command.Email };
+        var wrapper = new ApplicationUserWrapper{ ApplicationUser = userModel, Password = command.Password };
 
         _mockUserBuilder.Setup(b => b.Apply(command)).Returns(userModel);
 
         _mockApplicationUserManager
-            .Setup(m => m.CreateUserAsync(userModel, command.Password))
+            .Setup(m => m.CreateAsync(wrapper))
             .ReturnsAsync(IdentityResult.Failed(new IdentityError { Description = "User creation failed" }));
 
         // Act
@@ -78,7 +81,7 @@ public class CreateUserCommandHandlerTests
         var command = new CreateUserCommand { Email = "test@example.com", Password = "Secure123!" };
 
         _mockApplicationUserManager
-            .Setup(m => m.CreateUserAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
+            .Setup(m => m.CreateAsync(It.IsAny<ApplicationUserWrapper>()))
             .ThrowsAsync(new Exception("Unexpected error"));
 
         // Act & Assert
