@@ -3,6 +3,7 @@ using FluentAssertions;
 using Infrastructure.IdentityManagers;
 using Microsoft.AspNetCore.Identity;
 using Moq;
+using Shared.Wrappers;
 
 namespace Tests.Infra.IdentityManagers;
 
@@ -27,12 +28,13 @@ public class ApplicationUserManagerTests
         // Arrange
         var user = new ApplicationUser { UserName = "testuser", Email = "test@example.com" };
         var password = "Test@123";
+        var wrapper = new ApplicationUserWrapper{ApplicationUser = user, Password = password};
 
         _mockUserManager.Setup(um => um.CreateAsync(user, password))
             .ReturnsAsync(IdentityResult.Success);
 
         // Act
-        var result = await _applicationUserManager.CreateUserAsync(user, password);
+        var result = await _applicationUserManager.CreateAsync(wrapper);
 
         // Assert
         result.Should().Be(IdentityResult.Success);
@@ -45,6 +47,7 @@ public class ApplicationUserManagerTests
         // Arrange
         var user = new ApplicationUser { UserName = "testuser", Email = "test@example.com" };
         var password = "Test@123";
+        var wrapper = new ApplicationUserWrapper{ApplicationUser = user, Password = password};
 
         var identityErrors = new[] { new IdentityError { Description = "Error creating user" } };
         var failedResult = IdentityResult.Failed(identityErrors);
@@ -53,7 +56,7 @@ public class ApplicationUserManagerTests
             .ReturnsAsync(failedResult);
 
         // Act
-        var result = await _applicationUserManager.CreateUserAsync(user, password);
+        var result = await _applicationUserManager.CreateAsync(wrapper);
 
         // Assert
         result.Succeeded.Should().BeFalse();

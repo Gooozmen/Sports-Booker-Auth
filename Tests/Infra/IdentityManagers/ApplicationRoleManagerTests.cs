@@ -33,7 +33,7 @@ public class ApplicationRoleManagerTests
             .ReturnsAsync(IdentityResult.Success);
 
         // Act
-        var result = await _applicationRoleManager.CreateRoleAsync(role);
+        var result = await _applicationRoleManager.CreateAsync(role);
 
         // Assert
         result.Should().Be(IdentityResult.Success);
@@ -53,7 +53,7 @@ public class ApplicationRoleManagerTests
             .ReturnsAsync(failedResult);
 
         // Act
-        var result = await _applicationRoleManager.CreateRoleAsync(role);
+        var result = await _applicationRoleManager.CreateAsync(role);
 
         // Assert
         result.Succeeded.Should().BeFalse();
