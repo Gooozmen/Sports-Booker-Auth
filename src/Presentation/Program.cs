@@ -3,6 +3,7 @@ using Infrastructure;
 using Presentation;
 using Presentation.Environments;
 using Presentation.Interceptors;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMediatR();
@@ -20,6 +21,8 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddPresentationServices();
 builder.Services.AddOpenApi();
+
+builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
 

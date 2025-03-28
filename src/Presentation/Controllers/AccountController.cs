@@ -11,12 +11,14 @@ namespace Presentation.Controllers;
 [AllowAnonymous]
 public class AccountController(
     ISender sender,
-    IHttpResponseBuilder responseBuilder
+    IHttpResponseBuilder responseBuilder,
+    ILogger<AccountController> logger
 ) : AuthControllerBase(responseBuilder)
 {
     [HttpPost("Register")]
     public async Task<IActionResult> ProcessUserRegistrationAsync([FromBody] CreateUserCommand command)
     {
+        logger.LogInformation("Processing User Registration...");
         var result = await sender.Send(command);
 
         return result switch
