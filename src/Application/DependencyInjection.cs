@@ -1,6 +1,9 @@
 using System.Reflection;
+using Application.Behaviors;
 using Application.Builders;
 using Application.Factories;
+using Application.Interfaces;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;
@@ -9,28 +12,21 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        //command handlers
-        //Create Handlers
-        //query handlers
-
-
-        //builders
+        //DI's
         services.AddScoped<IApplicationRoleBuilder, ApplicationRoleBuilder>();
         services.AddScoped<IApplicationUserBuilder, ApplicationUserBuilder>();
         services.AddTransient<IHttpResponseBuilder, HttpResponseBuilder>();
-
-        //factories
         services.AddTransient<IPasswordSignInResponseFactory, PasswordSignInResponseFactory>();
-
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingPipelineBehavior<,>));
+        
+        AddMediatR(services);
 
         return services;
     }
 
-    public static IServiceCollection AddMediatR(this IServiceCollection services)
+    private static void AddMediatR(this IServiceCollection services)
     {
         //Mediator => MediatR
         services.AddMediatR(config => { config.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()); });
-
-        return services;
     }
 }

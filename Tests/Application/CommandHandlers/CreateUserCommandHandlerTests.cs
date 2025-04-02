@@ -1,7 +1,7 @@
 using Application.Builders;
-using Application.CommandHandlers;
+using Application.Handlers;
 using Domain.Models;
-using Infrastructure.IdentityManagers;
+using Application.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Shared.Wrappers;
 using Moq;
