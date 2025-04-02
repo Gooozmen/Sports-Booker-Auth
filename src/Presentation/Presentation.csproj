@@ -12,6 +12,7 @@
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
         <RestorePackagesPath>..\..\Dependencies\Packages\</RestorePackagesPath>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     </PropertyGroup>
 
     <ItemGroup>
@@ -21,12 +22,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="FluentAssertions"/>
+        
         <ProjectReference Include="..\Application\Application.csproj"/>
         <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
         <ProjectReference Include="..\Shared\Shared.csproj"/>
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="FluentAssertions" Version="8.2.0" />
     </ItemGroup>
 </Project>

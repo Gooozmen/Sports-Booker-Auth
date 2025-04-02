@@ -11,25 +11,12 @@
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
         <RestorePackagesPath>..\..\Dependencies\Packages\</RestorePackagesPath>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     </PropertyGroup>
 
     <ItemGroup>
-        <Reference Include="Microsoft.Extensions.Identity.Core">
-            <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\9.0.2\Microsoft.Extensions.Identity.Core.dll</HintPath>
-        </Reference>
+        <PackageReference Include="MediatR"/>
+        
+        <ProjectReference Include="..\Domain\Domain.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="MediatR" Version="12.4.1"/>
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Domain\Domain.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Abstractions\" />
-    </ItemGroup>
-
-
 </Project>
