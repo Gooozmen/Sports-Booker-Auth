@@ -12,13 +12,6 @@
         <RestorePackagesPath>..\..\Dependencies\Packages\</RestorePackagesPath>
         <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     </PropertyGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\Application\Application.csproj" />
-        <ProjectReference Include="..\Domain\Domain.csproj"/>
-        <ProjectReference Include="..\Shared\Shared.csproj"/>
-    </ItemGroup>
-
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer"/>
         <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions"/>
@@ -37,6 +30,10 @@
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL"/>
         <PackageReference Include="Serilog.AspNetCore"/>
         <PackageReference Include="Serilog.Sinks.Seq"/>
+
+        <ProjectReference Include="..\Application\Application.csproj" />
+        <ProjectReference Include="..\Domain\Domain.csproj"/>
+        <ProjectReference Include="..\Shared\Shared.csproj"/>
     </ItemGroup>
 
 </Project>
