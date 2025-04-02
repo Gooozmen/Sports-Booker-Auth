@@ -22,10 +22,6 @@ public class PasswordSignInResponseFactory : IPasswordSignInResponseFactory
 
     private SignInResponseBase ValidateFailure(SignInResult? source)
     {
-        return source is null ? new SignInFailed(false, false, false, true) : new SignInFailed(source);
+        return new SignInFailed(source);
     }
-}
-
-public interface IPasswordSignInResponseFactory : IFactory<SignInResult, SignInResponseBase, string>
-{
 }

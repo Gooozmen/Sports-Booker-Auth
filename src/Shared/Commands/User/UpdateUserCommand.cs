@@ -1,0 +1,17 @@
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using MediatR;
+using Microsoft.AspNetCore.Identity;
+using Shared.Interfaces;
+
+namespace Shared.Commands;
+
+public sealed record UpdateUserCommand : IRequest<IdentityResult>, ICommand
+{
+    [JsonIgnore]
+    public Guid Id { get; set; }
+    public string Email { get; init; }
+    public string Password { get; init; }
+    public string Username { get; init; }
+    public string PhoneNumber { get; init; }
+}

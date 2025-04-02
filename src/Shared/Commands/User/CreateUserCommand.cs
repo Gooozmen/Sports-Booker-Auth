@@ -14,7 +14,7 @@ public sealed record CreateUserCommand : IRequest<IdentityResult>, ICommand
     [RegularExpression(@"^(?=.*[A-Z])(?=.*\W).{8,16}$",
         ErrorMessage =
             "Password must be 8-16 characters, contain at least one uppercase letter and one special character.")]
-    public required string Password { get; set; }
+    public required string Password { get; init; }
 
-    public string? PhoneNumber { get; set; }
+    public string? PhoneNumber { get; init; }
 }

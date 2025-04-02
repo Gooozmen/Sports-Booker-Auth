@@ -1,5 +1,5 @@
 namespace Shared.Interfaces;
 
-public interface IQuery<TResult>
+public interface IQuery : IPropertyType
 {
 }
