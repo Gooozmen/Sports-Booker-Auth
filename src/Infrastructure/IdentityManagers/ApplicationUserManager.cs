@@ -6,7 +6,7 @@ using Shared.Wrappers;
 using Shared.Queries;
 
 namespace Infrastructure.IdentityManagers;
-
+ 
 public class ApplicationUserManager(UserManager<ApplicationUser> userManager) : IApplicationUserManager
 {
     public async Task<IdentityResult> CreateAsync(ApplicationUserWrapper wrapper)

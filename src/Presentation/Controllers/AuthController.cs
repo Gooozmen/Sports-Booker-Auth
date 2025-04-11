@@ -5,25 +5,24 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Commands;
 using Shared.Responses;
+using Shared.Responses.Auth;
 
 namespace Presentation.Controllers;
 
 [AllowAnonymous]
 public class AuthController(
     ISender sender,
-    IServiceProvider serviceProvide
-) : ControllerBase(serviceProvide)
+    IServiceProvider serviceProvider
+) : ControllerBase(serviceProvider)
 {
 
     [HttpPost("Login")]
-    public async Task<IActionResult> ProcessUserLoginAsync([FromBody] PasswordSignInCommand command)
+    public async Task<IActionResult> ProcessUserLoginAsync([FromBody] LoginCommand command)
     {
         var result = await sender.Send(command);
         return result switch
-        {
-            SignInSuccess => Ok(ResponseBuilder.CreateResponse((int)HttpStatusCode.OK, result.As<SignInSuccess>().Token)),
-            _ => BadRequest(ResponseBuilder.CreateResponse((int)HttpStatusCode.Unauthorized, result.As<SignInFailed>()))
+        {  { Success: true } => Ok(ResponseBuilder.CreateResponse((int)HttpStatusCode.OK, result.As<TokenResponse>())),
+            _ => BadRequest(ResponseBuilder.CreateResponse((int)HttpStatusCode.Unauthorized, result.As<AuthFailedResponse>()))
         };
-
     }
 }

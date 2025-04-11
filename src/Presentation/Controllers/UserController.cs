@@ -18,7 +18,7 @@ public class UserController(
         return result switch
         {
             { Succeeded: true } => Ok(ResponseBuilder.CreateResponse((int)HttpStatusCode.Created, result)),
-            _ => BadRequest(ResponseBuilder.CreateResponse((int)HttpStatusCode.BadRequest, result))
+            _ => BadRequest(ResponseBuilder.CreateResponse((int)HttpStatusCode.BadRequest, result.Errors))
         };
     }
 
