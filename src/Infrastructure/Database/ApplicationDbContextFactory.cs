@@ -3,20 +3,14 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Database;
 
-public class ApplicationDbContextFactory<TContext> : IDbContextFactory<TContext> where TContext : DbContext
+public class ApplicationDbContextFactory<TContext>(IServiceProvider provider) : IDbContextFactory<TContext>
+    where TContext : DbContext
 {
-    private readonly IServiceProvider _provider;
-
-    public ApplicationDbContextFactory(IServiceProvider provider)
-    {
-        _provider = provider;
-    }
-
     public TContext CreateDbContext()
     {
-        if (_provider == null)
+        if (provider == null)
             throw new InvalidOperationException("You must configure an instance of IServiceProvider");
 
-        return ActivatorUtilities.CreateInstance<TContext>(_provider);
+        return ActivatorUtilities.CreateInstance<TContext>(provider);
     }
 }

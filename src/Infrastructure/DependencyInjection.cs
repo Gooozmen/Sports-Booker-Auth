@@ -9,6 +9,7 @@ using Infrastructure.IdentityManagers;
 using Infrastructure.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -36,7 +37,7 @@ public static class DependencyInjection
         services.AddSingleton<IEnvironmentValidator, EnvironmentValidator>();
         services.AddScoped<IApplicationUserManager, ApplicationUserManager>();
         services.AddScoped<IApplicationRoleManager, ApplicationRoleManager>();
-        services.AddScoped<IApplicationSignInManager, ApplicationSignInManager>();
+        services.AddScoped<ILoginManager, LoginManager>();
         
         
         services.AddTransient<ISeeder, ApplicationUserSeeder>();
@@ -105,9 +106,23 @@ public static class DependencyInjection
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
         
+        ConfigureApplicationCookies(services);
+        
         services.AddScoped<IDbContextFactory<ApplicationDbContext>, ApplicationDbContextFactory<ApplicationDbContext>>();
         services.AddTransient<ApplicationDbContext>(provider => provider.GetRequiredService<IDbContextFactory<ApplicationDbContext>>().CreateDbContext());
         services.AddScoped<ApplicationDbContextInitializer>();
+    }
+
+    private static void ConfigureApplicationCookies(this IServiceCollection services)
+    {
+        services.ConfigureApplicationCookie(options =>
+        {
+            options.Cookie.HttpOnly = true;
+            options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+            options.SlidingExpiration = false;
+            options.LoginPath = PathString.Empty; // No redirect
+            options.AccessDeniedPath = PathString.Empty;
+        });
     }
     
     public static async Task UseDevelopEnvironment(this WebApplication app)

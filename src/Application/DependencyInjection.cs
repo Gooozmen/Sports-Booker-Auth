@@ -1,8 +1,6 @@
 using System.Reflection;
 using Application.Behaviors;
 using Application.Builders;
-using Application.Factories;
-using Application.Interfaces;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,8 +13,7 @@ public static class DependencyInjection
         //DI's
         services.AddScoped<IApplicationRoleBuilder, ApplicationRoleBuilder>();
         services.AddScoped<IApplicationUserBuilder, ApplicationUserBuilder>();
-        services.AddTransient<IHttpResponseBuilder, HttpResponseBuilder>();
-        services.AddTransient<IPasswordSignInResponseFactory, PasswordSignInResponseFactory>();
+        services.AddScoped<IHttpResponseBuilder, HttpResponseBuilder>();
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingPipelineBehavior<,>));
         
         AddMediatR(services);
