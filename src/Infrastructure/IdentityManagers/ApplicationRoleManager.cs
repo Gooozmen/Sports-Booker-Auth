@@ -14,9 +14,9 @@ public class ApplicationRoleManager(RoleManager<ApplicationRole> roleManager) : 
         return identityResult;
     }
 
-    public Task<IdentityResult> UpdateAsync(ApplicationRole model)
+    public async Task<IdentityResult> UpdateAsync(ApplicationRole model)
     {
-        throw new NotImplementedException();
+        return await roleManager.UpdateAsync(model);
     }
 
     public async Task<ApplicationRole?> GetAsync(ApplicationRoleQuery data)

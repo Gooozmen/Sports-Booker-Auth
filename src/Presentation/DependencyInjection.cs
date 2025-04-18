@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Presentation.Interceptors;
 using Presentation.Services;
+using Presentation.Transformations;
 
 namespace Presentation;
 
@@ -8,11 +10,16 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddPresentationServices(this IServiceCollection services)
     {
-        services.AddControllers(o => { o.Filters.Add<ModelStateInterceptor>(); });
+        services.AddControllers(o => 
+        { 
+            o.Filters.Add<ModelStateInterceptor>(); 
+            o.Conventions.Add(new RouteTokenTransformerConvention(new KebabCaseTransformer())); 
+        });
         services.AddScoped<IUserIdentifyService, UserIdentifyService>();
         SetupAuthorization(services);
         return services;
     }
+    
    
     public static IConfigurationBuilder AddDefaultConfiguration<T>(this IConfigurationBuilder configurationBuilder) where T : class
     {

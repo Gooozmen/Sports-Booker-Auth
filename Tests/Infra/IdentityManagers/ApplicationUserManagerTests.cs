@@ -1,5 +1,4 @@
 using Domain.Models;
-using FluentAssertions;
 using Infrastructure.IdentityManagers;
 using Microsoft.AspNetCore.Identity;
 using Moq;
@@ -37,7 +36,8 @@ public class ApplicationUserManagerTests
         var result = await _applicationUserManager.CreateAsync(wrapper);
 
         // Assert
-        result.Should().Be(IdentityResult.Success);
+        Assert.NotNull(result);
+        Assert.True(result.Succeeded);
         _mockUserManager.Verify(um => um.CreateAsync(user, password), Times.Once);
     }
 
@@ -59,10 +59,8 @@ public class ApplicationUserManagerTests
         var result = await _applicationUserManager.CreateAsync(wrapper);
 
         // Assert
-        result.Succeeded.Should().BeFalse();
-        result.Errors.Should().ContainSingle()
-            .Which.Description
-            .Should().Be("Error creating user");
+        Assert.False(result.Succeeded);
+        Assert.Contains(result.Errors, x => x.Description == "Error creating user");
 
         _mockUserManager.Verify(um => um.CreateAsync(user, password), Times.Once);
     }

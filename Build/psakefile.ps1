@@ -1,4 +1,5 @@
 $ToolkitPath = Resolve-Path "..\Dependencies\Toolkit*\lib\Tasks.ps1"
+$EnvFile = Resolve-Path ".\ENV.ps1"
 . $ToolkitPath
 
 # Debug: The default configuration, typically used for development. Includes debug symbols and disables optimizations.

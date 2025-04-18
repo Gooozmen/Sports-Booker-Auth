@@ -17,7 +17,7 @@ public class ApplicationRoleBuilderTests
     public void BuilderShouldReturnApplicationUserModel()
     {
         //arrange
-        var cmd = new CreateRoleCommand() { Name = "RoleName", };
+        var cmd = new CreateRoleCommand() { Name = "RoleName"};
 
         //act
         var result = _roleBuilder.Apply(cmd);
@@ -31,13 +31,13 @@ public class ApplicationRoleBuilderTests
     public void BuilderShouldMapCommandValuesToUserModel()
     {
         //arrange
-        var cmd = new CreateRoleCommand() { Name = "RoleName", };
+        var cmd = new CreateRoleCommand() { Name = "RoleName"};
 
         //act
         var result = _roleBuilder.Apply(cmd);
 
         //assert
-        Assert.True(result.GetType() == typeof(ApplicationUser));
+        Assert.True(result.GetType() == typeof(ApplicationRole));
         Assert.True(result.Name == cmd.Name);
         Assert.True(result.ConcurrencyStamp != null &&  result.ConcurrencyStamp.Length > 0);
         Assert.True(result.Active);

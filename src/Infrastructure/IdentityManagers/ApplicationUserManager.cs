@@ -26,6 +26,5 @@ public class ApplicationUserManager(UserManager<ApplicationUser> userManager) : 
 
     public async Task<IdentityResult> UpdateAsync(ApplicationUserWrapper wrapper) 
         => await userManager.UpdateAsync(wrapper.ApplicationUser);
-
 }
 

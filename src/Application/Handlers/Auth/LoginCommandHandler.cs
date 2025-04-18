@@ -25,7 +25,7 @@ public class LoginCommandHandler(
         var result = await loginManager.CheckPasswordAsync(dataModel, command.Password);
 
         if (result)
-           return new TokenResponse(tokenFactory.Create(dataModel),true);
+           return new LoginResponse(tokenFactory.Create(dataModel),true);
         
         return new AuthFailedResponse("Authentication Failed - Invalid username or password.",false);
     }

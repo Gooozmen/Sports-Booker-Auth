@@ -13,7 +13,7 @@ public class GetUserQueryHandler
     ) 
     : IRequestHandler<UserQuery, UserResponse>
 {
-    public async Task<UserResponse> Handle(UserQuery request, CancellationToken cancellationToken)
+    public async Task<UserResponse> Handle(UserQuery request, CancellationToken cancellationToken = default)
     {
         var dataModel = await userManager.GetAsync(request);
         if (dataModel is null) return new UserResponse { IsSuccess = false };

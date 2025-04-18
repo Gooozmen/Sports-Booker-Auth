@@ -56,4 +56,59 @@ public class ApplicationUserBuilderTests
         //assert
         Assert.True(result.PhoneNumber == null);
     }
+    
+    [Fact]
+    public void BuilderShouldMapUpdateCommandToApplicationUser()
+    {
+        // Arrange
+        var cmd = new UpdateUserCommand
+        {
+            Id = Guid.NewGuid(),
+            Email = "updated@test.com",
+            PhoneNumber = "999888777"
+        };
+
+        // Act
+        var result = _applicationUserBuilder.Apply(cmd);
+
+        // Assert
+        Assert.Equal(cmd.Id, result.Id);
+        Assert.Equal(cmd.Email, result.Email);
+        Assert.Equal(cmd.Email, result.UserName);
+        Assert.Equal(cmd.PhoneNumber, result.PhoneNumber);
+    }
+
+    
+    [Fact]
+    public void BuilderShouldMapApplicationUserToUserResponse()
+    {
+        // Arrange
+        var user = new ApplicationUser
+        {
+            Id = Guid.NewGuid(),
+            Email = "user@email.com",
+            UserName = "user@email.com",
+            PhoneNumber = "123456",
+            Active = true,
+            EmailConfirmed = true,
+            PhoneNumberConfirmed = false,
+            TwoFactorEnabled = true,
+            LockoutEnabled = false
+        };
+
+        // Act
+        var result = _applicationUserBuilder.Apply(user);
+
+        // Assert
+        Assert.Equal(user.Id, result.Id);
+        Assert.Equal(user.Email, result.Email);
+        Assert.Equal(user.UserName, result.Username);
+        Assert.Equal(user.PhoneNumber, result.PhoneNumber);
+        Assert.Equal(user.Active, result.Active);
+        Assert.Equal(user.EmailConfirmed, result.EmailConfirmed);
+        Assert.Equal(user.PhoneNumberConfirmed, result.PhoneNumberConfirmed);
+        Assert.Equal(user.TwoFactorEnabled, result.TwoFactorEnabled);
+        Assert.Equal(user.LockoutEnabled, result.LockoutEnabled);
+        Assert.True(result.IsSuccess);
+    }
 }

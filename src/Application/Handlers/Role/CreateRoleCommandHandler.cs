@@ -12,7 +12,7 @@ public class CreateRoleCommandHandler(
 )
     : IRequestHandler<CreateRoleCommand, IdentityResult>
 {
-    public async Task<IdentityResult> Handle(CreateRoleCommand command, CancellationToken cancellationToken)
+    public async Task<IdentityResult> Handle(CreateRoleCommand command, CancellationToken cancellationToken = default)
     {
         var dataModel = roleBuilder.Apply(command);
         var result = await roleManager.CreateAsync(dataModel);

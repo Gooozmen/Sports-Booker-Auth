@@ -7,10 +7,12 @@ using Shared.Responses;
 
 namespace Shared.Commands;
 
-public sealed record LoginCommand : IRequest<Result>, ICommand
+public sealed record LogoutCommand: IRequest<Result>, ICommand, IPropertyType
 {
     [Required] [EmailAddress] public required string Email { get; set; }
 
     [Required] [PasswordPropertyText] public required string Password { get; set; }
-    
+
+    [JsonIgnore]
+    public int PropertyType { get; set; }
 }
