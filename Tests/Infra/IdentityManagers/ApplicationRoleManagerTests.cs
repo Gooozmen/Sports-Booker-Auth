@@ -1,5 +1,4 @@
 using Domain.Models;
-using FluentAssertions;
 using Infrastructure.IdentityManagers;
 using Microsoft.AspNetCore.Identity;
 using Moq;
@@ -36,7 +35,7 @@ public class ApplicationRoleManagerTests
         var result = await _applicationRoleManager.CreateAsync(role);
 
         // Assert
-        result.Should().Be(IdentityResult.Success);
+        Assert.True(result == IdentityResult.Success);
         _mockRoleManager.Verify(rm => rm.CreateAsync(role), Times.Once);
     }
 
@@ -56,11 +55,8 @@ public class ApplicationRoleManagerTests
         var result = await _applicationRoleManager.CreateAsync(role);
 
         // Assert
-        result.Succeeded.Should().BeFalse();
-        result.Errors.Should().ContainSingle()
-            .Which.Description
-            .Should().Be("Error creating Role");
-
+        Assert.True(result == failedResult);
+        Assert.Contains(result.Errors, x => x.Description == "Error creating Role");
         _mockRoleManager.Verify(rm => rm.CreateAsync(role), Times.Once);
     }
 }

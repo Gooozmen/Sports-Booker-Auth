@@ -12,7 +12,7 @@ public class CreateUserCommandHandler(
     IApplicationUserBuilder userBuilder)
     : IRequestHandler<CreateUserCommand, IdentityResult>
 {
-    public async Task<IdentityResult> Handle(CreateUserCommand command, CancellationToken cancellationToken)
+    public async Task<IdentityResult> Handle(CreateUserCommand command, CancellationToken cancellationToken = default)
     {
         var dataModel = userBuilder.Apply(command);
         var wrapper = new ApplicationUserWrapper{ApplicationUser = dataModel, Password = command.Password};

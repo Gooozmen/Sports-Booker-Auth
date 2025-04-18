@@ -9,5 +9,5 @@ Dependencies/*
 !Dependencies/.gitkeep
 src/sports-booker-auth.sln.DotSettings.user
 Tests/obj/*
-
 build/ENV*
+.idea/

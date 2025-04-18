@@ -5,7 +5,7 @@ using Presentation.Services;
 namespace Presentation.Controllers;
 
 [Controller]
-[Route("api/[controller]")]
+[Route("api/[controller]/")]
 public abstract class ControllerBase(IServiceProvider serviceProvider) : Controller
 {
     protected IHttpResponseBuilder ResponseBuilder { get;} = serviceProvider.GetRequiredService<IHttpResponseBuilder>();

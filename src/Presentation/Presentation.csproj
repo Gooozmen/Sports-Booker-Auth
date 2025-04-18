@@ -22,8 +22,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="FluentAssertions"/>
-        
         <ProjectReference Include="..\Application\Application.csproj"/>
         <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
         <ProjectReference Include="..\Shared\Shared.csproj"/>
