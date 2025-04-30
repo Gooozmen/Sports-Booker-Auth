@@ -8,22 +8,27 @@ $configuration = "Debug"
 #PATHS
 $SolutionPath = Resolve-Path ("..\src\sports-booker-auth.sln")
 $OutputPath = Resolve-Path ("..\Output")
-$ArtifactsPath = Resolve-Path ("..\Artifacts")
+
+#Docker
 $DockerFilePath = Split-Path (Resolve-Path ("..\dockerfile")) -Parent 
-$SourceFolder = $OutputPath
-$OutputFolder = $ArtifactsPath
-$TestsLogOutput = $ArtifactsPath
+$ImageVersion = $Version
+$Username = $env:NUGET_USERNAME
+$Token = $env:NUGET_PASSWORD
+$Port= 8080
+
+#Artifacts
+$ArtifactsPath = Resolve-Path ("..\Artifacts")
 $ArtifactsFolder = $ArtifactsPath 
-$DestinationFolder = "$ArtifactsFolder\Application.zip"
-$ProjectArtifact = $DestinationFolder
+
+#Tests
+$TestsLogOutput = $ArtifactsPath
+$TestDllPath = "$OutputPath\Tests.dll"
+$TestsLogOutput = $ArtifactsPath
 
 #Others
 $ApplicationName = "sports-booker-auth"
 $Version = "1.0.0.0"
 $Identifier = "$ApplicationName"
 
-$Port= 8080
 
-$ImageVersion = $Version
-$Username = $env:NUGET_USERNAME
-$Token = $env:NUGET_PASSWORD
+
