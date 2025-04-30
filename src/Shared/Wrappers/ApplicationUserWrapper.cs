@@ -4,6 +4,6 @@ namespace Shared.Wrappers;
 
 public class ApplicationUserWrapper
 {
-    public ApplicationUser ApplicationUser { get; set; }
+    public required ApplicationUser ApplicationUser { get; set; }
     public string Password { get; set; }
 }
