@@ -65,7 +65,7 @@ function Set-DotnetSecrets {
     }
 }
 
-Set-EnviromentVariables
+# Set-EnviromentVariables
 # Set-DotnetSecrets
 Clear-NugetCache
 Set-PackageSource
