@@ -30,7 +30,7 @@ public class UpdateUserCommandHandlerTests
         // Arrange
         var userId = Guid.NewGuid();
         var command = new UpdateUserCommand { Id = userId, Email = "updated@email.com", PhoneNumber = "555-5555" };
-        var user = new ApplicationUser { Id = userId, Email = command.Email };
+        var user = new ApplicationUser { Id = userId, Email = "original@email.com",UserName = "original@email.com" };
 
         _userManagerMock
             .Setup(x => x.GetAsync(It.Is<UserQuery>(q =>
@@ -39,7 +39,7 @@ public class UpdateUserCommandHandlerTests
             .ReturnsAsync(user);
 
         _userManagerMock
-            .Setup(x => x.UpdateAsync(It.Is<ApplicationUserWrapper>(w => w.ApplicationUser == user)))
+            .Setup(x => x.UpdateAsync(It.Is<ApplicationUserWrapper>(w => w.ApplicationUser.Email == command.Email)))
             .ReturnsAsync(IdentityResult.Success);
 
         // Act
