@@ -18,10 +18,10 @@ public class ApplicationUserManager(UserManager<ApplicationUser> userManager) : 
     public async Task<ApplicationUser?> GetAsync(UserQuery query)
         => query.PropertyType switch
         {
-            (int)IdentityPropertyTypes.UserId => await userManager.FindByIdAsync(query.Id),
-            (int)IdentityPropertyTypes.UserLogin => await userManager.FindByLoginAsync(query.LoginProvider, query.ProviderKey),
-            (int)IdentityPropertyTypes.UserEmail => await userManager.FindByEmailAsync(query.Email),
-            (int)IdentityPropertyTypes.UserName => await userManager.FindByNameAsync(query.UserName)
+            (int)IdentityPropertyTypes.UserId => await userManager.FindByIdAsync(query.Id!),
+            (int)IdentityPropertyTypes.UserEmail => await userManager.FindByEmailAsync(query.Email!),
+            (int)IdentityPropertyTypes.UserName => await userManager.FindByNameAsync(query.UserName!),
+            _ => throw new ArgumentOutOfRangeException()
         };
 
     public async Task<IdentityResult> UpdateAsync(ApplicationUserWrapper wrapper) 

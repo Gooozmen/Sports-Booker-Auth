@@ -14,14 +14,12 @@ namespace Tests.Application.CommandHandlers;
 public class UpdateUserCommandHandlerTests
 {
     private readonly Mock<IApplicationUserManager> _userManagerMock;
-    private readonly Mock<IApplicationUserBuilder> _userBuilderMock;
     private readonly UpdateUserCommandHandler _handler;
 
     public UpdateUserCommandHandlerTests()
     {
         _userManagerMock = new Mock<IApplicationUserManager>();
-        _userBuilderMock = new Mock<IApplicationUserBuilder>();
-        _handler = new UpdateUserCommandHandler(_userManagerMock.Object, _userBuilderMock.Object);
+        _handler = new UpdateUserCommandHandler(_userManagerMock.Object);
     }
 
     [Fact]

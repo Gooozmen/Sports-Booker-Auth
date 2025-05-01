@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Primitives;
 using Shared.Enums;
 using Shared.Responses;
 
@@ -5,9 +6,9 @@ namespace Application.Builders;
 
 public class HttpResponseBuilder : IHttpResponseBuilder
 {
-    public ControllerResponse<T> CreateResponse<T>(int statusCode, T data, string message = "")
+    public Response<T> CreateResponse<T>(int statusCode, T data, string message)
     {
-        return new ControllerResponse<T>
+        return new Response<T>
         {
             IsSuccess = SetSuccess(statusCode),
             Data = data,
@@ -15,6 +16,12 @@ public class HttpResponseBuilder : IHttpResponseBuilder
             StatusCode = statusCode
         };
     }
+
+    public Response<T> CreateResponse<T>(int statusCode, T data)
+    {
+        return CreateResponse(statusCode, data, "");
+    }
+
 
     private bool SetSuccess(int httpStatusCode)
     {
@@ -28,5 +35,6 @@ public class HttpResponseBuilder : IHttpResponseBuilder
 
 public interface IHttpResponseBuilder
 {
-    ControllerResponse<T> CreateResponse<T>(int statusCode, T data, string message = "");
+    Response<T> CreateResponse<T>(int statusCode, T data, string message);
+    Response<T> CreateResponse<T>(int statusCode, T data);
 }

@@ -2,6 +2,6 @@
 
 public class ConnectionStringsOption
 {
-    public string AuthDb { get; set; }
-    public string Redis { get; set; }
+    public required string AuthDb { get; init; }
+    public required string Redis { get; init; }
 }

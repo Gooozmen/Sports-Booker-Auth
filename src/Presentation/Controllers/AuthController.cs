@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Commands;
+using Shared.Responses.Auth;
 
 namespace Presentation.Controllers;
 
@@ -18,8 +19,8 @@ public class AuthController(
     {
         var result = await sender.Send(command);
         return result switch
-        {  { Success: true } => Ok(ResponseBuilder.CreateResponse((int)HttpStatusCode.OK, result)),
-            _ => BadRequest(ResponseBuilder.CreateResponse((int)HttpStatusCode.Unauthorized, result))
+        {  { IsSuccess: true } => Ok(ResponseBuilder.CreateResponse((int)HttpStatusCode.OK, result.AccessToken)),
+            _ => BadRequest(ResponseBuilder.CreateResponse((int)HttpStatusCode.Unauthorized, result.Error))
         };
     }
     
@@ -28,7 +29,7 @@ public class AuthController(
     {
         var result = await sender.Send(command);
         return result switch
-        {  { Success: true } => Ok(ResponseBuilder.CreateResponse((int)HttpStatusCode.OK, result)),
+        {  { IsSuccess: true } => Ok(ResponseBuilder.CreateResponse((int)HttpStatusCode.OK, result)),
             _ => BadRequest(ResponseBuilder.CreateResponse((int)HttpStatusCode.Unauthorized, result))
         };
     }

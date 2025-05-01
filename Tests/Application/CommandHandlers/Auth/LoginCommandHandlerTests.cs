@@ -7,6 +7,7 @@ using Shared.Enums;
 using Shared.Queries;
 using Shared.Responses;
 using Shared.Responses.Auth;
+using Shared.Wrappers;
 
 namespace Tests.Application.CommandHandlers;
 
@@ -49,8 +50,8 @@ public class LoginCommandHandlerTests
         var result = await _handler.Handle(command, CancellationToken.None);
 
         // Assert
-        Assert.IsType<AuthFailedResponse>(result);
-        Assert.False(result.Success);
+        Assert.IsType<LoginResponse>(result);
+        Assert.False(result.IsSuccess);
     }
 
     [Fact]
@@ -72,8 +73,8 @@ public class LoginCommandHandlerTests
         var result = await _handler.Handle(command, CancellationToken.None);
 
         // Assert
-        Assert.IsType<AuthFailedResponse>(result);
-        Assert.False(result.Success);
+        Assert.IsType<LoginResponse>(result);
+        Assert.False(result.IsSuccess);
     }
 
     [Fact]
@@ -82,7 +83,8 @@ public class LoginCommandHandlerTests
         // Arrange
         var command = new LoginCommand{Email = "login@success.com",Password = "correctpass"};
         var user = new ApplicationUser { Email = command.Email };
-        var token = "token123";
+        var bearer = "token123";
+        var accessToken = new AccessToken(bearer);
 
         _userManagerMock
             .Setup(x => x.GetAsync(It.IsAny<UserQuery>()))
@@ -94,14 +96,15 @@ public class LoginCommandHandlerTests
 
         _tokenFactoryMock
             .Setup(x => x.Create(user))
-            .Returns(token);
+            .Returns(bearer);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
 
         // Assert
-        var tokenResponse = Assert.IsType<LoginResponse>(result);
-        Assert.True(tokenResponse.Success);
-        Assert.Equal(token, tokenResponse.Bearer);
+        var loginResponse = Assert.IsType<LoginResponse>(result);
+        Assert.True(loginResponse.IsSuccess);
+        Assert.NotNull(loginResponse.AccessToken);
+        Assert.Equal(accessToken.Bearer,loginResponse.AccessToken.Bearer);
     }
 }

@@ -16,7 +16,7 @@ public class ModelStateInterceptor : ActionFilterAttribute
                 .Select(e => e.ErrorMessage)
                 .ToArray();
 
-            var failedResponse = new ControllerResponse<string[]>
+            var failedResponse = new Response<string[]>
             {
                 IsSuccess = false,
                 Data = errors,

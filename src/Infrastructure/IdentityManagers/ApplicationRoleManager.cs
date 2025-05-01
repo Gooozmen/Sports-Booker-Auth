@@ -23,8 +23,8 @@ public class ApplicationRoleManager(RoleManager<ApplicationRole> roleManager) : 
     {
         return data.PropertyType switch
         {
-            (int)IdentityPropertyTypes.RoleName => await roleManager.FindByNameAsync(data.Name),
-            (int)IdentityPropertyTypes.RoleId => await roleManager.FindByIdAsync(data.Id),
+            (int)IdentityPropertyTypes.RoleName => await roleManager.FindByNameAsync(data.Name!),
+            (int)IdentityPropertyTypes.RoleId => await roleManager.FindByIdAsync(data.Id!),
             _ => throw new ArgumentOutOfRangeException()
         };
     }

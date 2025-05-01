@@ -11,7 +11,7 @@ public class RoleController(
 ) : ControllerBase(serviceProvider)
 {
     [HttpPost]
-    public async Task<IActionResult> ProcessUserRegistrationAsync([FromBody] CreateRoleCommand command)
+    public async Task<IActionResult> ProcessRoleRegistrationAsync([FromBody] CreateRoleCommand command)
     {
         var result = await sender.Send(command);
 

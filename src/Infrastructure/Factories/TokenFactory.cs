@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Security.Claims;
 using System.Text;
 using Application.Interfaces;
@@ -41,10 +42,12 @@ public class TokenFactory(IOptions<JwtOption> jwtOptions) : ITokenFactory
         =>new(key,SecurityAlgorithms.HmacSha256);
     
     private IEnumerable<Claim> AssemblyClaims(ApplicationUser user)
-        =>
+    {
+        return
         [
-            new(JwtRegisteredClaimNames.Sub, user.Id.ToString()), // Subject: the user's id.
-            new(JwtRegisteredClaimNames.Email, user.Email),
-            new("email_verified", user.EmailConfirmed.ToString())
+            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()), // Subject: the user's id.
+            new Claim(JwtRegisteredClaimNames.Email, user.Email!),
+            new Claim("email_verified", user.EmailConfirmed.ToString())
         ];
+    }
 }
