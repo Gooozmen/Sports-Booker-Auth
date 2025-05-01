@@ -9,6 +9,7 @@ using Presentation.Services;
 using Shared.Commands;
 using Shared.Enums;
 using Shared.Responses;
+using Shared.Responses.Auth;
 
 namespace Tests.Presentation.Controllers;
 
@@ -50,6 +51,12 @@ public class AuthControllerTests
             Email = "test@test.com",
             Password = "pasor*(&(#JJd",
         };
+
+        var handlerResult = new LoginResponse().Failed("Authentication Failed - Invalid username or password.");
+        
+        _mockSender
+            .Setup(u => u.Send(cmd, CancellationToken.None))
+            .ReturnsAsync(handlerResult);
         
         //act
         var result = await _controller.ProcessUserLoginAsync(cmd);
@@ -70,8 +77,8 @@ public class AuthControllerTests
             .ReturnsAsync(failedResult);
 
         _mockResponseBuilder
-            .Setup(r => r.CreateResponse((int)HttpStatusCode.BadRequest, failedResult.Errors, null))
-            .Returns(new ControllerResponse<IEnumerable<IdentityError>>
+            .Setup(r => r.CreateResponse((int)HttpStatusCode.BadRequest, failedResult.Errors))
+            .Returns(new Response<IEnumerable<IdentityError>>
             {
                 Message = HttpStatusDescriptions.GetDescription((int)HttpStatusCode.BadRequest),
                 StatusCode = (int)HttpStatusCode.BadRequest,

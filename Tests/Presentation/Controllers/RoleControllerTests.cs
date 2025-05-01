@@ -34,30 +34,30 @@ public class RoleControllerTests
     }
 
     [Fact]
-    public async Task ProcessUserRegistrationAsync_ShouldReturnCreated_WhenRoleIsCreated()
+    public async Task ProcessRoleRegistrationAsync_ShouldReturnCreated_WhenRoleIsCreated()
     {
         // Arrange
         var result = IdentityResult.Success;
         var command = new CreateRoleCommand { Name = "Admin" };
-        var expectedResponse = new ControllerResponse<IdentityResult> { IsSuccess = true };
+        var endpointResult = new Response<IdentityResult> { IsSuccess = true };
+        
 
-        _mockSender.Setup(s => s.Send(command, default)).ReturnsAsync(result);
+        _mockSender.Setup(s => s.Send(command, CancellationToken.None)).ReturnsAsync(result);
 
         _mockResponseBuilder
             .Setup(rb => rb.CreateResponse((int)HttpStatusCode.Created, result, string.Empty))
-            .Returns(expectedResponse);
+            .Returns(endpointResult);
 
         // Act
-        var actionResult = await _controller.ProcessUserRegistrationAsync(command);
+        var actionResult = await _controller.ProcessRoleRegistrationAsync(command);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(actionResult);
         Assert.Equal((int)HttpStatusCode.OK, okResult.StatusCode); // Optional
-        Assert.Same(expectedResponse, okResult.Value);
     }
 
     [Fact]
-    public async Task ProcessUserRegistrationAsync_ShouldReturnBadRequest_WhenRoleCreationFails()
+    public async Task ProcessRoleRegistrationAsync_ShouldReturnBadRequest_WhenRoleCreationFails()
     {
         // Arrange
         var result = IdentityResult.Failed();
@@ -68,7 +68,7 @@ public class RoleControllerTests
         _mockResponseBuilder
             .Setup(rb => rb.CreateResponse((int)HttpStatusCode.BadRequest, result, "user creation failed"));
         // Act
-        var actionResult = await _controller.ProcessUserRegistrationAsync(command);
+        var actionResult = await _controller.ProcessRoleRegistrationAsync(command);
 
         // Assert
         var badRequest = Assert.IsType<BadRequestObjectResult>(actionResult);

@@ -12,20 +12,24 @@ public sealed record UserQuery : IRequest<UserResponse>, IQuery
     public UserQuery(string value, int propertyType)
     {
         PropertyType = propertyType;
-        
-        if (propertyType.Equals((int)IdentityPropertyTypes.UserId)) 
-            Id = value;
-        else if(propertyType.Equals((int)IdentityPropertyTypes.UserName)) 
-            UserName = value;
-        else
-            Email = value;
+
+        switch (propertyType)
+        {
+            case (int)IdentityPropertyTypes.UserId:
+                Id = value;
+                break;
+            case (int)IdentityPropertyTypes.UserName:
+                UserName = value;
+                break;
+            case (int)IdentityPropertyTypes.UserEmail:
+                Email = value;
+                break;
+        }
     }
 
-    public string? Id { get; set; }
-    public string? Email { get; set; }
-    public string? UserName { get; set; }
-    public string? LoginProvider { get; set; }
-    public string? ProviderKey { get; set; }
+    public string? Id { get;}
+    public string? Email { get;}
+    public string? UserName { get;}
     [JsonIgnore]
     public int PropertyType { get; set; }
     

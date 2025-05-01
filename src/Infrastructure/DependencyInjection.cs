@@ -78,7 +78,6 @@ public static class DependencyInjection
         services.Configure<ConnectionStringsOption>(configuration.GetSection("ConnectionStrings"));
         services.Configure<JwtOption>(configuration.GetSection("Jwt"));
         services.Configure<EntityFrameworkOption>(configuration.GetSection("EntityFramework"));
-        services.Configure<RedisOption>(configuration.GetSection("Redis"));
         return services;
     }
     private static void SetupDatabase(this IServiceCollection services)

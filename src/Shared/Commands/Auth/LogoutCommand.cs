@@ -7,7 +7,7 @@ using Shared.Responses;
 
 namespace Shared.Commands;
 
-public sealed record LogoutCommand: IRequest<Result>, ICommand, IPropertyType
+public sealed record LogoutCommand: IRequest<IResponse>, ICommand, IPropertyType
 {
     [Required] [EmailAddress] public required string Email { get; set; }
 

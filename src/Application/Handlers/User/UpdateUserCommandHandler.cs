@@ -10,9 +10,8 @@ using Shared.Wrappers;
 
 namespace Application.Handlers;
 
-public class UpdateUserCommandHandler(
-    IApplicationUserManager userManager,
-    IApplicationUserBuilder userBuilder)
+public class UpdateUserCommandHandler
+    (IApplicationUserManager userManager) 
     : IRequestHandler<UpdateUserCommand,IdentityResult> 
 {
     public async Task<IdentityResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken = default)
