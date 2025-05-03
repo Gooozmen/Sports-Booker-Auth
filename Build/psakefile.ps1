@@ -30,5 +30,9 @@ $ApplicationName = "sports-booker-auth"
 $Version = "1.0.0.0"
 $Identifier = "$ApplicationName"
 
-
-
+task Deploy-ApplicationContainer -depends Build-DockerContainer{
+    $currentDir = Get-Location
+    Set-Location $DockerFilePath
+    docker-compose --env-file $EnvFile up -d
+    Set-Location $currentDir
+}

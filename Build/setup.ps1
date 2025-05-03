@@ -42,7 +42,7 @@ function Clear-NugetCache{
 }
 
 function Set-EnviromentVariables{
-    $EnvsPath = Resolve-Path ".\ENV.ps1"
+    $EnvsPath = Resolve-Path "..\Env\env.development.ps1"
     . $EnvsPath
 }
 
@@ -53,12 +53,10 @@ function Set-DotnetSecrets {
     try {
         Set-Location $StartingProjectLocation
 
-        & dotnet user-secrets set "Jwt:Key" "$ENV:JWT_KEY"
-        & dotnet user-secrets set "Jwt:Issuer" "$ENV:JWT_ISSUER"
-        & dotnet user-secrets set "Jwt:Audience" "$ENV:JWT_AUDIENCE"
-        & dotnet user-secrets set "ConnectionStrings:AuthDb" "$ENV:AUTH_DB"
-        & dotnet user-secrets set "ConnectionStrings:Redis" "$ENV:REDIS_CONNECTION"
-        & dotnet user-secrets set "Redis:InstanceName" "$ENV:REDIS_INSTANCE"
+        & dotnet user-secrets set "Jwt:Key" "$env:JWT_KEY"
+        & dotnet user-secrets set "Jwt:Issuer" "$env:JWT_ISSUER"
+        & dotnet user-secrets set "Jwt:Audience" "$env:JWT_AUDIENCE"
+        & dotnet user-secrets set "ConnectionStrings:AuthDb" "$env:AUTH_DB"
     }
     finally {
         Set-Location $CurrentPath
@@ -72,4 +70,3 @@ Set-PackageSource
 Remove-Folder -FolderArray @("..\Dependencies\psake*","..\Dependencies\Toolkit*","..\Artifacts\**")
 Install-Toolkit
 Import-ToolkitSetup
-

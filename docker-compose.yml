@@ -1,0 +1,16 @@
+services:
+  sports-booker-auth:
+    image: sports-booker-auth:latest
+    container_name: sports-booker-auth
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5073:80"
+    networks:
+      - dev-net
+
+networks:
+  dev-net:
+    external: true
+    

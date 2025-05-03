@@ -45,12 +45,30 @@ public class ApplicationDbContextInitializer : IContextInitializer
 
     private async Task ExecuteDatabaseDropAsync()
     {
-        await _context.Database.EnsureDeletedAsync();
+        try
+        {
+            // await _context.Database.EnsureDeletedAsync();
+            await _context.Database.ExecuteSqlRawAsync("DROP SCHEMA IF EXISTS Identity CASCADE;");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     private async Task ExecuteDatabaseBuildAsync()
     {
-        await _context.Database.EnsureCreatedAsync();
+        try
+        {
+            // await _context.Database.EnsureCreatedAsync();
+            await _context.Database.ExecuteSqlRawAsync("CREATE SCHEMA Identity;");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     private bool IsPgSql()
