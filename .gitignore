@@ -11,6 +11,7 @@ src/sports-booker-auth.sln.DotSettings.user
 Tests/obj/*
 build/ENV*
 .idea/
+ENV/
 Artifacts/TestResults.trx
 TestsOutput/TestResults/.msCoverageSourceRootsMapping_Tests
 TestsOutput/TestResults/CoverletSourceRootsMapping_Tests

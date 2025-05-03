@@ -7,16 +7,13 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class FixSchemas : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
                 name: "Identity");
-
-            migrationBuilder.EnsureSchema(
-                name: "Audit");
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
@@ -25,8 +22,8 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    NormalizedName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: false),
+                    NormalizedName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true),
                     Active = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
@@ -59,26 +56,6 @@ namespace Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AuditLog",
-                schema: "Audit",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TableName = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    RecordId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ActionType = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    UserName = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    ChangedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    OldValues = table.Column<string>(type: "jsonb", nullable: true),
-                    NewValues = table.Column<string>(type: "jsonb", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AuditLog", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -239,6 +216,20 @@ namespace Infrastructure.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_Email",
+                schema: "Identity",
+                table: "AspNetUsers",
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_UserName",
+                schema: "Identity",
+                table: "AspNetUsers",
+                column: "UserName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 schema: "Identity",
                 table: "AspNetUsers",
@@ -268,10 +259,6 @@ namespace Infrastructure.Migrations
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens",
                 schema: "Identity");
-
-            migrationBuilder.DropTable(
-                name: "AuditLog",
-                schema: "Audit");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles",

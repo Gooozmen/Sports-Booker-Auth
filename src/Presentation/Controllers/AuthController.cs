@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Commands;
-using Shared.Responses.Auth;
 
 namespace Presentation.Controllers;
 

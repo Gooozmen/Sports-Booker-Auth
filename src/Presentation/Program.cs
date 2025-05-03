@@ -1,26 +1,61 @@
 using Application;
 using Presentation;
 using Infrastructure;
+using Presentation.Middleware;
 
-var builder = WebApplication.CreateBuilder(args);
+try{
+        Console.WriteLine("Starting up");
+    var builder = WebApplication.CreateBuilder(args);
+        Console.WriteLine("Builder created");
 
-builder.Configuration.AddDefaultConfiguration<Program>(); //Load additional configuration before registering services.
-builder.Services.ConfigureOptions(builder.Configuration); //Register configuration options so that strongly-typed settings can be injected.
-builder.Services.ConfigureJwt();
+    builder.WebHost.UseUrls("http://0.0.0.0:80");
+        Console.WriteLine("URL Defined");
 
-builder.SetupLoggingInfrastructure();
-//architecture layers
-builder.Services.AddInfrastructure();
-builder.Services.AddApplicationServices();
-builder.Services.AddPresentationServices();
+    builder.Configuration.AddDefaultConfiguration<Program>();
+        Console.WriteLine("Default configuration added");
 
-var app = builder.Build();
+    builder.Services.ConfigureOptions(builder.Configuration);
+        Console.WriteLine("Options configured");
 
-await app.UseDevelopEnvironment();
-app.UseRouting(); //Configure the middleware pipeline.
-app.UseAuthentication();
-app.UseAuthorization();
+    builder.Services.ConfigureJwt();
+        Console.WriteLine("JWT configured");
 
-app.MapControllers(); //Map controllers to endpoints.
+    builder.SetupLoggingInfrastructure();
+        Console.WriteLine("Logging infrastructure set up");
 
-await app.RunAsync();
+    builder.Services.AddInfrastructure();
+        Console.WriteLine("Infrastructure services added");
+
+    builder.Services.AddApplicationServices();
+        Console.WriteLine("Application services added");
+
+    builder.Services.AddPresentationServices();
+        Console.WriteLine("Presentation services added");
+
+    var app = builder.Build();
+        Console.WriteLine("Application built");
+    
+    app.UseMiddleware<RequestLoggingMiddleware>();
+
+    await app.UseDevelopEnvironment();
+        Console.WriteLine("Development environment set up");
+        
+    app.UseRouting(); //Configure the middleware pipeline.
+        Console.WriteLine("Routing set up");
+
+    app.UseAuthentication();
+        Console.WriteLine("Authentication set up");
+
+    app.UseAuthorization();
+        Console.WriteLine("Authorization set up");
+
+    app.MapControllers(); //Map controllers to endpoints.
+        Console.WriteLine("Controllers mapped to endpoints");
+        
+    await app.RunAsync();
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.Message);
+    throw;
+}
