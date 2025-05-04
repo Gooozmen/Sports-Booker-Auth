@@ -15,3 +15,4 @@ ENV/
 Artifacts/TestResults.trx
 TestsOutput/TestResults/.msCoverageSourceRootsMapping_Tests
 TestsOutput/TestResults/CoverletSourceRootsMapping_Tests
+.env

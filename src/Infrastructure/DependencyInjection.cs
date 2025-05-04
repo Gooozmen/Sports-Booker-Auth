@@ -30,8 +30,7 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
         SetupDatabase(services);
-
-        //DI's
+        
         services.AddTransient<ITokenFactory, TokenFactory>();
 
         services.AddSingleton<IEnvironmentValidator, EnvironmentValidator>();
@@ -99,31 +98,16 @@ public static class DependencyInjection
             options.EnableDetailedErrors(true);
             // options.EnableSensitiveDataLogging();
         });
-
-        // Db Context
-        services.AddIdentity<ApplicationUser, ApplicationRole>()
+        
+        services.AddIdentityCore<ApplicationUser>()
+            .AddRoles<ApplicationRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
-        
-        ConfigureApplicationCookies(services);
         
         services.AddScoped<IDbContextFactory<ApplicationDbContext>, ApplicationDbContextFactory<ApplicationDbContext>>();
         services.AddTransient<ApplicationDbContext>(provider => provider.GetRequiredService<IDbContextFactory<ApplicationDbContext>>().CreateDbContext());
         services.AddScoped<ApplicationDbContextInitializer>();
     }
-
-    private static void ConfigureApplicationCookies(this IServiceCollection services)
-    {
-        services.ConfigureApplicationCookie(options =>
-        {
-            options.Cookie.HttpOnly = true;
-            options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-            options.SlidingExpiration = false;
-            options.LoginPath = PathString.Empty; // No redirect
-            options.AccessDeniedPath = PathString.Empty;
-        });
-    }
-    
     public static async Task UseDevelopEnvironment(this WebApplication app)
     {
         var environmentValidator = app.Services.GetRequiredService<IEnvironmentValidator>();

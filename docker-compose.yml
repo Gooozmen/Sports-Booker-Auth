@@ -9,6 +9,8 @@ services:
       - "5073:80"
     networks:
       - dev-net
+    env_file:
+      - .env
 
 networks:
   dev-net:

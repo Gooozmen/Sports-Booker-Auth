@@ -1,10 +1,10 @@
 using Application;
 using Presentation;
 using Infrastructure;
-using Presentation.Middleware;
 
 try{
-        Console.WriteLine("Starting up");
+    Console.WriteLine("Starting up");
+        
     var builder = WebApplication.CreateBuilder(args);
         Console.WriteLine("Builder created");
 
@@ -34,8 +34,8 @@ try{
 
     var app = builder.Build();
         Console.WriteLine("Application built");
-    
-    app.UseMiddleware<RequestLoggingMiddleware>();
+
+    app.UsePresentationMiddlewares();
 
     await app.UseDevelopEnvironment();
         Console.WriteLine("Development environment set up");

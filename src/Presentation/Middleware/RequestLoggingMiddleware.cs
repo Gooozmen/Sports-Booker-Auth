@@ -1,20 +1,15 @@
 namespace Presentation.Middleware;
 
-public class RequestLoggingMiddleware
+public class RequestLoggingMiddleware(RequestDelegate next, ILogger<RequestLoggingMiddleware> logger)
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogger _logger;
-
-    public RequestLoggingMiddleware(RequestDelegate next, ILogger<RequestLoggingMiddleware> logger)
-    {
-        _next = next;
-        _logger = logger;
-    }
-
     public async Task Invoke(HttpContext context)
     {
-        _logger.LogInformation($"Request: {context.Request.Method}-{context.Request.Path}");
-        await _next(context);
-        _logger.LogInformation($"Response: {context.Response.StatusCode}");
+        logger.LogInformation("Incoming request {Method} - {Path}", 
+            context.Request.Method,
+            context.Request.Path);
+        
+        await next(context);
+        
+        logger.LogInformation("Response: {context.Response.StatusCode}", context.Response.StatusCode);
     }
 }
