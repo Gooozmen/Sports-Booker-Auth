@@ -1,2 +1,2 @@
 $psakeFilePath = ".\psakefile.ps1"
-& (Resolve-Path "..\Dependencies\psake*\tools\psake\psake.ps1") $psakeFilePath Push-DockerImage
+& (Resolve-Path "..\Dependencies\psake*\tools\psake\psake.ps1") $psakeFilePath Build-DockerContainer

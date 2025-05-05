@@ -9,13 +9,6 @@ $configuration = "Debug"
 $SolutionPath = Resolve-Path ("..\src\sports-booker-auth.sln")
 $OutputPath = Resolve-Path ("..\Output")
 
-#Docker
-$DockerFilePath = Split-Path (Resolve-Path ("..\dockerfile")) -Parent 
-$ImageVersion = $Version
-$Username = $env:NUGET_USERNAME
-$Token = $env:NUGET_PASSWORD
-$Port= 8080
-
 #Artifacts
 $ArtifactsPath = Resolve-Path ("..\Artifacts")
 $ArtifactsFolder = $ArtifactsPath 
@@ -25,14 +18,14 @@ $TestsLogOutput = $ArtifactsPath
 $TestDllPath = "$OutputPath\Tests.dll"
 $TestsLogOutput = $ArtifactsPath
 
-#Others
+#Application
 $ApplicationName = "sports-booker-auth"
-$Version = "1.0.0.0"
-$Identifier = "$ApplicationName"
+$ContainerServiceName = $ApplicationName 
 
-task Deploy-ApplicationContainer -depends Build-DockerContainer{
-    $currentDir = Get-Location
-    Set-Location $DockerFilePath
-    docker-compose --env-file $EnvFile up -d
-    Set-Location $currentDir
-}
+#Docker
+$DockerFilePath = Split-Path (Resolve-Path ("..\dockerfile")) -Parent 
+$DockerComposePath = $DockerFilePath
+$ImageVersion = (Get-Content $EnvFile | Where-Object { $_ -match '^IMAGE_TAG=' }) -replace 'IMAGE_TAG=', ''
+write-host "Image version: $ImageVersion"
+$Username = $env:NUGET_USERNAME
+$Token = $env:NUGET_PASSWORD

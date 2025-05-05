@@ -1,10 +1,10 @@
 services:
   sports-booker-auth:
-    image: sports-booker-auth:latest
+    image: ${IMAGE_IDENTIFIER}:${IMAGE_TAG}
     container_name: sports-booker-auth
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     ports:
       - "5073:80"
     networks:
