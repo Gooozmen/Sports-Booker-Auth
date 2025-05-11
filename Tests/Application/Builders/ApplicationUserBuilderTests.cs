@@ -56,7 +56,7 @@ public class ApplicationUserBuilderTests
         //assert
         Assert.True(result.PhoneNumber == null);
     }
-    
+
     [Fact]
     public void BuilderShouldMapUpdateCommandToApplicationUser()
     {
@@ -78,7 +78,7 @@ public class ApplicationUserBuilderTests
         Assert.Equal(cmd.PhoneNumber, result.PhoneNumber);
     }
 
-    
+
     [Fact]
     public void BuilderShouldMapApplicationUserToUserResponse()
     {

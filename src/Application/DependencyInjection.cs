@@ -15,7 +15,7 @@ public static class DependencyInjection
         services.AddScoped<IApplicationUserBuilder, ApplicationUserBuilder>();
         services.AddScoped<IHttpResponseBuilder, HttpResponseBuilder>();
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingPipelineBehavior<,>));
-        
+
         AddMediatR(services);
 
         return services;

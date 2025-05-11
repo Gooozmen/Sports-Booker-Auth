@@ -2,8 +2,6 @@ using Application.Interfaces;
 using MediatR;
 using Shared.Commands;
 using Shared.Enums;
-using Shared.Interfaces;
-using Shared.Responses;
 using Shared.Queries;
 using Shared.Responses.Auth;
 
@@ -26,8 +24,8 @@ public class LoginCommandHandler(
         var result = await loginManager.CheckPasswordAsync(dataModel, command.Password);
 
         if (result)
-           return new LoginResponse().Success(tokenFactory.Create(dataModel));
-        
+            return new LoginResponse().Success(tokenFactory.Create(dataModel));
+
         return new LoginResponse().Failed("Authentication Failed - Invalid username or password.");
     }
-} 
+}

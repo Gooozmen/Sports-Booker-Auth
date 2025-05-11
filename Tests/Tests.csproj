@@ -17,15 +17,15 @@
 
     <ItemGroup>
         <Using Include="Xunit"/>
-        
+
         <!-- <PackageReference Include="coverlet.collector" Version="6.0.2"/> -->
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0"/>
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.2"/>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0"/>
-        <PackageReference Include="Moq" Version="4.20.72" />
+        <PackageReference Include="Moq" Version="4.20.72"/>
         <PackageReference Include="xunit" Version="2.9.2"/>
         <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.0-preview.4.24267.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.0-preview.4.24267.1"/>
 
         <ProjectReference Include="..\src\Application\Application.csproj"/>
         <ProjectReference Include="..\src\Infrastructure\Infrastructure.csproj"/>

@@ -2,7 +2,7 @@ using Shared.Interfaces;
 
 namespace Shared.Responses.User;
 
-public class UserResponse : IResponse 
+public class UserResponse : IResponse
 {
     public Guid Id { get; set; }
     public string? Username { get; set; }

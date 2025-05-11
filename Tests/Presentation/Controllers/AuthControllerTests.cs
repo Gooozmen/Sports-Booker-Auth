@@ -26,9 +26,9 @@ public class AuthControllerTests
         // Mock dependencies
         _mockResponseBuilder = new Mock<IHttpResponseBuilder>();
         _mockSender = new Mock<ISender>();
-        _mockServiceProvider  = new Mock<IServiceProvider>();
+        _mockServiceProvider = new Mock<IServiceProvider>();
         _mockUserIdentifyService = new Mock<IUserIdentifyService>();
-        
+
         _mockServiceProvider.Setup(sp => sp.GetService(typeof(IHttpResponseBuilder)))
             .Returns(_mockResponseBuilder.Object);
         _mockServiceProvider.Setup(sp => sp.GetService(typeof(IUserIdentifyService)))
@@ -49,23 +49,23 @@ public class AuthControllerTests
         var cmd = new LoginCommand
         {
             Email = "test@test.com",
-            Password = "pasor*(&(#JJd",
+            Password = "pasor*(&(#JJd"
         };
 
         var handlerResult = new LoginResponse().Failed("Authentication Failed - Invalid username or password.");
-        
+
         _mockSender
             .Setup(u => u.Send(cmd, CancellationToken.None))
             .ReturnsAsync(handlerResult);
-        
+
         //act
         var result = await _controller.ProcessUserLoginAsync(cmd);
-        
+
         //assert
         Assert.IsType<BadRequestObjectResult>(result);
     }
-    
-     [Fact]
+
+    [Fact]
     public async Task ProcessUserRegistrationAsync_ShouldReturnBadRequest_WhenUserCreationFails()
     {
         // Arrange
@@ -93,11 +93,12 @@ public class AuthControllerTests
         var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
         Assert.Equal(400, badRequestResult.StatusCode);
     }
+
     [Fact]
     public async Task ProcessUserRegistrationAsync_ShouldReturn_Created_WhenUserCreatedSuccessfully()
     {
         // Arrange
-        var command = new CreateUserCommand{Email = "test@example.com",Password = "P@ssw0rd!"};
+        var command = new CreateUserCommand { Email = "test@example.com", Password = "P@ssw0rd!" };
         var successResult = IdentityResult.Success; // Simulating a successful identity result
 
         _mockSender

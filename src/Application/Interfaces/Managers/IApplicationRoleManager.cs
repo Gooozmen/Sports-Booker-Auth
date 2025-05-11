@@ -4,8 +4,8 @@ using Shared.Queries;
 
 namespace Application.Interfaces;
 
-public interface IApplicationRoleManager : 
-    ICommandManager<ApplicationRole,IdentityResult>,
+public interface IApplicationRoleManager :
+    ICommandManager<ApplicationRole, IdentityResult>,
     IQueryableManager<ApplicationRole, ApplicationRoleQuery>
 {
 }

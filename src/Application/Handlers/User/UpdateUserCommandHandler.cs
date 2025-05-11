@@ -1,4 +1,3 @@
-using Application.Builders;
 using Application.Interfaces;
 using Domain.Models;
 using MediatR;
@@ -10,9 +9,8 @@ using Shared.Wrappers;
 
 namespace Application.Handlers;
 
-public class UpdateUserCommandHandler
-    (IApplicationUserManager userManager) 
-    : IRequestHandler<UpdateUserCommand,IdentityResult> 
+public class UpdateUserCommandHandler(IApplicationUserManager userManager)
+    : IRequestHandler<UpdateUserCommand, IdentityResult>
 {
     public async Task<IdentityResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken = default)
     {
@@ -20,10 +18,7 @@ public class UpdateUserCommandHandler
             new UserQuery(request.Id.ToString(), (int)IdentityPropertyTypes.UserId)
         );
 
-        if (dataModel == null)
-        {
-            return IdentityResult.Failed(new IdentityError { Description = "User not found." });
-        }
+        if (dataModel == null) return IdentityResult.Failed(new IdentityError { Description = "User not found." });
 
         var result = await userManager.UpdateAsync(new ApplicationUserWrapper
         {
@@ -32,7 +27,7 @@ public class UpdateUserCommandHandler
                 Id = dataModel.Id,
                 UserName = string.IsNullOrEmpty(request.Username) ? dataModel.UserName : request.Username,
                 Email = string.IsNullOrEmpty(request.Email) ? dataModel.Email : request.Email,
-                PasswordHash = string.IsNullOrEmpty(request.Password) ? dataModel.PasswordHash : request.Password,
+                PasswordHash = string.IsNullOrEmpty(request.Password) ? dataModel.PasswordHash : request.Password
             }
         });
 

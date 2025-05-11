@@ -2,7 +2,6 @@ using Domain.Models;
 
 namespace Application.Interfaces;
 
-public interface ITokenFactory : IFactory<ApplicationUser,string>
+public interface ITokenFactory : IFactory<ApplicationUser, string>
 {
-    
 }

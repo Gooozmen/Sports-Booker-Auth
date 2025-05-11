@@ -6,7 +6,7 @@ using Shared.Wrappers;
 namespace Application.Interfaces;
 
 public interface IApplicationUserManager :
-    ICommandManager<ApplicationUserWrapper,IdentityResult>,
-    IQueryableManager<ApplicationUser,UserQuery>
+    ICommandManager<ApplicationUserWrapper, IdentityResult>,
+    IQueryableManager<ApplicationUser, UserQuery>
 {
 }

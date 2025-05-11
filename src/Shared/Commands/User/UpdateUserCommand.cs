@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -8,8 +7,8 @@ namespace Shared.Commands;
 
 public sealed record UpdateUserCommand : IRequest<IdentityResult>, ICommand
 {
-    [JsonIgnore]
-    public Guid Id { get; set; }
+    [JsonIgnore] public Guid Id { get; set; }
+
     public string? Email { get; init; }
     public string? Password { get; init; }
     public string? Username { get; init; }
