@@ -4,6 +4,5 @@ namespace Shared.Interfaces;
 
 public interface IResponse
 {
-    [JsonIgnore]
-    bool IsSuccess { get; set; }
+    [JsonIgnore] bool IsSuccess { get; set; }
 }

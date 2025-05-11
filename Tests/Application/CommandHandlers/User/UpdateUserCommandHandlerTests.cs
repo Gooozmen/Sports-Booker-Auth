@@ -1,20 +1,19 @@
-using Application.Builders;
 using Application.Handlers;
 using Application.Interfaces;
 using Domain.Models;
+using Microsoft.AspNetCore.Identity;
 using Moq;
 using Shared.Commands;
 using Shared.Enums;
 using Shared.Queries;
-using Microsoft.AspNetCore.Identity;
 using Shared.Wrappers;
 
 namespace Tests.Application.CommandHandlers;
 
 public class UpdateUserCommandHandlerTests
 {
-    private readonly Mock<IApplicationUserManager> _userManagerMock;
     private readonly UpdateUserCommandHandler _handler;
+    private readonly Mock<IApplicationUserManager> _userManagerMock;
 
     public UpdateUserCommandHandlerTests()
     {
@@ -28,7 +27,7 @@ public class UpdateUserCommandHandlerTests
         // Arrange
         var userId = Guid.NewGuid();
         var command = new UpdateUserCommand { Id = userId, Email = "updated@email.com", PhoneNumber = "555-5555" };
-        var user = new ApplicationUser { Id = userId, Email = "original@email.com",UserName = "original@email.com" };
+        var user = new ApplicationUser { Id = userId, Email = "original@email.com", UserName = "original@email.com" };
 
         _userManagerMock
             .Setup(x => x.GetAsync(It.Is<UserQuery>(q =>

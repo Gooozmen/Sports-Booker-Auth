@@ -29,4 +29,3 @@ public class ApplicationRoleManager(RoleManager<ApplicationRole> roleManager) : 
         };
     }
 }
-

@@ -16,7 +16,7 @@
 
     <ItemGroup>
         <PackageReference Include="MediatR"/>
-        
-        <ProjectReference Include="..\Domain\Domain.csproj" />
+
+        <ProjectReference Include="..\Domain\Domain.csproj"/>
     </ItemGroup>
 </Project>

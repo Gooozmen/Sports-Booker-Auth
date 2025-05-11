@@ -8,6 +8,9 @@ namespace Presentation.Controllers;
 [Route("api/[controller]/")]
 public abstract class ControllerBase(IServiceProvider serviceProvider) : Controller
 {
-    protected IHttpResponseBuilder ResponseBuilder { get;} = serviceProvider.GetRequiredService<IHttpResponseBuilder>();
-    protected IUserIdentifyService UserIdentifyService { get;} = serviceProvider.GetRequiredService<IUserIdentifyService>();
+    protected IHttpResponseBuilder ResponseBuilder { get; } =
+        serviceProvider.GetRequiredService<IHttpResponseBuilder>();
+
+    protected IUserIdentifyService UserIdentifyService { get; } =
+        serviceProvider.GetRequiredService<IUserIdentifyService>();
 }

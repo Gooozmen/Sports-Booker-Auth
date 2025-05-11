@@ -5,7 +5,6 @@ using Moq;
 using Shared.Commands;
 using Shared.Enums;
 using Shared.Queries;
-using Shared.Responses;
 using Shared.Responses.Auth;
 using Shared.Wrappers;
 
@@ -13,10 +12,10 @@ namespace Tests.Application.CommandHandlers;
 
 public class LoginCommandHandlerTests
 {
-    private readonly Mock<ILoginManager> _loginManagerMock;
-    private readonly Mock<IApplicationUserManager> _userManagerMock;
-    private readonly Mock<ITokenFactory> _tokenFactoryMock;
     private readonly LoginCommandHandler _handler;
+    private readonly Mock<ILoginManager> _loginManagerMock;
+    private readonly Mock<ITokenFactory> _tokenFactoryMock;
+    private readonly Mock<IApplicationUserManager> _userManagerMock;
 
     public LoginCommandHandlerTests()
     {
@@ -38,11 +37,10 @@ public class LoginCommandHandlerTests
         var command = new LoginCommand
         {
             Email = "test@email.com", Password = "123456"
-            
         };
-        
-        _userManagerMock.Setup(x => 
-                x.GetAsync(It.Is<UserQuery>(q => q.Email == command.Email && 
+
+        _userManagerMock.Setup(x =>
+                x.GetAsync(It.Is<UserQuery>(q => q.Email == command.Email &&
                                                  q.PropertyType == (int)IdentityPropertyTypes.UserEmail)))
             .ReturnsAsync((ApplicationUser)null);
 
@@ -58,7 +56,7 @@ public class LoginCommandHandlerTests
     public async Task Handle_ShouldReturnAuthFailedResponse_WhenPasswordIsIncorrect()
     {
         // Arrange
-        var command = new LoginCommand{Email = "user@system.com", Password = "wrongpass"};
+        var command = new LoginCommand { Email = "user@system.com", Password = "wrongpass" };
         var user = new ApplicationUser { Email = command.Email };
 
         _userManagerMock
@@ -81,7 +79,7 @@ public class LoginCommandHandlerTests
     public async Task Handle_ShouldReturnTokenResponse_WhenLoginSucceeds()
     {
         // Arrange
-        var command = new LoginCommand{Email = "login@success.com",Password = "correctpass"};
+        var command = new LoginCommand { Email = "login@success.com", Password = "correctpass" };
         var user = new ApplicationUser { Email = command.Email };
         var bearer = "token123";
         var accessToken = new AccessToken(bearer);
@@ -105,6 +103,6 @@ public class LoginCommandHandlerTests
         var loginResponse = Assert.IsType<LoginResponse>(result);
         Assert.True(loginResponse.IsSuccess);
         Assert.NotNull(loginResponse.AccessToken);
-        Assert.Equal(accessToken.Bearer,loginResponse.AccessToken.Bearer);
+        Assert.Equal(accessToken.Bearer, loginResponse.AccessToken.Bearer);
     }
 }

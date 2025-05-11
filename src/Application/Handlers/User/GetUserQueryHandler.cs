@@ -6,11 +6,10 @@ using Shared.Responses.User;
 
 namespace Application.Handlers;
 
-public class GetUserQueryHandler
-    (
-        IApplicationUserManager userManager,
-        IApplicationUserBuilder builder
-    ) 
+public class GetUserQueryHandler(
+    IApplicationUserManager userManager,
+    IApplicationUserBuilder builder
+)
     : IRequestHandler<UserQuery, UserResponse>
 {
     public async Task<UserResponse> Handle(UserQuery request, CancellationToken cancellationToken = default)

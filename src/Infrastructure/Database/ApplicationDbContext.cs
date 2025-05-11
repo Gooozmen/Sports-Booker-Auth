@@ -15,7 +15,7 @@ public class ApplicationDbContext :
         : base(options)
     {
     }
-    
+
     public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
     public virtual DbSet<ApplicationUserRole> ApplicationUserRoles { get; set; }
     public virtual DbSet<ApplicationUserClaim> ApplicationUserClaims { get; set; }

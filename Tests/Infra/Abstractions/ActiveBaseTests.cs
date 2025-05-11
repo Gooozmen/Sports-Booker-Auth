@@ -1,16 +1,28 @@
-using System.ComponentModel.DataAnnotations;
 using Infrastructure.Database.Base;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Tests.Infra.Abstractions;
 
 public class ActiveBaseTests
 {
+    [Fact]
+    public void ConfigureActiveProperty_ShouldSetDefaultValueTrueAndRequired()
+    {
+        // Arrange
+        using var context = new TestDbContext();
+        var entityType = context.Model.FindEntityType(typeof(DummyEntity));
+        var property = entityType!.FindProperty("Active");
+
+        // Assert
+        Assert.NotNull(property);
+        Assert.False(property.IsNullable);
+        Assert.Equal(true, property.GetDefaultValue());
+        Assert.Equal("Active", property.GetColumnName());
+    }
+
     private class DummyEntity
     {
-        
         public int Id { get; set; }
         public bool Active { get; set; }
     }
@@ -38,20 +50,5 @@ public class ActiveBaseTests
         {
             optionsBuilder.UseInMemoryDatabase("ActiveBaseTests");
         }
-    }
-
-    [Fact]
-    public void ConfigureActiveProperty_ShouldSetDefaultValueTrueAndRequired()
-    {
-        // Arrange
-        using var context = new TestDbContext();
-        var entityType = context.Model.FindEntityType(typeof(DummyEntity));
-        var property = entityType!.FindProperty("Active");
-
-        // Assert
-        Assert.NotNull(property);
-        Assert.False(property.IsNullable);
-        Assert.Equal(true, property.GetDefaultValue());
-        Assert.Equal("Active", property.GetColumnName());
     }
 }

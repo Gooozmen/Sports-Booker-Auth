@@ -87,10 +87,10 @@ public class ApplicationUserConfig : ActiveBase<ApplicationUser>, IEntityTypeCon
         builder.Property(x => x.AccessFailedCount)
             .HasColumnName("AccessFailedCount")
             .HasColumnOrder(15);
-        
+
         builder.HasIndex(x => x.Email).IsUnique();
         builder.HasIndex(x => x.UserName).IsUnique();
-        
+
         ConfigureActiveProperty(builder, 16);
     }
 }

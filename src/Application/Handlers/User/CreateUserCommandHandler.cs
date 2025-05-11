@@ -15,7 +15,7 @@ public class CreateUserCommandHandler(
     public async Task<IdentityResult> Handle(CreateUserCommand command, CancellationToken cancellationToken = default)
     {
         var dataModel = userBuilder.Apply(command);
-        var wrapper = new ApplicationUserWrapper{ApplicationUser = dataModel, Password = command.Password};
+        var wrapper = new ApplicationUserWrapper { ApplicationUser = dataModel, Password = command.Password };
         var result = await applicationUserManager.CreateAsync(wrapper);
         return result;
     }

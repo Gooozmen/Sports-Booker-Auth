@@ -4,7 +4,10 @@ namespace Presentation.Services;
 
 public class UserIdentifyService(IHttpContextAccessor httpContextAccessor) : IUserIdentifyService
 {
-    public string? GetUserId() => httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+    public string? GetUserId()
+    {
+        return httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+    }
 }
 
 public interface IUserIdentifyService

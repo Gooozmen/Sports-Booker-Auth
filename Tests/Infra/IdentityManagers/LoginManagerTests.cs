@@ -7,8 +7,8 @@ namespace Tests.Infra.IdentityManagers;
 
 public class LoginManagerTests
 {
-    Mock<UserManager<ApplicationUser>> _userManagerMock;
-    LoginManager _loginManager;
+    private readonly LoginManager _loginManager;
+    private readonly Mock<UserManager<ApplicationUser>> _userManagerMock;
 
     public LoginManagerTests()
     {
@@ -27,12 +27,12 @@ public class LoginManagerTests
         var password = "testlajd!#*&";
 
         _userManagerMock.Setup(c => c.CheckPasswordAsync(user, password)).ReturnsAsync(true);
-        
-        var result =  await _loginManager.CheckPasswordAsync(user, password);
-        
+
+        var result = await _loginManager.CheckPasswordAsync(user, password);
+
         Assert.True(result);
     }
-    
+
     [Fact]
     public async Task CheckPasswordAsync_InvalidPassword_ReturnsFalse()
     {
@@ -40,9 +40,9 @@ public class LoginManagerTests
         var password = "testlajd!#*&";
 
         _userManagerMock.Setup(c => c.CheckPasswordAsync(user, password)).ReturnsAsync(false);
-        
-        var result =  await _loginManager.CheckPasswordAsync(user, password);
-        
+
+        var result = await _loginManager.CheckPasswordAsync(user, password);
+
         Assert.False(result);
     }
 }

@@ -1,4 +1,3 @@
-
 using System.Text.Json.Serialization;
 using Shared.Enums;
 using Shared.Interfaces;
@@ -21,8 +20,9 @@ public sealed record ApplicationRoleQuery : IPropertyType
                 break;
         }
     }
-    public string? Id {get;}
-    public string? Name {get;}
-    [JsonIgnore]
-    public int PropertyType { get; set; }
+
+    public string? Id { get; }
+    public string? Name { get; }
+
+    [JsonIgnore] public int PropertyType { get; set; }
 }

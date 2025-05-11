@@ -74,7 +74,7 @@ public class LoggingPipelineBehaviorTests
     }
 }
 
-public class DummyRequest : IRequest<DummyResponse> 
+public class DummyRequest : IRequest<DummyResponse>
 {
     public string Payload => "test-payload";
 }

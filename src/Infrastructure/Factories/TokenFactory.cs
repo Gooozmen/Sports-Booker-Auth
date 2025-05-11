@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Security.Claims;
 using System.Text;
 using Application.Interfaces;
@@ -14,13 +13,13 @@ namespace Infrastructure.Factories;
 public class TokenFactory(IOptions<JwtOption> jwtOptions) : ITokenFactory
 {
     private readonly JwtOption _jwtOption = jwtOptions.Value;
-    
+
     public string Create(ApplicationUser user)
     {
         var key = AssemblySecurityKey();
         var credentials = AssemblySigningCredentials(key);
         var claims = AssemblyClaims(user);
-        
+
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(claims),
@@ -29,18 +28,22 @@ public class TokenFactory(IOptions<JwtOption> jwtOptions) : ITokenFactory
             Issuer = _jwtOption.Issuer,
             Audience = _jwtOption.Audience
         };
-        
+
         var handler = new JsonWebTokenHandler();
         var token = handler.CreateToken(tokenDescriptor);
         return token;
     }
-    
-    private SymmetricSecurityKey AssemblySecurityKey() 
-        =>new(Encoding.UTF8.GetBytes(_jwtOption.Key));
-    
+
+    private SymmetricSecurityKey AssemblySecurityKey()
+    {
+        return new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOption.Key));
+    }
+
     private SigningCredentials AssemblySigningCredentials(SymmetricSecurityKey key)
-        =>new(key,SecurityAlgorithms.HmacSha256);
-    
+    {
+        return new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+    }
+
     private IEnumerable<Claim> AssemblyClaims(ApplicationUser user)
     {
         return

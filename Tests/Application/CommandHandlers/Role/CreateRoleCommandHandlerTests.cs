@@ -10,9 +10,9 @@ namespace Tests.Application.CommandHandlers;
 
 public class CreateRoleCommandHandlerTests
 {
-    private readonly Mock<IApplicationRoleManager> _roleManagerMock;
-    private readonly Mock<IApplicationRoleBuilder> _roleBuilderMock;
     private readonly CreateRoleCommandHandler _handler;
+    private readonly Mock<IApplicationRoleBuilder> _roleBuilderMock;
+    private readonly Mock<IApplicationRoleManager> _roleManagerMock;
 
     public CreateRoleCommandHandlerTests()
     {
@@ -71,6 +71,3 @@ public class CreateRoleCommandHandlerTests
         Assert.Equal("Role already exists", result.Errors.First().Description);
     }
 }
-
-
-
