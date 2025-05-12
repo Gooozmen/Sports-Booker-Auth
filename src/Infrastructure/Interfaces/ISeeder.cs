@@ -1,4 +1,4 @@
-namespace Infrastructure.Database.Seeders;
+namespace CourtBooker.Auth.Infrastructure.Database.Seeders;
 
 public interface ISeeder
 {

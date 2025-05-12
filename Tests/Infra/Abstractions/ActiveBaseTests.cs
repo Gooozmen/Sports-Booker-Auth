@@ -1,8 +1,8 @@
-using Infrastructure.Database.Base;
+using CourtBooker.Auth.Infrastructure.Database.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Tests.Infra.Abstractions;
+namespace CourtBooker.Auth.Tests.Infra.Abstractions;
 
 public class ActiveBaseTests
 {

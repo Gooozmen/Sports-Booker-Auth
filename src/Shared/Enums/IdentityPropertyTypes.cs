@@ -1,4 +1,4 @@
-namespace Shared.Enums;
+namespace CourtBooker.Auth.Shared.Enums;
 
 public enum IdentityPropertyTypes
 {

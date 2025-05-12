@@ -1,7 +1,7 @@
-using Domain.Models;
+using CourtBooker.Auth.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace Infrastructure.Database.Seeders;
+namespace CourtBooker.Auth.Infrastructure.Database.Seeders;
 
 public class ApplicationUserSeeder : ISeeder
 {

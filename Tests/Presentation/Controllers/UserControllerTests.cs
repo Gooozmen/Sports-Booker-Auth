@@ -1,10 +1,10 @@
-using Application.Builders;
+using CourtBooker.Auth.Application.Builders;
 using MediatR;
 using Moq;
-using Presentation.Controllers;
-using Presentation.Services;
+using CourtBooker.Auth.Presentation.Controllers;
+using CourtBooker.Auth.Presentation.Services;
 
-namespace Tests.Presentation.Controllers;
+namespace CourtBooker.Auth.Tests.Presentation.Controllers;
 
 public class UserControllerTests
 {

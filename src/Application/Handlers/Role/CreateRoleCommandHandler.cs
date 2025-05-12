@@ -1,10 +1,10 @@
-using Application.Builders;
-using Application.Interfaces;
+using CourtBooker.Auth.Application.Builders;
+using CourtBooker.Auth.Application.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Shared.Commands;
+using CourtBooker.Auth.Shared.Commands;
 
-namespace Application.Handlers;
+namespace CourtBooker.Auth.Application.Handlers;
 
 public class CreateRoleCommandHandler(
     IApplicationRoleManager roleManager,

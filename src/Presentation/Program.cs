@@ -1,6 +1,6 @@
-using Application;
-using Infrastructure;
-using Presentation;
+using CourtBooker.Auth.Application;
+using CourtBooker.Auth.Infrastructure;
+using CourtBooker.Auth.Presentation;
 
 try
 {

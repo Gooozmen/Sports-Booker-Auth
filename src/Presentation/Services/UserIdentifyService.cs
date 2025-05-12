@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace Presentation.Services;
+namespace CourtBooker.Auth.Presentation.Services;
 
 public class UserIdentifyService(IHttpContextAccessor httpContextAccessor) : IUserIdentifyService
 {

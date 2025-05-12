@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using CourtBooker.Auth.Presentation.Interceptors;
+using CourtBooker.Auth.Presentation.Middleware;
+using CourtBooker.Auth.Presentation.Services;
+using CourtBooker.Auth.Presentation.Transformations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using Presentation.Interceptors;
-using Presentation.Middleware;
-using Presentation.Services;
-using Presentation.Transformations;
 
-namespace Presentation;
+namespace CourtBooker.Auth.Presentation;
 
 public static class DependencyInjection
 {
