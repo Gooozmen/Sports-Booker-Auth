@@ -1,8 +1,8 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Shared.Interfaces;
+using CourtBooker.Auth.Shared.Interfaces;
 
-namespace Application.Behaviors;
+namespace CourtBooker.Auth.Application.Behaviors;
 
 public class LoggingPipelineBehavior<TRequest, TResponse>(ILogger<LoggingPipelineBehavior<TRequest, TResponse>> logger)
     : IPipelineBehavior<TRequest, TResponse>

@@ -1,10 +1,10 @@
 using System.Reflection;
-using Application.Behaviors;
-using Application.Builders;
+using CourtBooker.Auth.Application.Behaviors;
+using CourtBooker.Auth.Application.Builders;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Application;
+namespace CourtBooker.Auth.Application;
 
 public static class DependencyInjection
 {

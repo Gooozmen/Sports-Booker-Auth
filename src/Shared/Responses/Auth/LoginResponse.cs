@@ -1,7 +1,7 @@
-using Shared.Interfaces;
-using Shared.Wrappers;
+using CourtBooker.Auth.Shared.Interfaces;
+using CourtBooker.Auth.Shared.Wrappers;
 
-namespace Shared.Responses.Auth;
+namespace CourtBooker.Auth.Shared.Responses;
 
 public class LoginResponse : IResponse
 {

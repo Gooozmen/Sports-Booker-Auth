@@ -1,10 +1,10 @@
-using Domain.Models;
-using Infrastructure.IdentityManagers;
+using CourtBooker.Auth.Domain.Models;
+using CourtBooker.Auth.Infrastructure.IdentityManagers;
 using Microsoft.AspNetCore.Identity;
 using Moq;
-using Shared.Wrappers;
+using CourtBooker.Auth.Shared.Wrappers;
 
-namespace Tests.Infra.IdentityManagers;
+namespace CourtBooker.Auth.Tests.Infra.IdentityManagers;
 
 public class ApplicationUserManagerTests
 {

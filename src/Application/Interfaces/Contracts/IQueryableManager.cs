@@ -1,6 +1,6 @@
-using Shared.Interfaces;
+using CourtBooker.Auth.Shared.Interfaces;
 
-namespace Application.Interfaces;
+namespace CourtBooker.Auth.Application.Interfaces;
 
 public interface IQueryableManager<TResult, in TData> where TData : IPropertyType
 {

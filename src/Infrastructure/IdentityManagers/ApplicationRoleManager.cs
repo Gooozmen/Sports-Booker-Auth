@@ -1,10 +1,10 @@
-using Application.Interfaces;
-using Domain.Models;
+using CourtBooker.Auth.Application.Interfaces;
+using CourtBooker.Auth.Domain.Models;
 using Microsoft.AspNetCore.Identity;
-using Shared.Enums;
-using Shared.Queries;
+using CourtBooker.Auth.Shared.Enums;
+using CourtBooker.Auth.Shared.Queries;
 
-namespace Infrastructure.IdentityManagers;
+namespace CourtBooker.Auth.Infrastructure.IdentityManagers;
 
 public class ApplicationRoleManager(RoleManager<ApplicationRole> roleManager) : IApplicationRoleManager
 {

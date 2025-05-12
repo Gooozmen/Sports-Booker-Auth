@@ -1,4 +1,4 @@
-namespace Shared.Interfaces;
+namespace CourtBooker.Auth.Shared.Interfaces;
 
 public interface ICommand
 {

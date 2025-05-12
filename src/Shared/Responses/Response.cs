@@ -1,6 +1,6 @@
-using Shared.Interfaces;
+using CourtBooker.Auth.Shared.Interfaces;
 
-namespace Shared.Responses;
+namespace CourtBooker.Auth.Shared.Responses;
 
 public class Response<T> : IResponse
 {

@@ -1,8 +1,8 @@
-using Application.Builders;
-using Domain.Models;
-using Shared.Commands;
+using CourtBooker.Auth.Application.Builders;
+using CourtBooker.Auth.Domain.Models;
+using CourtBooker.Auth.Shared.Commands;
 
-namespace Tests.Application.Builders;
+namespace CourtBooker.Auth.Tests.Application.Builders;
 
 public class ApplicationRoleBuilderTests
 {

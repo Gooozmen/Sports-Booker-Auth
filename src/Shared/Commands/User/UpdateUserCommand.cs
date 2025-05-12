@@ -1,9 +1,9 @@
 using System.Text.Json.Serialization;
+using CourtBooker.Auth.Shared.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Shared.Interfaces;
 
-namespace Shared.Commands;
+namespace CourtBooker.Auth.Shared.Commands;
 
 public sealed record UpdateUserCommand : IRequest<IdentityResult>, ICommand
 {

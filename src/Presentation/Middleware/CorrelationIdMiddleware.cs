@@ -1,6 +1,6 @@
 using Serilog.Context;
 
-namespace Presentation.Middleware;
+namespace CourtBooker.Auth.Presentation.Middleware;
 
 public class CorrelationIdMiddleware(RequestDelegate next)
 {

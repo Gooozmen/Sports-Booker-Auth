@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Presentation.Controllers;
+namespace CourtBooker.Auth.Presentation.Controllers;
 
 [AllowAnonymous]
 [Controller]
