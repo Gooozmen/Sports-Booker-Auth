@@ -1,10 +1,10 @@
-using Domain.Models;
-using Infrastructure.IdentityManagers;
+using CourtBooker.Auth.Domain.Models;
+using CourtBooker.Auth.Infrastructure.IdentityManagers;
 using Microsoft.AspNetCore.Identity;
 using Moq;
-using Shared.Wrappers;
+using CourtBooker.Auth.Shared.Wrappers;
 
-namespace Tests.Infra.IdentityManagers;
+namespace CourtBooker.Auth.Tests.Infra.IdentityManagers;
 
 public class ApplicationUserManagerTests
 {
@@ -27,7 +27,7 @@ public class ApplicationUserManagerTests
         // Arrange
         var user = new ApplicationUser { UserName = "testuser", Email = "test@example.com" };
         var password = "Test@123";
-        var wrapper = new ApplicationUserWrapper{ApplicationUser = user, Password = password};
+        var wrapper = new ApplicationUserWrapper { ApplicationUser = user, Password = password };
 
         _mockUserManager.Setup(um => um.CreateAsync(user, password))
             .ReturnsAsync(IdentityResult.Success);
@@ -47,7 +47,7 @@ public class ApplicationUserManagerTests
         // Arrange
         var user = new ApplicationUser { UserName = "testuser", Email = "test@example.com" };
         var password = "Test@123";
-        var wrapper = new ApplicationUserWrapper{ApplicationUser = user, Password = password};
+        var wrapper = new ApplicationUserWrapper { ApplicationUser = user, Password = password };
 
         var identityErrors = new[] { new IdentityError { Description = "Error creating user" } };
         var failedResult = IdentityResult.Failed(identityErrors);

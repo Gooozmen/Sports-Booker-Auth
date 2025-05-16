@@ -1,13 +1,13 @@
-using Application.Builders;
-using Application.Handlers;
-using Domain.Models;
-using Application.Interfaces;
+using CourtBooker.Auth.Application.Builders;
+using CourtBooker.Auth.Application.Handlers;
+using CourtBooker.Auth.Application.Interfaces;
+using CourtBooker.Auth.Domain.Models;
 using Microsoft.AspNetCore.Identity;
-using Shared.Wrappers;
 using Moq;
-using Shared.Commands;
+using CourtBooker.Auth.Shared.Commands;
+using CourtBooker.Auth.Shared.Wrappers;
 
-namespace Tests.Application.CommandHandlers;
+namespace CourtBooker.Auth.Tests.Application.CommandHandlers;
 
 public class CreateUserCommandHandlerTests
 {
@@ -29,37 +29,40 @@ public class CreateUserCommandHandlerTests
     public async Task ExecuteCreateAsync_ShouldReturnSuccess_WhenUserIsCreated()
     {
         // Arrange
-        var command = new CreateUserCommand { Email = "test@example.com", Password = "Secure123!", PhoneNumber = "1234-2343" };
-        var userModel = new ApplicationUser { Id = Guid.NewGuid(), UserName = command.Email, Email = command.Email, PhoneNumber = command.PhoneNumber };
-        var wrapper = new ApplicationUserWrapper{ ApplicationUser = userModel, Password = command.Password };
+        var command = new CreateUserCommand
+            { Email = "test@example.com", Password = "Secure123!", PhoneNumber = "1234-2343" };
+        var userModel = new ApplicationUser
+            { Id = Guid.NewGuid(), UserName = command.Email, Email = command.Email, PhoneNumber = command.PhoneNumber };
+        var wrapper = new ApplicationUserWrapper { ApplicationUser = userModel, Password = command.Password };
         var identityResult = IdentityResult.Success;
 
         _mockUserBuilder
             .Setup(b => b.Apply(It.Is<CreateUserCommand>(c => c.Email == command.Email)))
             .Returns(userModel);
-        
+
         _mockApplicationUserManager.Setup(x => x.CreateAsync
                 (
                     It.Is<ApplicationUserWrapper>
                     (
-                        w => w.ApplicationUser.Email == command.Email && 
+                        w => w.ApplicationUser.Email == command.Email &&
                              w.Password == command.Password)
-                    )
                 )
+            )
             .ReturnsAsync(identityResult);
-        
+
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
 
         // Assert
         Assert.True(result != null);
         Assert.True(result.Succeeded);
-        _mockUserBuilder.Verify(b => b.Apply(It.Is<CreateUserCommand>(c => c.Email == command.Email)), Times.Once); // Ensure Apply() was called once
+        _mockUserBuilder.Verify(b => b.Apply(It.Is<CreateUserCommand>(c => c.Email == command.Email)),
+            Times.Once); // Ensure Apply() was called once
         _mockApplicationUserManager.Verify(m => m.CreateAsync(It.Is<ApplicationUserWrapper>
-            (
-                w => w.ApplicationUser.Email == command.Email && 
-                     w.Password == command.Password
-            )), Times.Once); // Ensure CreateUserAsync() was called once
+        (
+            w => w.ApplicationUser.Email == command.Email &&
+                 w.Password == command.Password
+        )), Times.Once); // Ensure CreateUserAsync() was called once
     }
 
     [Fact]
@@ -68,7 +71,7 @@ public class CreateUserCommandHandlerTests
         // Arrange
         var command = new CreateUserCommand { Email = "test@example.com", Password = "Secure123!" };
         var userModel = new ApplicationUser { UserName = command.Email, Email = command.Email };
-        var wrapper = new ApplicationUserWrapper{ ApplicationUser = userModel, Password = command.Password };
+        var wrapper = new ApplicationUserWrapper { ApplicationUser = userModel, Password = command.Password };
 
         _mockUserBuilder
             .Setup(b => b.Apply(It.Is<CreateUserCommand>(c => c.Email == command.Email)))
@@ -77,7 +80,7 @@ public class CreateUserCommandHandlerTests
         _mockApplicationUserManager
             .Setup(x => x.CreateAsync(It.IsAny<ApplicationUserWrapper>()))
             .ReturnsAsync(IdentityResult.Failed(new IdentityError { Description = "User creation failed" }));
-        
+
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
 

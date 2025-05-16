@@ -1,8 +1,8 @@
-using Domain.Models;
+using CourtBooker.Auth.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Database.Configurations;
+namespace CourtBooker.Auth.Infrastructure.Database.Configurations;
 
 public class ApplicationUserLoginConfig : IEntityTypeConfiguration<ApplicationUserLogin>
 {

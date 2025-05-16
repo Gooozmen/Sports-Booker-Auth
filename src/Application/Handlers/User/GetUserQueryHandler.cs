@@ -1,16 +1,15 @@
-using Application.Builders;
-using Application.Interfaces;
+using CourtBooker.Auth.Application.Builders;
+using CourtBooker.Auth.Application.Interfaces;
 using MediatR;
-using Shared.Queries;
-using Shared.Responses.User;
+using CourtBooker.Auth.Shared.Queries;
+using CourtBooker.Auth.Shared.Responses;
 
-namespace Application.Handlers;
+namespace CourtBooker.Auth.Application.Handlers;
 
-public class GetUserQueryHandler
-    (
-        IApplicationUserManager userManager,
-        IApplicationUserBuilder builder
-    ) 
+public class GetUserQueryHandler(
+    IApplicationUserManager userManager,
+    IApplicationUserBuilder builder
+)
     : IRequestHandler<UserQuery, UserResponse>
 {
     public async Task<UserResponse> Handle(UserQuery request, CancellationToken cancellationToken = default)

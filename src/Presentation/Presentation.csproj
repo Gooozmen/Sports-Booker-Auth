@@ -5,30 +5,29 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UserSecretsId>9b7ce954-8914-4c01-b3ba-65e524588aaf</UserSecretsId>
-    </PropertyGroup>
 
-    <PropertyGroup>
-        <OutputPath>..\..\Output\</OutputPath>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-        <RestorePackagesPath>..\..\Dependencies\Packages\</RestorePackagesPath>
         <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+
+        <AssemblyName>CourtBooker.Auth.Presentation</AssemblyName>
+        <OutputPath>..\..\Output\</OutputPath>
+        <RestorePackagesPath>..\..\Dependencies\Packages\</RestorePackagesPath>
     </PropertyGroup>
 
     <ItemGroup>
         <Content Update="appsettings.json">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-    </ItemGroup>
 
-    <ItemGroup>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
 
         <ProjectReference Include="..\Application\Application.csproj"/>
-        <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+        <ProjectReference Include="..\Infrastructure\Infrastructure.csproj"/>
         <ProjectReference Include="..\Shared\Shared.csproj"/>
     </ItemGroup>
 </Project>

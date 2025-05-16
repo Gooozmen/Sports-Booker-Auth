@@ -1,16 +1,10 @@
-using System.Net;
-using Application.Builders;
+using CourtBooker.Auth.Application.Builders;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Presentation.Controllers;
-using Presentation.Services;
-using Shared.Commands;
-using Shared.Enums;
-using Shared.Responses;
+using CourtBooker.Auth.Presentation.Controllers;
+using CourtBooker.Auth.Presentation.Services;
 
-namespace Tests.Presentation.Controllers;
+namespace CourtBooker.Auth.Tests.Presentation.Controllers;
 
 public class UserControllerTests
 {
@@ -25,9 +19,9 @@ public class UserControllerTests
         // Mock dependencies
         _mockResponseBuilder = new Mock<IHttpResponseBuilder>();
         _mockSender = new Mock<ISender>();
-        _mockServiceProvider  = new Mock<IServiceProvider>();
+        _mockServiceProvider = new Mock<IServiceProvider>();
         _mockUserIdentifyService = new Mock<IUserIdentifyService>();
-        
+
         _mockServiceProvider.Setup(sp => sp.GetService(typeof(IHttpResponseBuilder)))
             .Returns(_mockResponseBuilder.Object);
         _mockServiceProvider.Setup(sp => sp.GetService(typeof(IUserIdentifyService)))

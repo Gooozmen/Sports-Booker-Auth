@@ -1,13 +1,11 @@
 using System.Net;
-using System.Reflection;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Commands;
-using Shared.Enums;
-using Shared.Queries;
+using CourtBooker.Auth.Shared.Commands;
+using CourtBooker.Auth.Shared.Enums;
+using CourtBooker.Auth.Shared.Queries;
 
-namespace Presentation.Controllers;
+namespace CourtBooker.Auth.Presentation.Controllers;
 
 public class UserController(
     ISender sender,
@@ -15,13 +13,14 @@ public class UserController(
 ) : AuthorizeControllerBase(serviceProvider)
 {
     /// <summary>
-    ///  Dynamic endpoint to get a single user by specifying a key and the property type
+    ///     Dynamic endpoint to get a single user by specifying a key and the property type
     /// </summary>
     /// <param name="key">id value, email value, username value</param>
     /// <param name="propertyType">integer id corresponding the key type that is being sent, 3 = id, 4 = name, 6 = email</param>
     /// <returns>UserResponse</returns>
     [HttpGet("me")]
-    public async Task<IActionResult> GetUserAsync([FromQuery] string key, [FromQuery] int propertyType = (int)IdentityPropertyTypes.UserEmail)
+    public async Task<IActionResult> GetUserAsync([FromQuery] string key,
+        [FromQuery] int propertyType = (int)IdentityPropertyTypes.UserEmail)
     {
         var query = new UserQuery(key, propertyType);
         var result = await sender.Send(query);
@@ -37,13 +36,12 @@ public class UserController(
     public async Task<IActionResult> UpdateUserAsync([FromBody] UpdateUserCommand command)
     {
         var userId = UserIdentifyService.GetUserId();
-        
-        if(userId is null) return BadRequest();
-        
+
+        if (userId is null) return BadRequest();
+
         command.Id = Guid.Parse(userId);
-        
+
         var result = await sender.Send(command);
         return Ok(ResponseBuilder.CreateResponse((int)HttpStatusCode.OK, result));
     }
-
 }

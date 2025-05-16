@@ -1,22 +1,22 @@
 using System.Net;
-using Application.Builders;
+using CourtBooker.Auth.Application.Builders;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Presentation.Controllers;
-using Presentation.Services;
-using Shared.Commands;
-using Shared.Responses;
+using CourtBooker.Auth.Presentation.Controllers;
+using CourtBooker.Auth.Presentation.Services;
+using CourtBooker.Auth.Shared.Commands;
+using CourtBooker.Auth.Shared.Responses;
 
-namespace Tests.Presentation.Controllers;
+namespace CourtBooker.Auth.Tests.Presentation.Controllers;
 
 public class RoleControllerTests
 {
-    private readonly Mock<ISender> _mockSender;
-    private readonly Mock<IHttpResponseBuilder> _mockResponseBuilder;
-    private readonly Mock<IUserIdentifyService> _mockUserIdentifyService;
     private readonly RoleController _controller;
+    private readonly Mock<IHttpResponseBuilder> _mockResponseBuilder;
+    private readonly Mock<ISender> _mockSender;
+    private readonly Mock<IUserIdentifyService> _mockUserIdentifyService;
 
     public RoleControllerTests()
     {
@@ -40,7 +40,7 @@ public class RoleControllerTests
         var result = IdentityResult.Success;
         var command = new CreateRoleCommand { Name = "Admin" };
         var endpointResult = new Response<IdentityResult> { IsSuccess = true };
-        
+
 
         _mockSender.Setup(s => s.Send(command, CancellationToken.None)).ReturnsAsync(result);
 
@@ -63,7 +63,7 @@ public class RoleControllerTests
         var result = IdentityResult.Failed();
         var command = new CreateRoleCommand { Name = "Admin" };
 
-        _mockSender.Setup(s => s.Send(command,CancellationToken.None)).ReturnsAsync(result);
+        _mockSender.Setup(s => s.Send(command, CancellationToken.None)).ReturnsAsync(result);
 
         _mockResponseBuilder
             .Setup(rb => rb.CreateResponse((int)HttpStatusCode.BadRequest, result, "user creation failed"));

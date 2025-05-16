@@ -1,7 +1,7 @@
-using Application.Builders;
-using Shared.Enums;
+using CourtBooker.Auth.Application.Builders;
+using CourtBooker.Auth.Shared.Enums;
 
-namespace Tests.Application.Builders;
+namespace CourtBooker.Auth.Tests.Application.Builders;
 
 public class HttpResponseBuilderTests
 {

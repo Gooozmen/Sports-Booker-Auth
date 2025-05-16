@@ -1,18 +1,18 @@
-using Application.Builders;
-using Application.Handlers;
-using Application.Interfaces;
-using Domain.Models;
+using CourtBooker.Auth.Application.Builders;
+using CourtBooker.Auth.Application.Handlers;
+using CourtBooker.Auth.Application.Interfaces;
+using CourtBooker.Auth.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Moq;
-using Shared.Commands;
+using CourtBooker.Auth.Shared.Commands;
 
-namespace Tests.Application.CommandHandlers;
+namespace CourtBooker.Auth.Tests.Application.CommandHandlers;
 
 public class CreateRoleCommandHandlerTests
 {
-    private readonly Mock<IApplicationRoleManager> _roleManagerMock;
-    private readonly Mock<IApplicationRoleBuilder> _roleBuilderMock;
     private readonly CreateRoleCommandHandler _handler;
+    private readonly Mock<IApplicationRoleBuilder> _roleBuilderMock;
+    private readonly Mock<IApplicationRoleManager> _roleManagerMock;
 
     public CreateRoleCommandHandlerTests()
     {
@@ -71,6 +71,3 @@ public class CreateRoleCommandHandlerTests
         Assert.Equal("Role already exists", result.Errors.First().Description);
     }
 }
-
-
-

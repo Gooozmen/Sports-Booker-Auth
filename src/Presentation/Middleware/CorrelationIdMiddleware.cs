@@ -1,6 +1,6 @@
 using Serilog.Context;
 
-namespace Presentation.Middleware;
+namespace CourtBooker.Auth.Presentation.Middleware;
 
 public class CorrelationIdMiddleware(RequestDelegate next)
 {
@@ -11,15 +11,15 @@ public class CorrelationIdMiddleware(RequestDelegate next)
         var correlationId = context.Request.Headers.TryGetValue(CorrelationIdHeader, out var id)
             ? id.ToString()
             : Guid.NewGuid().ToString();
-        
+
         context.Items[CorrelationIdHeader] = correlationId;
-        
+
         context.Response.OnStarting(() =>
         {
             context.Response.Headers[CorrelationIdHeader] = correlationId;
             return Task.CompletedTask;
         });
-        
+
         using (LogContext.PushProperty("CorrelationId", correlationId))
         {
             await next(context);

@@ -1,13 +1,12 @@
-using Application.Interfaces;
-using Domain.Models;
+using CourtBooker.Auth.Application.Interfaces;
+using CourtBooker.Auth.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace Infrastructure.IdentityManagers;
+namespace CourtBooker.Auth.Infrastructure.IdentityManagers;
 
-public class LoginManager
-    (
-        UserManager<ApplicationUser> userManager
-    ) 
+public class LoginManager(
+    UserManager<ApplicationUser> userManager
+)
     : ILoginManager
 {
     public async Task<bool> CheckPasswordAsync(ApplicationUser user, string password)
@@ -15,4 +14,3 @@ public class LoginManager
         return await userManager.CheckPasswordAsync(user, password);
     }
 }
-

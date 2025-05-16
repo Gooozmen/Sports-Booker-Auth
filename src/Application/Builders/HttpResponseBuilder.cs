@@ -1,8 +1,7 @@
-using Microsoft.Extensions.Primitives;
-using Shared.Enums;
-using Shared.Responses;
+using CourtBooker.Auth.Shared.Enums;
+using CourtBooker.Auth.Shared.Responses;
 
-namespace Application.Builders;
+namespace CourtBooker.Auth.Application.Builders;
 
 public class HttpResponseBuilder : IHttpResponseBuilder
 {

@@ -1,9 +1,9 @@
-﻿using Infrastructure.Database.Seeders;
-using Infrastructure.Options;
+﻿using CourtBooker.Auth.Infrastructure.Database.Seeders;
+using CourtBooker.Auth.Infrastructure.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
-namespace Infrastructure.Database;
+namespace CourtBooker.Auth.Infrastructure.Database;
 
 public class ApplicationDbContextInitializer : IContextInitializer
 {

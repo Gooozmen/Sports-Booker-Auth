@@ -1,13 +1,12 @@
-
 using System.Text.Json.Serialization;
+using CourtBooker.Auth.Shared.Enums;
+using CourtBooker.Auth.Shared.Interfaces;
+using CourtBooker.Auth.Shared.Responses;
 using MediatR;
-using Shared.Enums;
-using Shared.Interfaces;
-using Shared.Responses.User;
 
-namespace Shared.Queries;
+namespace CourtBooker.Auth.Shared.Queries;
 
-public sealed record UserQuery : IRequest<UserResponse>, IQuery 
+public sealed record UserQuery : IRequest<UserResponse>, IQuery
 {
     public UserQuery(string value, int propertyType)
     {
@@ -27,10 +26,9 @@ public sealed record UserQuery : IRequest<UserResponse>, IQuery
         }
     }
 
-    public string? Id { get;}
-    public string? Email { get;}
-    public string? UserName { get;}
-    [JsonIgnore]
-    public int PropertyType { get; set; }
-    
+    public string? Id { get; }
+    public string? Email { get; }
+    public string? UserName { get; }
+
+    [JsonIgnore] public int PropertyType { get; set; }
 }

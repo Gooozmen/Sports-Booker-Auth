@@ -1,15 +1,14 @@
 ﻿using System.Text;
-using Application.Interfaces;
-using Domain.Models;
-using Infrastructure.Database;
-using Infrastructure.Database.Seeders;
-using Infrastructure.Environments;
-using Infrastructure.Factories;
-using Infrastructure.IdentityManagers;
-using Infrastructure.Options;
+using CourtBooker.Auth.Application.Interfaces;
+using CourtBooker.Auth.Domain.Models;
+using CourtBooker.Auth.Infrastructure.Database;
+using CourtBooker.Auth.Infrastructure.Database.Seeders;
+using CourtBooker.Auth.Infrastructure.Environments;
+using CourtBooker.Auth.Infrastructure.Factories;
+using CourtBooker.Auth.Infrastructure.IdentityManagers;
+using CourtBooker.Auth.Infrastructure.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,32 +17,35 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 
-namespace Infrastructure;
+namespace CourtBooker.Auth.Infrastructure;
 
 public static class DependencyInjection
 {
     public static WebApplicationBuilder SetupLoggingInfrastructure(this WebApplicationBuilder builder)
     {
-        builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
+        builder.Host.UseSerilog((context, configuration) =>
+            configuration.ReadFrom.Configuration(context.Configuration));
         return builder;
     }
+
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
         SetupDatabase(services);
-        
+
         services.AddTransient<ITokenFactory, TokenFactory>();
 
         services.AddSingleton<IEnvironmentValidator, EnvironmentValidator>();
         services.AddScoped<IApplicationUserManager, ApplicationUserManager>();
         services.AddScoped<IApplicationRoleManager, ApplicationRoleManager>();
         services.AddScoped<ILoginManager, LoginManager>();
-        
-        
+
+
         services.AddTransient<ISeeder, ApplicationUserSeeder>();
         services.AddTransient<ISeeder, ApplicationRoleSeeder>();
-        
+
         return services;
     }
+
     public static IServiceCollection ConfigureJwt(this IServiceCollection services)
     {
         var option = services.BuildServiceProvider().GetRequiredService<IOptions<JwtOption>>();
@@ -54,23 +56,24 @@ public static class DependencyInjection
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(options =>
-            {
-                var key = Encoding.UTF8.GetBytes(jwt.Key);
+        {
+            var key = Encoding.UTF8.GetBytes(jwt.Key);
 
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwt.Issuer,
-                    ValidAudience = jwt.Audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(key)
-                };
-            });
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = jwt.Issuer,
+                ValidAudience = jwt.Audience,
+                IssuerSigningKey = new SymmetricSecurityKey(key)
+            };
+        });
 
         return services;
     }
+
     public static IServiceCollection ConfigureOptions(this IServiceCollection services, IConfiguration configuration)
     {
         // Add configuration options
@@ -79,6 +82,7 @@ public static class DependencyInjection
         services.Configure<EntityFrameworkOption>(configuration.GetSection("EntityFramework"));
         return services;
     }
+
     private static void SetupDatabase(this IServiceCollection services)
     {
         var option = services.BuildServiceProvider().GetRequiredService<IOptions<ConnectionStringsOption>>();
@@ -95,19 +99,22 @@ public static class DependencyInjection
                     npgsqlOptions.CommandTimeout(15);
                 }
             );
-            options.EnableDetailedErrors(true);
+            options.EnableDetailedErrors();
             // options.EnableSensitiveDataLogging();
         });
-        
+
         services.AddIdentityCore<ApplicationUser>()
             .AddRoles<ApplicationRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
-        
-        services.AddScoped<IDbContextFactory<ApplicationDbContext>, ApplicationDbContextFactory<ApplicationDbContext>>();
-        services.AddTransient<ApplicationDbContext>(provider => provider.GetRequiredService<IDbContextFactory<ApplicationDbContext>>().CreateDbContext());
+
+        services
+            .AddScoped<IDbContextFactory<ApplicationDbContext>, ApplicationDbContextFactory<ApplicationDbContext>>();
+        services.AddTransient<ApplicationDbContext>(provider =>
+            provider.GetRequiredService<IDbContextFactory<ApplicationDbContext>>().CreateDbContext());
         services.AddScoped<ApplicationDbContextInitializer>();
     }
+
     public static async Task UseDevelopEnvironment(this WebApplication app)
     {
         var environmentValidator = app.Services.GetRequiredService<IEnvironmentValidator>();
@@ -117,7 +124,7 @@ public static class DependencyInjection
             await app.RunDatabaseInitialization();
         }
     }
-    
+
     private static async Task RunDatabaseInitialization(this WebApplication app)
     {
         using var scope = app.Services.CreateScope();
