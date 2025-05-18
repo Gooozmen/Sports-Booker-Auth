@@ -1,7 +1,7 @@
-using Domain.Interfaces;
+using CourtBooker.Auth.Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
-namespace Domain.Models;
+namespace CourtBooker.Auth.Domain.Models;
 
 public class ApplicationRole : IdentityRole<Guid>, IActive
 {

@@ -4,13 +4,12 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-    </PropertyGroup>
-    <PropertyGroup>
-        <OutputPath>..\..\Output\</OutputPath>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+        <AssemblyName>CourtBooker.Auth.Infrastructure</AssemblyName>
+        <OutputPath>..\..\Output\</OutputPath>
         <RestorePackagesPath>..\..\Dependencies\Packages\</RestorePackagesPath>
-        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer"/>

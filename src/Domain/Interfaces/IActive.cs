@@ -1,4 +1,4 @@
-namespace Domain.Interfaces;
+namespace CourtBooker.Auth.Domain.Interfaces;
 
 public interface IActive
 {

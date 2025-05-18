@@ -1,4 +1,4 @@
-namespace Infrastructure.Options;
+namespace CourtBooker.Auth.Infrastructure.Options;
 
 public class JwtOption
 {

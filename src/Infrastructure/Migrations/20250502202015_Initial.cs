@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace CourtBooker.Auth.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration

@@ -12,7 +12,7 @@
         <OutputPath>..\Output</OutputPath>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-        <RestorePackagesPath>..\..\Dependencies\Packages\</RestorePackagesPath>
+        <RestorePackagesPath>..\Dependencies\Packages\</RestorePackagesPath>
     </PropertyGroup>
 
     <ItemGroup>

@@ -1,4 +1,4 @@
-namespace Domain.Enums;
+namespace CourtBooker.Auth.Domain.Enums;
 
 public enum UserRoles
 {

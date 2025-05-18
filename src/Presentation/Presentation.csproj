@@ -5,14 +5,14 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UserSecretsId>9b7ce954-8914-4c01-b3ba-65e524588aaf</UserSecretsId>
-    </PropertyGroup>
 
-    <PropertyGroup>
-        <OutputPath>..\..\Output\</OutputPath>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+
+        <AssemblyName>CourtBooker.Auth.Presentation</AssemblyName>
+        <OutputPath>..\..\Output\</OutputPath>
         <RestorePackagesPath>..\..\Dependencies\Packages\</RestorePackagesPath>
-        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     </PropertyGroup>
 
     <ItemGroup>

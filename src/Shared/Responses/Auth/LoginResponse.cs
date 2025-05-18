@@ -1,8 +1,8 @@
+using CourtBooker.Auth.Shared.Interfaces;
+using CourtBooker.Auth.Shared.Wrappers;
 using Microsoft.AspNetCore.Authorization;
-using Shared.Interfaces;
-using Shared.Wrappers;
 
-namespace Shared.Responses.Auth;
+namespace CourtBooker.Auth.Shared.Responses.Auth;
 
 public class LoginResponse: IResponse
 {

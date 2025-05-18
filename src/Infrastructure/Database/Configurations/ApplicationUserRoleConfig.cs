@@ -1,9 +1,9 @@
-using Domain.Models;
-using Infrastructure.Database.Base;
+using CourtBooker.Auth.Domain.Models;
+using CourtBooker.Auth.Infrastructure.Database.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Database.Configurations;
+namespace CourtBooker.Auth.Infrastructure.Database.Configurations;
 
 public class ApplicationUserRoleConfig : ActiveBase<ApplicationUserRole>, IEntityTypeConfiguration<ApplicationUserRole>
 {

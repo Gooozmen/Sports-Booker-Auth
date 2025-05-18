@@ -1,4 +1,4 @@
-namespace Application.Interfaces;
+namespace CourtBooker.Auth.Application.Interfaces;
 public interface ICommandManager<in TModel, TResult>
 {
     Task<TResult> CreateAsync(TModel model);

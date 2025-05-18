@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 
-namespace Presentation.Controllers;
+namespace CourtBooker.Auth.Presentation.Controllers;
 
 [Authorize]
 public abstract class AuthorizeControllerBase(IServiceProvider serviceProvider)

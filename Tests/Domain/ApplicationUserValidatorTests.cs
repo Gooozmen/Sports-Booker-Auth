@@ -1,8 +1,8 @@
-using Domain.Models;
-using Domain.Validators;
+using CourtBooker.Auth.Domain.Models;
+using CourtBooker.Auth.Domain.Validators;
 using FluentValidation.TestHelper;
 
-namespace Tests.Domain;
+namespace CourtBooker.Auth.Tests.Domain;
 
 public class ApplicationUserValidatorTests
 {

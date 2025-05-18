@@ -1,1 +1,1 @@
-namespace Shared.Enums;
+namespace CourtBooker.Auth.Shared.Enums;
