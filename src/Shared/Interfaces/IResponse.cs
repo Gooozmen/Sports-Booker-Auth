@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Shared.Interfaces;
+namespace CourtBooker.Auth.Shared.Interfaces;
 
 public interface IResponse
 {

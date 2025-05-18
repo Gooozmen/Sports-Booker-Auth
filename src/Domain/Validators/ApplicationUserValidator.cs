@@ -1,7 +1,7 @@
-using Domain.Models;
+using CourtBooker.Auth.Domain.Models;
 using FluentValidation;
 
-namespace Domain.Validators;
+namespace CourtBooker.Auth.Domain.Validators;
 
 public class ApplicationUserValidator : AbstractValidator<ApplicationUser>
 {

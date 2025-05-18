@@ -1,12 +1,12 @@
 ﻿using System.Text;
-using Application.Interfaces;
-using Domain.Models;
-using Infrastructure.Database;
-using Infrastructure.Database.Seeders;
-using Infrastructure.Environments;
-using Infrastructure.Factories;
-using Infrastructure.IdentityManagers;
-using Infrastructure.Options;
+using CourtBooker.Auth.Application.Interfaces;
+using CourtBooker.Auth.Domain.Models;
+using CourtBooker.Auth.Infrastructure.Database;
+using CourtBooker.Auth.Infrastructure.Database.Seeders;
+using CourtBooker.Auth.Infrastructure.Environments;
+using CourtBooker.Auth.Infrastructure.Factories;
+using CourtBooker.Auth.Infrastructure.IdentityManagers;
+using CourtBooker.Auth.Infrastructure.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -18,7 +18,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 
-namespace Infrastructure;
+namespace CourtBooker.Auth.Infrastructure;
 
 public static class DependencyInjection
 {

@@ -1,8 +1,8 @@
-using Application.Builders;
+using CourtBooker.Auth.Application.Builders;
+using CourtBooker.Auth.Presentation.Services;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Services;
 
-namespace Presentation.Controllers;
+namespace CourtBooker.Auth.Presentation.Controllers;
 
 [Controller]
 [Route("api/[controller]/")]

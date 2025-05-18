@@ -1,13 +1,13 @@
-using Application.Interfaces;
+using CourtBooker.Auth.Application.Interfaces;
 using MediatR;
-using Shared.Commands;
-using Shared.Enums;
-using Shared.Interfaces;
-using Shared.Responses;
-using Shared.Queries;
-using Shared.Responses.Auth;
+using CourtBooker.Auth.Shared.Commands;
+using CourtBooker.Auth.Shared.Enums;
+using CourtBooker.Auth.Shared.Interfaces;
+using CourtBooker.Auth.Shared.Responses;
+using CourtBooker.Auth.Shared.Queries;
+using CourtBooker.Auth.Shared.Responses.Auth;
 
-namespace Application.Handlers;
+namespace CourtBooker.Auth.Application.Handlers;
 
 public class LoginCommandHandler(
     ILoginManager loginManager,

@@ -1,16 +1,16 @@
 using System.Net;
-using Application.Builders;
+using CourtBooker.Auth.Application.Builders;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Presentation.Controllers;
-using Presentation.Services;
-using Shared.Commands;
-using Shared.Enums;
-using Shared.Responses;
+using CourtBooker.Auth.Presentation.Controllers;
+using CourtBooker.Auth.Presentation.Services;
+using CourtBooker.Auth.Shared.Commands;
+using CourtBooker.Auth.Shared.Enums;
+using CourtBooker.Auth.Shared.Responses;
 
-namespace Tests.Presentation.Controllers;
+namespace CourtBooker.Auth.Tests.Presentation.Controllers;
 
 public class UserControllerTests
 {

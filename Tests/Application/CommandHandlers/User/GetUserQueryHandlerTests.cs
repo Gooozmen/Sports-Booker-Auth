@@ -1,13 +1,13 @@
-using Application.Builders;
-using Application.Handlers;
-using Application.Interfaces;
-using Domain.Models;
+using CourtBooker.Auth.Application.Builders;
+using CourtBooker.Auth.Application.Handlers;
+using CourtBooker.Auth.Application.Interfaces;
+using CourtBooker.Auth.Domain.Models;
 using Moq;
-using Shared.Enums;
-using Shared.Queries;
-using Shared.Responses.User;
+using CourtBooker.Auth.Shared.Enums;
+using CourtBooker.Auth.Shared.Queries;
+using CourtBooker.Auth.Shared.Responses.User;
 
-namespace Tests.Application.CommandHandlers;
+namespace CourtBooker.Auth.Tests.Application.CommandHandlers;
 
 public class GetUserQueryHandlerTests
 {

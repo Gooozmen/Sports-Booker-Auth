@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure.Database;
+namespace CourtBooker.Auth.Infrastructure.Database;
 
 public class ApplicationDbContextFactory<TContext>(IServiceProvider provider) : IDbContextFactory<TContext>
     where TContext : DbContext

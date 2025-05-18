@@ -1,14 +1,14 @@
-using Application.Interfaces;
-using Domain.Models;
-using Infrastructure.Factories;
-using Infrastructure.Options;
+using CourtBooker.Auth.Application.Interfaces;
+using CourtBooker.Auth.Domain.Models;
+using CourtBooker.Auth.Infrastructure.Factories;
+using CourtBooker.Auth.Infrastructure.Options;
 using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Tests.Infra.Factories;
+namespace CourtBooker.Auth.Tests.Infra.Factories;
 
 public class TokenFactoryTests
 {

@@ -1,15 +1,15 @@
 using System.Diagnostics;
 using System.Security.Claims;
 using System.Text;
-using Application.Interfaces;
-using Domain.Models;
-using Infrastructure.Options;
+using CourtBooker.Auth.Application.Interfaces;
+using CourtBooker.Auth.Domain.Models;
+using CourtBooker.Auth.Infrastructure.Options;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using JwtRegisteredClaimNames = System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames;
 
-namespace Infrastructure.Factories;
+namespace CourtBooker.Auth.Infrastructure.Factories;
 
 public class TokenFactory(IOptions<JwtOption> jwtOptions) : ITokenFactory
 {

@@ -1,12 +1,12 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using CourtBooker.Auth.Shared.Interfaces;
+using CourtBooker.Auth.Shared.Responses.Auth;
 using MediatR;
-using Shared.Interfaces;
-using Shared.Responses;
-using Shared.Responses.Auth;
+using CourtBooker.Auth.Shared.Responses;
 
-namespace Shared.Commands;
+namespace CourtBooker.Auth.Shared.Commands;
 
 public sealed record LoginCommand : IRequest<LoginResponse>, ICommand
 {

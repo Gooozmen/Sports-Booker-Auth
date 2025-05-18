@@ -1,9 +1,9 @@
 
 using System.Text.Json.Serialization;
-using Shared.Enums;
-using Shared.Interfaces;
+using CourtBooker.Auth.Shared.Enums;
+using CourtBooker.Auth.Shared.Interfaces;
 
-namespace Shared.Queries;
+namespace CourtBooker.Auth.Shared.Queries;
 
 public sealed record ApplicationRoleQuery : IPropertyType
 {

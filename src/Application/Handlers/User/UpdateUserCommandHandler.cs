@@ -1,14 +1,14 @@
-using Application.Builders;
-using Application.Interfaces;
-using Domain.Models;
+using CourtBooker.Auth.Application.Builders;
+using CourtBooker.Auth.Application.Interfaces;
+using CourtBooker.Auth.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Shared.Commands;
-using Shared.Enums;
-using Shared.Queries;
-using Shared.Wrappers;
+using CourtBooker.Auth.Shared.Commands;
+using CourtBooker.Auth.Shared.Enums;
+using CourtBooker.Auth.Shared.Queries;
+using CourtBooker.Auth.Shared.Wrappers;
 
-namespace Application.Handlers;
+namespace CourtBooker.Auth.Application.Handlers;
 
 public class UpdateUserCommandHandler
     (IApplicationUserManager userManager) 

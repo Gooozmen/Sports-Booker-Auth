@@ -1,6 +1,6 @@
-using Domain.Models;
+using CourtBooker.Auth.Domain.Models;
 
-namespace Shared.Wrappers;
+namespace CourtBooker.Auth.Shared.Wrappers;
 
 public class ApplicationUserWrapper
 {

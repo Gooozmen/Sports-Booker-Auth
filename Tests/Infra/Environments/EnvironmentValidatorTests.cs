@@ -1,8 +1,8 @@
-using Infrastructure.Environments;
+using CourtBooker.Auth.Infrastructure.Environments;
 using Microsoft.AspNetCore.Hosting;
 using Moq;
 
-namespace Tests.Infra.Environments;
+namespace CourtBooker.Auth.Tests.Infra.Environments;
 
 public class EnvironmentValidatorTests
 {

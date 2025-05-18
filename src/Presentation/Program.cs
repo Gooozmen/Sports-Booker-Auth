@@ -1,6 +1,6 @@
-using Application;
-using Presentation;
-using Infrastructure;
+using CourtBooker.Auth.Application;
+using CourtBooker.Auth.Presentation;
+using CourtBooker.Auth.Infrastructure;
 
 try{
     Console.WriteLine("Starting up");

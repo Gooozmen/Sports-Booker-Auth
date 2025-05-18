@@ -1,8 +1,8 @@
-using Domain.Models;
+using CourtBooker.Auth.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Database.EntityConfig;
+namespace CourtBooker.Auth.Infrastructure.Database.EntityConfig;
 
 public class ApplicationUserTokenConfig : IEntityTypeConfiguration<ApplicationUserToken>
 {

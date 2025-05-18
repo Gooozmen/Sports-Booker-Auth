@@ -3,11 +3,11 @@ using System.Reflection;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Commands;
-using Shared.Enums;
-using Shared.Queries;
+using CourtBooker.Auth.Shared.Commands;
+using CourtBooker.Auth.Shared.Enums;
+using CourtBooker.Auth.Shared.Queries;
 
-namespace Presentation.Controllers;
+namespace CourtBooker.Auth.Presentation.Controllers;
 
 public class UserController(
     ISender sender,
