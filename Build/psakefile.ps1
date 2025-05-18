@@ -19,7 +19,7 @@ $TestDllPath = "$OutputPath\Tests.dll"
 $TestsLogOutput = $ArtifactsPath
 
 #Application
-$ApplicationName = "CourtBooker-Auth"
+$ApplicationName = "courtbooker-auth"
 $ContainerServiceName = $ApplicationName 
 
 #Docker

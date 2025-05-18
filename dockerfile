@@ -7,7 +7,7 @@ COPY src/nuget.config .
 COPY src/Directory.Packages.props .
 
 # Copiar solución y proyectos (.csproj) para cache eficiente
-COPY src/sports-booker-auth.sln .
+COPY src/CourtBooker-Auth.sln .
 COPY src/Shared/*.csproj ./Shared/
 COPY src/Application/*.csproj ./Application/
 COPY src/Domain/*.csproj ./Domain/
