@@ -1,11 +1,11 @@
-using CourtBooker.Auth.Domain.Models;
+using Domain.Models;
 using Microsoft.AspNetCore.Identity;
-using CourtBooker.Auth.Shared.Queries;
+using Shared.Queries;
 
-namespace CourtBooker.Auth.Application.Interfaces;
+namespace Application.Interfaces;
 
-public interface IApplicationRoleManager :
-    ICommandManager<ApplicationRole, IdentityResult>,
+public interface IApplicationRoleManager : 
+    ICommandManager<ApplicationRole,IdentityResult>,
     IQueryableManager<ApplicationRole, ApplicationRoleQuery>
 {
 }

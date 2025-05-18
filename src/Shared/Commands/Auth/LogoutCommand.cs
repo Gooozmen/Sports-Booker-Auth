@@ -1,16 +1,18 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using CourtBooker.Auth.Shared.Interfaces;
 using MediatR;
+using Shared.Interfaces;
+using Shared.Responses;
 
-namespace CourtBooker.Auth.Shared.Commands;
+namespace Shared.Commands;
 
-public sealed record LogoutCommand : IRequest<IResponse>, ICommand, IPropertyType
+public sealed record LogoutCommand: IRequest<IResponse>, ICommand, IPropertyType
 {
     [Required] [EmailAddress] public required string Email { get; set; }
 
     [Required] [PasswordPropertyText] public required string Password { get; set; }
 
-    [JsonIgnore] public int PropertyType { get; set; }
+    [JsonIgnore]
+    public int PropertyType { get; set; }
 }

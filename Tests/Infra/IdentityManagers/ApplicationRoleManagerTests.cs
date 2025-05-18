@@ -1,9 +1,9 @@
-using CourtBooker.Auth.Domain.Models;
-using CourtBooker.Auth.Infrastructure.IdentityManagers;
+using Domain.Models;
+using Infrastructure.IdentityManagers;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 
-namespace CourtBooker.Auth.Tests.Infra.IdentityManagers;
+namespace Tests.Infra.IdentityManagers;
 
 public class ApplicationRoleManagerTests
 {

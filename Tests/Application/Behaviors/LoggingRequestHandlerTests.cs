@@ -1,10 +1,10 @@
-using CourtBooker.Auth.Application.Behaviors;
+using Application.Behaviors;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Moq;
-using CourtBooker.Auth.Shared.Interfaces;
+using Shared.Interfaces;
 
-namespace CourtBooker.Auth.Tests.Application.Behaviors;
+namespace Tests.Application.Behaviors;
 
 public class LoggingPipelineBehaviorTests
 {
@@ -74,7 +74,7 @@ public class LoggingPipelineBehaviorTests
     }
 }
 
-public class DummyRequest : IRequest<DummyResponse>
+public class DummyRequest : IRequest<DummyResponse> 
 {
     public string Payload => "test-payload";
 }

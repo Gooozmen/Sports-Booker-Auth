@@ -1,6 +1,6 @@
-using CourtBooker.Auth.Domain.Models;
+using Domain.Models;
 
-namespace CourtBooker.Auth.Infrastructure.Database.Seeders;
+namespace Infrastructure.Database.Seeders;
 
 public class ApplicationRoleSeeder : ISeeder
 {

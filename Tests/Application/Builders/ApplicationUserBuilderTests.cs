@@ -1,8 +1,8 @@
-using CourtBooker.Auth.Application.Builders;
-using CourtBooker.Auth.Domain.Models;
-using CourtBooker.Auth.Shared.Commands;
+using Application.Builders;
+using Domain.Models;
+using Shared.Commands;
 
-namespace CourtBooker.Auth.Tests.Application.Builders;
+namespace Tests.Application.Builders;
 
 public class ApplicationUserBuilderTests
 {
@@ -56,7 +56,7 @@ public class ApplicationUserBuilderTests
         //assert
         Assert.True(result.PhoneNumber == null);
     }
-
+    
     [Fact]
     public void BuilderShouldMapUpdateCommandToApplicationUser()
     {
@@ -78,7 +78,7 @@ public class ApplicationUserBuilderTests
         Assert.Equal(cmd.PhoneNumber, result.PhoneNumber);
     }
 
-
+    
     [Fact]
     public void BuilderShouldMapApplicationUserToUserResponse()
     {

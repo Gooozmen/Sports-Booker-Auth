@@ -1,10 +1,10 @@
 using System.Reflection;
-using CourtBooker.Auth.Application.Behaviors;
-using CourtBooker.Auth.Application.Builders;
+using Application.Behaviors;
+using Application.Builders;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CourtBooker.Auth.Application;
+namespace Application;
 
 public static class DependencyInjection
 {
@@ -15,7 +15,7 @@ public static class DependencyInjection
         services.AddScoped<IApplicationUserBuilder, ApplicationUserBuilder>();
         services.AddScoped<IHttpResponseBuilder, HttpResponseBuilder>();
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingPipelineBehavior<,>));
-
+        
         AddMediatR(services);
 
         return services;

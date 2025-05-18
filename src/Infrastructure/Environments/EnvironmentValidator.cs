@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace CourtBooker.Auth.Infrastructure.Environments;
+namespace Infrastructure.Environments;
 
 public class EnvironmentValidator : IEnvironmentValidator
 {

@@ -6,7 +6,7 @@ $EnvFile = Resolve-Path "..\.env"
 $configuration = "Debug"
 
 #PATHS
-$SolutionPath = Resolve-Path ("..\src\CourtBooker-Auth.sln")
+$SolutionPath = Resolve-Path ("..\src\sports-booker-auth.sln")
 $OutputPath = Resolve-Path ("..\Output")
 
 #Artifacts
@@ -19,7 +19,7 @@ $TestDllPath = "$OutputPath\Tests.dll"
 $TestsLogOutput = $ArtifactsPath
 
 #Application
-$ApplicationName = "CourtBooker-Auth"
+$ApplicationName = "sports-booker-auth"
 $ContainerServiceName = $ApplicationName 
 
 #Docker
@@ -27,6 +27,5 @@ $DockerFilePath = Split-Path (Resolve-Path ("..\dockerfile")) -Parent
 $DockerComposePath = $DockerFilePath
 $ImageVersion = (Get-Content $EnvFile | Where-Object { $_ -match '^IMAGE_TAG=' }) -replace 'IMAGE_TAG=', ''
 write-host "Image version: $ImageVersion"
-
 $Username = $env:NUGET_USERNAME
 $Token = $env:NUGET_PASSWORD

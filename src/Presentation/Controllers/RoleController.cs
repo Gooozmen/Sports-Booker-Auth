@@ -1,9 +1,9 @@
 using System.Net;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using CourtBooker.Auth.Shared.Commands;
+using Shared.Commands;
 
-namespace CourtBooker.Auth.Presentation.Controllers;
+namespace Presentation.Controllers;
 
 public class RoleController(
     ISender sender,

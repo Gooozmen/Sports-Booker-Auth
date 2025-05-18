@@ -1,8 +1,8 @@
-using CourtBooker.Auth.Shared.Interfaces;
+using Shared.Interfaces;
 
-namespace CourtBooker.Auth.Shared.Responses;
+namespace Shared.Responses.User;
 
-public class UserResponse : IResponse
+public class UserResponse : IResponse 
 {
     public Guid Id { get; set; }
     public string? Username { get; set; }

@@ -1,9 +1,9 @@
-﻿using CourtBooker.Auth.Domain.Models;
-using CourtBooker.Auth.Infrastructure.Interfaces;
+﻿using Domain.Models;
+using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace CourtBooker.Auth.Infrastructure.Database;
+namespace Infrastructure.Database;
 
 public class ApplicationDbContext :
     IdentityDbContext
@@ -15,7 +15,7 @@ public class ApplicationDbContext :
         : base(options)
     {
     }
-
+    
     public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
     public virtual DbSet<ApplicationUserRole> ApplicationUserRoles { get; set; }
     public virtual DbSet<ApplicationUserClaim> ApplicationUserClaims { get; set; }

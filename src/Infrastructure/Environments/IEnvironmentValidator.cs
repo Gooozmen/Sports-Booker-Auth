@@ -1,4 +1,4 @@
-﻿namespace CourtBooker.Auth.Infrastructure.Environments;
+﻿namespace Infrastructure.Environments;
 
 public interface IEnvironmentValidator
 {

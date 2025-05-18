@@ -1,4 +1,4 @@
-namespace CourtBooker.Auth.Infrastructure.Options;
+namespace Infrastructure.Options;
 
 public class EntityFrameworkOption
 {

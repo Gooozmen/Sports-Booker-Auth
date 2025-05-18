@@ -1,6 +1,7 @@
-using CourtBooker.Auth.Domain.Models;
+using Domain.Models;
+using Microsoft.AspNetCore.Identity;
 
-namespace CourtBooker.Auth.Application.Interfaces;
+namespace Application.Interfaces;
 
 public interface ILoginManager
 {

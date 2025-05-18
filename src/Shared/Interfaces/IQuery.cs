@@ -1,4 +1,4 @@
-namespace CourtBooker.Auth.Shared.Interfaces;
+namespace Shared.Interfaces;
 
 public interface IQuery : IPropertyType
 {

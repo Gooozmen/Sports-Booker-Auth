@@ -1,9 +1,9 @@
-using CourtBooker.Auth.Domain.Models;
-using CourtBooker.Auth.Infrastructure.Database.Base;
+using Domain.Models;
+using Infrastructure.Database.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CourtBooker.Auth.Infrastructure.Database.Configurations;
+namespace Infrastructure.Database.Configurations;
 
 public class ApplicationUserConfig : ActiveBase<ApplicationUser>, IEntityTypeConfiguration<ApplicationUser>
 {
@@ -87,10 +87,10 @@ public class ApplicationUserConfig : ActiveBase<ApplicationUser>, IEntityTypeCon
         builder.Property(x => x.AccessFailedCount)
             .HasColumnName("AccessFailedCount")
             .HasColumnOrder(15);
-
+        
         builder.HasIndex(x => x.Email).IsUnique();
         builder.HasIndex(x => x.UserName).IsUnique();
-
+        
         ConfigureActiveProperty(builder, 16);
     }
 }

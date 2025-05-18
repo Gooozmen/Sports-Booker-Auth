@@ -1,15 +1,19 @@
-using CourtBooker.Auth.Application.Interfaces;
-using CourtBooker.Auth.Domain.Models;
-using CourtBooker.Auth.Infrastructure.Factories;
-using CourtBooker.Auth.Infrastructure.Options;
+using Application.Interfaces;
+using Domain.Models;
+using Infrastructure.Factories;
+using Infrastructure.Options;
 using Microsoft.Extensions.Options;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
-namespace CourtBooker.Auth.Tests.Infra.Factories;
+namespace Tests.Infra.Factories;
 
 public class TokenFactoryTests
 {
-    private readonly JwtOption _jwtOptions;
     private readonly ITokenFactory _tokenFactory;
+    private readonly JwtOption _jwtOptions;
 
     public TokenFactoryTests()
     {

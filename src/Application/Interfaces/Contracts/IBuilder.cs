@@ -1,4 +1,4 @@
-namespace CourtBooker.Auth.Application.Interfaces;
+namespace Application.Interfaces;
 
 public interface IBuilder<in TCommand, out TResult>
 {

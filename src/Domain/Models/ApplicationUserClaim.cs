@@ -1,7 +1,7 @@
-using CourtBooker.Auth.Domain.Interfaces;
+using Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
-namespace CourtBooker.Auth.Domain.Models;
+namespace Domain.Models;
 
 public class ApplicationUserClaim : IdentityUserClaim<Guid>, IActive
 {

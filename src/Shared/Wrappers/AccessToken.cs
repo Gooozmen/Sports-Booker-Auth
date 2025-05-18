@@ -1,4 +1,4 @@
-namespace CourtBooker.Auth.Shared.Wrappers;
+namespace Shared.Wrappers;
 
 public class AccessToken
 {

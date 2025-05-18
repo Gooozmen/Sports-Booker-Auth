@@ -1,11 +1,13 @@
-using CourtBooker.Auth.Application.Interfaces;
+using Application.Interfaces;
 using MediatR;
-using CourtBooker.Auth.Shared.Commands;
-using CourtBooker.Auth.Shared.Enums;
-using CourtBooker.Auth.Shared.Queries;
-using CourtBooker.Auth.Shared.Responses;
+using Shared.Commands;
+using Shared.Enums;
+using Shared.Interfaces;
+using Shared.Responses;
+using Shared.Queries;
+using Shared.Responses.Auth;
 
-namespace CourtBooker.Auth.Application.Handlers;
+namespace Application.Handlers;
 
 public class LoginCommandHandler(
     ILoginManager loginManager,
@@ -24,8 +26,8 @@ public class LoginCommandHandler(
         var result = await loginManager.CheckPasswordAsync(dataModel, command.Password);
 
         if (result)
-            return new LoginResponse().Success(tokenFactory.Create(dataModel));
-
+           return new LoginResponse().Success(tokenFactory.Create(dataModel));
+        
         return new LoginResponse().Failed("Authentication Failed - Invalid username or password.");
     }
-}
+} 

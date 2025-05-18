@@ -1,8 +1,8 @@
-using CourtBooker.Auth.Shared.Interfaces;
+using Shared.Interfaces;
 
-namespace CourtBooker.Auth.Application.Interfaces;
+namespace Application.Interfaces;
 
-public interface IQueryableManager<TResult, in TData> where TData : IPropertyType
+public interface IQueryableManager<TResult,in TData> where TData : IPropertyType
 {
     Task<TResult?> GetAsync(TData data);
 }

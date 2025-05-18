@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace CourtBooker.Auth.Presentation.Transformations;
+namespace Presentation.Transformations;
 
 public class KebabCaseTransformer : IOutboundParameterTransformer
 {

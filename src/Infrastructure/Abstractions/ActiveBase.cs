@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CourtBooker.Auth.Infrastructure.Database.Base;
+namespace Infrastructure.Database.Base;
 
 public abstract class ActiveBase<T> where T : class
 {

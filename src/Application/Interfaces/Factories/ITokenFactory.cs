@@ -1,7 +1,8 @@
-using CourtBooker.Auth.Domain.Models;
+using Domain.Models;
 
-namespace CourtBooker.Auth.Application.Interfaces;
+namespace Application.Interfaces;
 
-public interface ITokenFactory : IFactory<ApplicationUser, string>
+public interface ITokenFactory : IFactory<ApplicationUser,string>
 {
+    
 }

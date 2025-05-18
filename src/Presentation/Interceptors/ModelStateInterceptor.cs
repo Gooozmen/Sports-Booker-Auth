@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using CourtBooker.Auth.Shared.Enums;
-using CourtBooker.Auth.Shared.Responses;
+using Shared.Enums;
+using Shared.Responses;
 
-namespace CourtBooker.Auth.Presentation.Interceptors;
+namespace Presentation.Interceptors;
 
 public class ModelStateInterceptor : ActionFilterAttribute
 {

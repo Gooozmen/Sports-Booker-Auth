@@ -1,4 +1,4 @@
-namespace CourtBooker.Auth.Presentation.Middleware;
+namespace Presentation.Middleware;
 
 public class UnauthorizeMiddleware(RequestDelegate next)
 {

@@ -1,4 +1,4 @@
-namespace CourtBooker.Auth.Shared.Enums;
+namespace Shared.Enums;
 
 public static class HttpStatusDescriptions
 {

@@ -1,4 +1,4 @@
-namespace CourtBooker.Auth.Infrastructure.Interfaces;
+namespace Infrastructure.Interfaces;
 
 public interface IDbContext
 {

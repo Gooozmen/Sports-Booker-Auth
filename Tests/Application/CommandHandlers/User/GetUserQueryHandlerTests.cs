@@ -1,13 +1,13 @@
-using CourtBooker.Auth.Application.Builders;
-using CourtBooker.Auth.Application.Handlers;
-using CourtBooker.Auth.Application.Interfaces;
-using CourtBooker.Auth.Domain.Models;
+using Application.Builders;
+using Application.Handlers;
+using Application.Interfaces;
+using Domain.Models;
 using Moq;
-using CourtBooker.Auth.Shared.Enums;
-using CourtBooker.Auth.Shared.Queries;
-using CourtBooker.Auth.Shared.Responses;
+using Shared.Enums;
+using Shared.Queries;
+using Shared.Responses.User;
 
-namespace CourtBooker.Auth.Tests.Application.CommandHandlers;
+namespace Tests.Application.CommandHandlers;
 
 public class GetUserQueryHandlerTests
 {
@@ -40,7 +40,7 @@ public class GetUserQueryHandlerTests
             LockoutEnabled = false,
             Active = true
         };
-
+        
         var userResponse = new UserResponse
         {
             Id = applicationUser.Id,
@@ -54,17 +54,16 @@ public class GetUserQueryHandlerTests
             LockoutEnabled = applicationUser.LockoutEnabled,
             IsSuccess = true
         };
-
-        _mockApplicationUserManager.Setup(c =>
-                c.GetAsync(It.Is<UserQuery>(w =>
-                    w.Id == userId.ToString() && w.PropertyType == (int)IdentityPropertyTypes.UserId)))
+        
+        _mockApplicationUserManager.Setup(c => 
+            c.GetAsync(It.Is<UserQuery>(w => w.Id == userId.ToString() && w.PropertyType == (int)IdentityPropertyTypes.UserId)))
             .ReturnsAsync(applicationUser);
-
+        
         _mockApplicationBuilder
             .Setup(b => b.Apply(It.IsAny<ApplicationUser>())).Returns(userResponse);
 
         var result = await _handler.Handle(request);
-
+        
         Assert.NotNull(result);
         Assert.True(result.GetType() == typeof(UserResponse));
         Assert.Equal(applicationUser.Id, result.Id);
@@ -77,7 +76,7 @@ public class GetUserQueryHandlerTests
         Assert.Equal(applicationUser.Active, result.Active);
         Assert.Equal(applicationUser.LockoutEnabled, result.LockoutEnabled);
     }
-
+    
     [Fact]
     public async Task GetUserByEmailAsync_ShouldReturnUser_WhenUser()
     {
@@ -97,7 +96,7 @@ public class GetUserQueryHandlerTests
             LockoutEnabled = false,
             Active = true
         };
-
+        
         var userResponse = new UserResponse
         {
             Id = applicationUser.Id,
@@ -111,17 +110,16 @@ public class GetUserQueryHandlerTests
             LockoutEnabled = applicationUser.LockoutEnabled,
             IsSuccess = true
         };
-
-        _mockApplicationUserManager.Setup(c =>
-                c.GetAsync(It.Is<UserQuery>(w =>
-                    w.Email == userEmail && w.PropertyType == (int)IdentityPropertyTypes.UserEmail)))
+        
+        _mockApplicationUserManager.Setup(c => 
+            c.GetAsync(It.Is<UserQuery>(w => w.Email == userEmail && w.PropertyType == (int)IdentityPropertyTypes.UserEmail)))
             .ReturnsAsync(applicationUser);
-
+        
         _mockApplicationBuilder
             .Setup(b => b.Apply(It.IsAny<ApplicationUser>())).Returns(userResponse);
 
         var result = await _handler.Handle(request);
-
+        
         Assert.NotNull(result);
         Assert.True(result.GetType() == typeof(UserResponse));
         Assert.Equal(applicationUser.Id, result.Id);

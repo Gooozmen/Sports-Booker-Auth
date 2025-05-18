@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace CourtBooker.Auth.Domain.Models;
+namespace Domain.Models;
 
 public class ApplicationUserLogin : IdentityUserLogin<Guid>
 {

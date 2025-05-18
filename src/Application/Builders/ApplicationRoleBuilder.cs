@@ -1,8 +1,8 @@
-using CourtBooker.Auth.Application.Interfaces;
-using CourtBooker.Auth.Domain.Models;
-using CourtBooker.Auth.Shared.Commands;
+using Application.Interfaces;
+using Domain.Models;
+using Shared.Commands;
 
-namespace CourtBooker.Auth.Application.Builders;
+namespace Application.Builders;
 
 public class ApplicationRoleBuilder : IApplicationRoleBuilder
 {

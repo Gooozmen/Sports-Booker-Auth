@@ -1,8 +1,9 @@
-using System.Text.Json.Serialization;
-using CourtBooker.Auth.Shared.Enums;
-using CourtBooker.Auth.Shared.Interfaces;
 
-namespace CourtBooker.Auth.Shared.Queries;
+using System.Text.Json.Serialization;
+using Shared.Enums;
+using Shared.Interfaces;
+
+namespace Shared.Queries;
 
 public sealed record ApplicationRoleQuery : IPropertyType
 {
@@ -20,9 +21,8 @@ public sealed record ApplicationRoleQuery : IPropertyType
                 break;
         }
     }
-
-    public string? Id { get; }
-    public string? Name { get; }
-
-    [JsonIgnore] public int PropertyType { get; set; }
+    public string? Id {get;}
+    public string? Name {get;}
+    [JsonIgnore]
+    public int PropertyType { get; set; }
 }

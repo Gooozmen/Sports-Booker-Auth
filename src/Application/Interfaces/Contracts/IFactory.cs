@@ -1,4 +1,4 @@
-namespace CourtBooker.Auth.Application.Interfaces;
+namespace Application.Interfaces;
 
 public interface IFactory<in TSource, out TResponse, in TData>
 {

@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-using CourtBooker.Auth.Shared.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Shared.Interfaces;
 
-namespace CourtBooker.Auth.Shared.Commands;
+namespace Shared.Commands;
 
 public sealed record CreateRoleCommand : IRequest<IdentityResult>, ICommand
 {

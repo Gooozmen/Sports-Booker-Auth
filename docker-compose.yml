@@ -1,7 +1,7 @@
 services:
   sports-booker-auth:
     image: ${IMAGE_IDENTIFIER}:${IMAGE_TAG}
-    container_name: CourtBooker.Auth
+    container_name: sports-booker-auth
     build:
       context: .
       dockerfile: dockerfile
