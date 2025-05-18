@@ -34,4 +34,4 @@ WORKDIR /app
 COPY --from=build /app/publish .
 
 EXPOSE 80
-ENTRYPOINT ["dotnet", "Presentation.dll"]
+ENTRYPOINT ["dotnet", "CourtBooker.Auth.Presentation.dll"]
