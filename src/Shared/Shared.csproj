@@ -11,7 +11,7 @@
 
         <AssemblyName>CourtBooker.Auth.Shared</AssemblyName>
         <OutputPath>..\..\Output\</OutputPath>
-        <RestorePackagesPath>..\Dependencies\Packages\</RestorePackagesPath>
+        <RestorePackagesPath>..\..\Dependencies\Packages\</RestorePackagesPath>
     </PropertyGroup>
 
     <ItemGroup>

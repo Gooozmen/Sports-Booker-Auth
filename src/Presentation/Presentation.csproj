@@ -26,6 +26,9 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Elastic.Serilog.Sinks"/>
+        <PackageReference Include="Elastic.Extensions.Logging"/>
+        <PackageReference Include="Serilog.Sinks.Console"/>
 
         <ProjectReference Include="..\Application\Application.csproj"/>
         <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />

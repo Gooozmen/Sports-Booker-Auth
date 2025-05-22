@@ -19,10 +19,18 @@ public class CorrelationIdMiddleware(RequestDelegate next)
             context.Response.Headers[CorrelationIdHeader] = correlationId;
             return Task.CompletedTask;
         });
-        
-        using (LogContext.PushProperty("CorrelationId", correlationId))
+
+        try
         {
-            await next(context);
+            using (LogContext.PushProperty("CorrelationId", correlationId))
+            {
+                await next(context);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 }

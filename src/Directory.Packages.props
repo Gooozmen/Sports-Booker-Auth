@@ -19,6 +19,9 @@
 
         <PackageVersion Include="Serilog.AspNetCore" Version="9.0.0"/>
         <PackageVersion Include="Elastic.Serilog.Sinks" Version="8.12.3"/>
+        <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.1-dev-00953" />
         <PackageVersion Include="Serilog.Enrichers.Environment" Version="3.0.1"/>
+
+        <PackageVersion Include="Elastic.Extensions.Logging" Version="8.12.3" />
     </ItemGroup>
 </Project>

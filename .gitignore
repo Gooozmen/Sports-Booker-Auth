@@ -15,3 +15,5 @@ Tests/obj/*
 TestsOutput/*
 
 .env
+src/CourtBooker-Auth.sln.DotSettings.user
+src/Presentation/Presentation.csproj
