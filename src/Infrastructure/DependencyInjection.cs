@@ -108,7 +108,7 @@ public static class DependencyInjection
         services.AddTransient<ApplicationDbContext>(provider => provider.GetRequiredService<IDbContextFactory<ApplicationDbContext>>().CreateDbContext());
         services.AddScoped<ApplicationDbContextInitializer>();
     }
-    public static async Task UseDevelopEnvironment(this WebApplication app)
+    public static async Task UseEnvironment(this WebApplication app)
     {
         var environmentValidator = app.Services.GetRequiredService<IEnvironmentValidator>();
         if (environmentValidator.IsDevelopment())
@@ -116,6 +116,9 @@ public static class DependencyInjection
             app.UseDeveloperExceptionPage();
             await app.RunDatabaseInitialization();
         }
+        
+        if(environmentValidator.IsStaging())
+            await app.RunDatabaseInitialization();
     }
     
     private static async Task RunDatabaseInitialization(this WebApplication app)

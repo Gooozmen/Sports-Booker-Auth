@@ -45,8 +45,8 @@ try{
 
     app.UsePresentationMiddlewares();
 
-    await app.UseDevelopEnvironment();
-        Console.WriteLine("Development environment set up");
+    await app.UseEnvironment();
+        Console.WriteLine("Environment set up");
         
     app.UseRouting(); //Configure the middleware pipeline.
         Console.WriteLine("Routing set up");

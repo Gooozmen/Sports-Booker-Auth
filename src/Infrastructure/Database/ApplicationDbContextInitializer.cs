@@ -1,4 +1,5 @@
-﻿using CourtBooker.Auth.Infrastructure.Database.Seeders;
+﻿using System.Data;
+using CourtBooker.Auth.Infrastructure.Database.Seeders;
 using CourtBooker.Auth.Infrastructure.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -30,12 +31,9 @@ public class ApplicationDbContextInitializer : IContextInitializer
             {
                 await ExecuteDatabaseDropAsync();
                 await ExecuteDatabaseBuildAsync();
-            }
-
-            // await _context.Database.MigrateAsync();
-
-            if (_entityFrameworkOption.ExecuteRebuild)
+                await _context.Database.MigrateAsync();
                 await ExecuteSeedAsync();
+            }
         }
         catch (Exception ex)
         {
@@ -47,7 +45,6 @@ public class ApplicationDbContextInitializer : IContextInitializer
     {
         try
         {
-            // await _context.Database.EnsureDeletedAsync();
             await _context.Database.ExecuteSqlRawAsync("DROP SCHEMA IF EXISTS Identity CASCADE;");
         }
         catch (Exception e)
@@ -61,7 +58,6 @@ public class ApplicationDbContextInitializer : IContextInitializer
     {
         try
         {
-            // await _context.Database.EnsureCreatedAsync();
             await _context.Database.ExecuteSqlRawAsync("CREATE SCHEMA Identity;");
         }
         catch (Exception e)
@@ -85,7 +81,16 @@ public class ApplicationDbContextInitializer : IContextInitializer
             _seeders.FirstOrDefault(seeder => seeder.GetType() == typeof(ApplicationRoleSeeder));
         if (applicationRoleSeeder != null) await applicationRoleSeeder.SeedAsync();
 
-        await _context.SaveChangesAsync();
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new DataException(e.Message);
+        }
+        
     }
 }
 
