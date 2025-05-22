@@ -15,6 +15,9 @@ try{
     builder.SetupLoggingInfrastructure();
     Log.Information("Logging infrastructure set up");
     
+    // Validar configuración antes de continuar
+    ConfigValidator.ValidateRequiredConfiguration(builder.Configuration);
+    
     builder.WebHost.UseUrls("http://0.0.0.0:80");
     Log.Information("URL Defined");
 
