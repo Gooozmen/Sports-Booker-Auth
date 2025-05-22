@@ -5,9 +5,9 @@ name:  CI - Build and Test
 
 on:
   push:
-    branches: [ "develop" ]
+    branches: [ "staging" ]
   pull_request:
-    branches: [ "develop" ]
+    branches: [ "staging" ]
   workflow_dispatch:
 
 jobs:
@@ -25,27 +25,38 @@ jobs:
         working-directory: ./Build
 
     steps:
+    # Step 1: Checkout the Repository
     - name: Checkout Repository
       uses: actions/checkout@v4
 
+    # Step 2: Setup .NET SDK
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
 
+    # Step 3: Install Dependencies
     - name: Setup
       run: ./setup.ps1
       #load environment variables from secrets
       env:
           NUGET_USERNAME: ${{ secrets.NUGET_USERNAME }}
           NUGET_PASSWORD: ${{ secrets.NUGET_PASSWORD }}
-      
+          # AUTH_DB: ${{ secrets.AUTH_DB }}
+          # JWT_KEY: ${{ secrets.JWT_KEY}}
+          # JWT_ISSUER: ${{ secrets.JWT_ISSUER }}
+          # JWT_AUDIENCE: ${{ secrets.JWT_AUDIENCE }}
+          # ELASTIC_NODE_URL: ${{ secrets.ELASTIC_NODE_URL }}
+          # ELASTIC_API_KEY: ${{ secrets.ELASTIC_API_KEY }}
+          # ELASTIC_USERNAME: ${{ secrets.ELASTIC_USERNAME }}
+          # ELASTIC_PASSWORD: ${{ secrets.ELASTIC_PASSWORD }}
+    
+    # Step 4: Build the Solution
     - name: build dotnet solution
       run: ./build-solution.ps1
 
-    # Step 4: Run Unit Tests
+    # Step 5: Run Unit Tests
     - name: run unit tests
-      working-directory: ./Build
       run: ./run-tests.ps1
 
     # Step 6: Parse and Display the Test Results
@@ -56,3 +67,9 @@ jobs:
         name: Test Results
         path: Artifacts/TestResults.trx
         reporter: dotnet-trx
+
+    # step 7: Build Docker Image
+    - name: Build and Publish Image
+      run: ./publish-image.ps1
+      env:
+          DOCKER_IMAGE_VERSION: ${{ github.run_number }}

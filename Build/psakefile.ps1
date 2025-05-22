@@ -25,8 +25,7 @@ $ContainerServiceName = $ApplicationName
 #Docker
 $DockerFilePath = Split-Path (Resolve-Path ("..\dockerfile")) -Parent 
 $DockerComposePath = $DockerFilePath
-$ImageVersion = (Get-Content $EnvFile | Where-Object { $_ -match '^IMAGE_TAG=' }) -replace 'IMAGE_TAG=', ''
-write-host "Image version: $ImageVersion"
+$ImageVersion = "1.0.$env:DOCKER_IMAGE_VERSION"
 
 $Username = $env:NUGET_USERNAME
 $Token = $env:NUGET_PASSWORD
