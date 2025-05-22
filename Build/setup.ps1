@@ -69,8 +69,8 @@ function Set-DotnetSecrets {
     }
 }
 
-Set-EnviromentVariables
-Set-DotnetSecrets
+# Set-EnviromentVariables
+# Set-DotnetSecrets
 Clear-NugetCache
 Set-PackageSource
 Remove-Folder -FolderArray @("..\Dependencies\psake*","..\Dependencies\Toolkit*","..\Artifacts\**")
