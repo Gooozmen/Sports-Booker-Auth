@@ -28,4 +28,5 @@ $DockerComposePath = $DockerFilePath
 $ImageVersion = "1.0.$env:DOCKER_IMAGE_VERSION"
 
 $Username = $env:NUGET_USERNAME
+write-host "Username------------- $Username"
 $Token = $env:NUGET_PASSWORD
