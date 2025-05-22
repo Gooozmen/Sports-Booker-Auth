@@ -12,6 +12,13 @@ jobs:
     runs-on: ubuntu-latest
 
     #load environment variables from secrets for the whole pipeline
+    env:
+      CONTAINER_NAME: courtbooker-auth
+      REGISTRY: ghcr.io
+      IMAGE_VERSION: 1.0.${{ github.run_number }}
+      USERNAME: gooozmen
+      FULL_NAME_LC: ${{ github.actor }}
+      NUGET_PASSWORD: ${{ secrets.NUGET_PASSWORD }}
     # env:
     #   NUGET_USERNAME: ${{ secrets.NUGET_USERNAME }}
     #   NUGET_PASSWORD: ${{ secrets.NUGET_PASSWORD }}
@@ -54,11 +61,28 @@ jobs:
             --no-build \
             --logger "trx;LogFileName=TestResults.trx" \
             --results-directory Artifacts/TestResults
-
-      - name: Publish test results
-        uses: dorny/test-reporter@v1
-        if: always()
+        
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
         with:
-          name: Test Results
-          path: Artifacts/TestResults/TestResults.trx
-          reporter: dotnet-trx
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.NUGET_PASSWORD }}
+
+      - name: Build, tag and push Docker image
+        run: |
+          IMAGE_BASE=ghcr.io/${{ env.USERNAME }}/${{ env.CONTAINER_NAME }}
+          IMAGE_LATEST=$IMAGE_BASE:latest
+          IMAGE_VERSIONED=$IMAGE_BASE:${{ env.IMAGE_VERSION }}
+
+          echo "Building $IMAGE_LATEST"
+          docker build -t $IMAGE_LATEST .
+
+          echo "Tagging image as $IMAGE_VERSIONED"
+          docker tag $IMAGE_LATEST $IMAGE_VERSIONED
+
+          echo "Pushing both tags..."
+          docker push $IMAGE_LATEST
+          docker push $IMAGE_VERSIONED
+
+          echo "Docker image pushed: $IMAGE_VERSIONED"
