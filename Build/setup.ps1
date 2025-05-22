@@ -69,8 +69,22 @@ function Set-DotnetSecrets {
     }
 }
 
+function Verify-EnviromentVariables{
+
+    if ([string]::IsNullOrEmpty($env:NUGET_USERNAME)) 
+    {
+        Write-Host "NUGET_USERNAME is not set"
+        exit 1
+    }
+    if ([string]::IsNullOrEmpty($env:NUGET_PASSWORD)) 
+    {
+        Write-Host "NUGET_PASSWORD is not set"
+        exit 1
+    }
+}
 # Set-EnviromentVariables
 # Set-DotnetSecrets
+Verify-EnviromentVariables
 Clear-NugetCache
 Set-PackageSource
 Remove-Folder -FolderArray @("..\Dependencies\psake*","..\Dependencies\Toolkit*","..\Artifacts\**")
