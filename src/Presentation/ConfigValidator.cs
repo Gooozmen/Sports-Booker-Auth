@@ -9,8 +9,6 @@ public static class ConfigValidator
         // ConnectionStrings
         if (string.IsNullOrWhiteSpace(config["ConnectionStrings:AuthDb"]))
             errors.Add("ConnectionStrings:AuthDb is missing or empty.");
-        if (string.IsNullOrWhiteSpace(config["ConnectionStrings:Redis"]))
-            errors.Add("ConnectionStrings:Redis is missing or empty.");
 
         // JWT
         if (string.IsNullOrWhiteSpace(config["Jwt:Key"]))
