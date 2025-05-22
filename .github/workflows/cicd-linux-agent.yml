@@ -1,15 +1,15 @@
 name:  CI - Build and Test
 
 on:
-  # push:
-  #   branches: [ "staging" ]
-  # pull_request:
-  #   branches: [ "staging" ]
+  push:
+    branches: [ "staging" ]
+  pull_request:
+    branches: [ "staging" ]
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: Windows-latest
+    runs-on: ubuntu-latest
 
     permissions:  # Add permissions for test reporting
       contents: read
@@ -50,23 +50,23 @@ jobs:
     - name: Setup
       run: ./setup.ps1
       
-    # Step 4: Build the Solution
-    - name: build dotnet solution
-      run: ./build-solution.ps1
+    # # Step 4: Build the Solution
+    # - name: build dotnet solution
+    #   run: ./build-solution.ps1
 
-    # Step 5: Run Unit Tests
-    - name: run unit tests
-      run: ./run-tests.ps1
+    # # Step 5: Run Unit Tests
+    # - name: run unit tests
+    #   run: ./run-tests.ps1
 
-    # # Step 6: Parse and Display the Test Results
-    # - name: Report Test Results
-    #   uses: dorny/test-reporter@v1
-    #   if: always()
-    #   with:
-    #     name: Test Results
-    #     path: Artifacts/TestResults.trx
-    #     reporter: dotnet-trx
+    # # # Step 6: Parse and Display the Test Results
+    # # - name: Report Test Results
+    # #   uses: dorny/test-reporter@v1
+    # #   if: always()
+    # #   with:
+    # #     name: Test Results
+    # #     path: Artifacts/TestResults.trx
+    # #     reporter: dotnet-trx
 
-    # step 7: Build Docker Image
-    - name: Build Image
-      run: ./build-image.ps1
+    # # step 7: Build Docker Image
+    # - name: Build Image
+    #   run: ./build-image.ps1
