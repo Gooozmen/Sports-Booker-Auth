@@ -58,15 +58,15 @@ jobs:
     - name: run unit tests
       run: ./run-tests.ps1
 
-    # Step 6: Parse and Display the Test Results
-    - name: Report Test Results
-      uses: dorny/test-reporter@v1
-      if: always()
-      with:
-        name: Test Results
-        path: Artifacts/TestResults.trx
-        reporter: dotnet-trx
+    # # Step 6: Parse and Display the Test Results
+    # - name: Report Test Results
+    #   uses: dorny/test-reporter@v1
+    #   if: always()
+    #   with:
+    #     name: Test Results
+    #     path: Artifacts/TestResults.trx
+    #     reporter: dotnet-trx
 
     # step 7: Build Docker Image
-    - name: Build and Publish Image
-      run: ./publish-image.ps1
+    - name: Build Image
+      run: ./build-image.ps1
