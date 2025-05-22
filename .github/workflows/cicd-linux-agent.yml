@@ -91,10 +91,12 @@ jobs:
         run: |
           IMAGE_BASE=${{ env.REGISTRY }}/${{ env.USERNAME }}/${{ env.CONTAINER_NAME }}
           IMAGE_LATEST=$IMAGE_BASE:latest
+          REV_SUFFIX="rev-${{ github.run_number }}"
           az containerapp update \
             --name ${{ env.CONTAINER_NAME }} \
             --resource-group ${{ env.RESOURCE_GROUP }} \
             --image $IMAGE_LATEST \
+            --revision-suffix "rev-${{ github.run_number }}"
             --set-env-vars \
               JWT_KEY=${{ secrets.JWT_KEY }} \
               JWT_ISSUER=${{ secrets.CONTAINER_URL }} \
