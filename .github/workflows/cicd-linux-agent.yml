@@ -80,7 +80,13 @@ jobs:
 
           echo "Docker image pushed: $IMAGE_VERSIONED"
 
-      # Step 8: Deploy to Azure Container App
+      # Step 8: Log in to Azure
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
+      # Step 9: Deploy to Azure Container App
       - name: Deploy to Azure Container App
         run: |
           IMAGE_BASE=${{ env.REGISTRY }}/${{ env.USERNAME }}/${{ env.CONTAINER_NAME }}
