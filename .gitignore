@@ -2,7 +2,7 @@ src/.vs/
 src/.idea/
 src/*/bin/
 src/*/obj/
-src/sports-booker-auth.sln.DotSettings.user
+src/CourtBooker-Auth.sln.DotSettings.user
 
 .vs/
 .idea/
@@ -15,5 +15,7 @@ Tests/obj/*
 TestsOutput/*
 
 .env
-src/CourtBooker-Auth.sln.DotSettings.user
-src/Presentation/Presentation.csproj
+Env/development.env.ps1
+
+
+
