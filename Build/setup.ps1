@@ -59,10 +59,6 @@ function Set-DotnetSecrets {
         & dotnet user-secrets set "Jwt:Issuer" "$env:JWT_ISSUER"
         & dotnet user-secrets set "Jwt:Audience" "$env:JWT_AUDIENCE"
         & dotnet user-secrets set "ConnectionStrings:AuthDb" "$env:AUTH_DB"
-        & dotnet user-secrets set "Serilog:WriteTo:0:Args:nodes:0" "$env:ELASTIC_NODE_URL"
-        & dotnet user-secrets set "Serilog:WriteTo:0:Args:ApiKey" "$env:ELASTIC_API_KEY"
-        & dotnet user-secrets set "Serilog:WriteTo:0:Args:Username" "$env:ELASTIC_USERNAME"
-        & dotnet user-secrets set "Serilog:WriteTo:0:Args:Password" "$env:ELASTIC_PASSWORD"
     }
     finally {
         Set-Location $CurrentPath
