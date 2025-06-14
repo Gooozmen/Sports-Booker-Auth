@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using CourtBooker.Auth.Application;
 using CourtBooker.Auth.Presentation;
 using CourtBooker.Auth.Infrastructure;
