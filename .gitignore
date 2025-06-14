@@ -14,8 +14,3 @@ Output/*
 Tests/obj/*
 TestsOutput/*
 
-.env
-Env/development.env.ps1
-
-
-
