@@ -42,7 +42,7 @@ function Clear-NugetCache{
 }
 
 function Set-EnviromentVariables{
-    $env:ASPNETCORE_ENVIRONMENT = "Staging"
+    $env:ASPNETCORE_ENVIRONMENT = "Development"
     $EnvsPath = Resolve-Path "..\Env\$env:ASPNETCORE_ENVIRONMENT.env.ps1"
     . $EnvsPath
 }

@@ -1,4 +1,4 @@
-﻿using System.Data;
+﻿﻿using System.Data;
 using CourtBooker.Auth.Infrastructure.Database.Seeders;
 using CourtBooker.Auth.Infrastructure.Options;
 using Microsoft.EntityFrameworkCore;
