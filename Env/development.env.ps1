@@ -1,7 +1,0 @@
-$env:NUGET_PASSWORD = 
-$env:NUGET_USERNAME = 
-$env:AUTH_DB =
-$env:JWT_KEY =
-$env:JWT_ISSUER =
-$env:JWT_AUDIENCE =
-$env:ASPNETCORE_ENVIRONMENT =
