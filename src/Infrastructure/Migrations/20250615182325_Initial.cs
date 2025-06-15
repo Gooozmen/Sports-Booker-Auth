@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace CourtBooker.Auth.Infrastructure.Migrations
+namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration
@@ -13,11 +13,11 @@ namespace CourtBooker.Auth.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
-                name: "Identity");
+                name: "identity");
 
             migrationBuilder.CreateTable(
-                name: "AspNetRoles",
-                schema: "Identity",
+                name: "aspnetroles",
+                schema: "identity",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -28,12 +28,12 @@ namespace CourtBooker.Auth.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                    table.PrimaryKey("PK_aspnetroles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                schema: "Identity",
+                name: "aspnetusers",
+                schema: "identity",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -55,12 +55,12 @@ namespace CourtBooker.Auth.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.PrimaryKey("PK_aspnetusers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
-                schema: "Identity",
+                name: "aspnetroleclaims",
+                schema: "identity",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -72,19 +72,19 @@ namespace CourtBooker.Auth.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.PrimaryKey("PK_aspnetroleclaims", x => x.Id);
                     table.ForeignKey(
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
-                        principalSchema: "Identity",
-                        principalTable: "AspNetRoles",
+                        principalSchema: "identity",
+                        principalTable: "aspnetroles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserClaims",
-                schema: "Identity",
+                name: "aspnetuserclaims",
+                schema: "identity",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -96,19 +96,19 @@ namespace CourtBooker.Auth.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.PrimaryKey("PK_aspnetuserclaims", x => x.Id);
                     table.ForeignKey(
                         name: "FK_AspNetUserClaims_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalSchema: "Identity",
-                        principalTable: "AspNetUsers",
+                        principalSchema: "identity",
+                        principalTable: "aspnetusers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserLogins",
-                schema: "Identity",
+                name: "aspnetuserlogins",
+                schema: "identity",
                 columns: table => new
                 {
                     LoginProvider = table.Column<string>(type: "character varying(450)", maxLength: 450, nullable: false),
@@ -118,19 +118,19 @@ namespace CourtBooker.Auth.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.PrimaryKey("PK_aspnetuserlogins", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
                         name: "FK_AspNetUserLogins_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalSchema: "Identity",
-                        principalTable: "AspNetUsers",
+                        principalSchema: "identity",
+                        principalTable: "aspnetusers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserRoles",
-                schema: "Identity",
+                name: "aspnetuserroles",
+                schema: "identity",
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -139,26 +139,26 @@ namespace CourtBooker.Auth.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.PrimaryKey("PK_aspnetuserroles", x => new { x.UserId, x.RoleId });
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        name: "FK_aspnetuserroles_aspnetroles_RoleId",
                         column: x => x.RoleId,
-                        principalSchema: "Identity",
-                        principalTable: "AspNetRoles",
+                        principalSchema: "identity",
+                        principalTable: "aspnetroles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        name: "FK_aspnetuserroles_aspnetusers_UserId",
                         column: x => x.UserId,
-                        principalSchema: "Identity",
-                        principalTable: "AspNetUsers",
+                        principalSchema: "identity",
+                        principalTable: "aspnetusers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserTokens",
-                schema: "Identity",
+                name: "aspnetusertokens",
+                schema: "identity",
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -168,71 +168,71 @@ namespace CourtBooker.Auth.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.PrimaryKey("PK_aspnetusertokens", x => new { x.UserId, x.LoginProvider, x.Name });
                     table.ForeignKey(
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalSchema: "Identity",
-                        principalTable: "AspNetUsers",
+                        principalSchema: "identity",
+                        principalTable: "aspnetusers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetRoleClaims_RoleId",
-                schema: "Identity",
-                table: "AspNetRoleClaims",
+                name: "IX_aspnetroleclaims_RoleId",
+                schema: "identity",
+                table: "aspnetroleclaims",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
-                schema: "Identity",
-                table: "AspNetRoles",
+                schema: "identity",
+                table: "aspnetroles",
                 column: "NormalizedName",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserClaims_UserId",
-                schema: "Identity",
-                table: "AspNetUserClaims",
+                name: "IX_aspnetuserclaims_UserId",
+                schema: "identity",
+                table: "aspnetuserclaims",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserLogins_UserId",
-                schema: "Identity",
-                table: "AspNetUserLogins",
+                name: "IX_aspnetuserlogins_UserId",
+                schema: "identity",
+                table: "aspnetuserlogins",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserRoles_RoleId",
-                schema: "Identity",
-                table: "AspNetUserRoles",
+                name: "IX_aspnetuserroles_RoleId",
+                schema: "identity",
+                table: "aspnetuserroles",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
-                schema: "Identity",
-                table: "AspNetUsers",
+                schema: "identity",
+                table: "aspnetusers",
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_Email",
-                schema: "Identity",
-                table: "AspNetUsers",
+                name: "IX_aspnetusers_Email",
+                schema: "identity",
+                table: "aspnetusers",
                 column: "Email",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_UserName",
-                schema: "Identity",
-                table: "AspNetUsers",
+                name: "IX_aspnetusers_UserName",
+                schema: "identity",
+                table: "aspnetusers",
                 column: "UserName",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
-                schema: "Identity",
-                table: "AspNetUsers",
+                schema: "identity",
+                table: "aspnetusers",
                 column: "NormalizedUserName",
                 unique: true);
         }
@@ -241,32 +241,32 @@ namespace CourtBooker.Auth.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AspNetRoleClaims",
-                schema: "Identity");
+                name: "aspnetroleclaims",
+                schema: "identity");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserClaims",
-                schema: "Identity");
+                name: "aspnetuserclaims",
+                schema: "identity");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserLogins",
-                schema: "Identity");
+                name: "aspnetuserlogins",
+                schema: "identity");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserRoles",
-                schema: "Identity");
+                name: "aspnetuserroles",
+                schema: "identity");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserTokens",
-                schema: "Identity");
+                name: "aspnetusertokens",
+                schema: "identity");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles",
-                schema: "Identity");
+                name: "aspnetroles",
+                schema: "identity");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers",
-                schema: "Identity");
+                name: "aspnetusers",
+                schema: "identity");
         }
     }
 }

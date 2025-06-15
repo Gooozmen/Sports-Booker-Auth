@@ -1,6 +1,7 @@
 using CourtBooker.Auth.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Shared.Constants;
 
 namespace CourtBooker.Auth.Infrastructure.Database.EntityConfig;
 
@@ -8,7 +9,7 @@ public class ApplicationUserTokenConfig : IEntityTypeConfiguration<ApplicationUs
 {
     public void Configure(EntityTypeBuilder<ApplicationUserToken> builder)
     {
-        builder.ToTable("AspNetUserTokens", "Identity");
+        builder.ToTable(DatabaseConstants.UserTokens, DatabaseConstants.IdentitySchema);
 
         // Composite primary key
         builder.HasKey(x => new { x.UserId, x.LoginProvider, x.Name });

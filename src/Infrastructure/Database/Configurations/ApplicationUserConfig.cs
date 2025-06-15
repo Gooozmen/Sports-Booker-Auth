@@ -2,6 +2,7 @@ using CourtBooker.Auth.Domain.Models;
 using CourtBooker.Auth.Infrastructure.Database.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Shared.Constants;
 
 namespace CourtBooker.Auth.Infrastructure.Database.Configurations;
 
@@ -10,7 +11,7 @@ public class ApplicationUserConfig : ActiveBase<ApplicationUser>, IEntityTypeCon
     public void Configure(EntityTypeBuilder<ApplicationUser> builder)
     {
         // Table name
-        builder.ToTable("AspNetUsers", "Identity");
+        builder.ToTable(DatabaseConstants.Users, DatabaseConstants.IdentitySchema);
 
         // Primary key
         builder.HasKey(x => x.Id);

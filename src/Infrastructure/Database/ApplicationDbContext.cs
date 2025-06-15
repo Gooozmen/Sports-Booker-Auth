@@ -27,7 +27,6 @@ public class ApplicationDbContext :
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.HasAnnotation("Npgsql:DefaultSchema", "Identity");
         builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
 }

@@ -1,8 +1,10 @@
-﻿﻿using System.Data;
+﻿using System.Data;
 using CourtBooker.Auth.Infrastructure.Database.Seeders;
 using CourtBooker.Auth.Infrastructure.Options;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Shared.Constants;
 
 namespace CourtBooker.Auth.Infrastructure.Database;
 
@@ -11,16 +13,20 @@ public class ApplicationDbContextInitializer : IContextInitializer
     private readonly ApplicationDbContext _context;
     private readonly EntityFrameworkOption _entityFrameworkOption;
     private readonly IEnumerable<ISeeder> _seeders;
+    private readonly ILogger _logger;
 
     public ApplicationDbContextInitializer
     (
         ApplicationDbContext context,
         IOptions<EntityFrameworkOption> option,
-        IEnumerable<ISeeder> seeders)
+        IEnumerable<ISeeder> seeders,
+        ILogger<ApplicationDbContextInitializer> logger
+    )
     {
         _context = context;
         _seeders = seeders;
         _entityFrameworkOption = option.Value;
+        _logger = logger;
     }
 
     public async Task InitialiseAsync()
@@ -45,12 +51,13 @@ public class ApplicationDbContextInitializer : IContextInitializer
     {
         try
         {
-            await _context.Database.ExecuteSqlRawAsync("DROP SCHEMA IF EXISTS Identity CASCADE;");
+            _logger.LogInformation("Dropping Schema ...");
+            await _context.Database.ExecuteSqlRawAsync($"DROP SCHEMA IF EXISTS {DatabaseConstants.IdentitySchema} CASCADE;");
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            _logger.LogError("Drop Identity Schema Failed - {0}",e.Message );
+            throw new Exception(e.Message);
         }
     }
 
@@ -58,12 +65,17 @@ public class ApplicationDbContextInitializer : IContextInitializer
     {
         try
         {
-            await _context.Database.ExecuteSqlRawAsync("CREATE SCHEMA Identity;");
+            _logger.LogInformation("Creating Schema ...");
+            await _context.Database.ExecuteSqlRawAsync($"CREATE SCHEMA {DatabaseConstants.IdentitySchema};");
+            if(!await SchemaExistsAsync(DatabaseConstants.IdentitySchema))
+                throw new Exception("Identity Schema does not exist");
+                
+            
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            _logger.LogError("Create Identity Schema Failed - {0}",e.Message );
+            throw new Exception(e.Message);
         }
     }
 
@@ -92,6 +104,28 @@ public class ApplicationDbContextInitializer : IContextInitializer
         }
         
     }
+    
+    public async Task<bool> SchemaExistsAsync(string schemaName)
+    {
+        var connection = _context.Database.GetDbConnection();
+        await connection.OpenAsync();
+
+        using var command = connection.CreateCommand();
+        command.CommandText = @"
+        SELECT EXISTS (
+            SELECT 1
+            FROM information_schema.schemata
+            WHERE schema_name = @schema
+        );";
+        var param = command.CreateParameter();
+        param.ParameterName = "@schema";
+        param.Value = schemaName;
+        command.Parameters.Add(param);
+
+        var result = await command.ExecuteScalarAsync();
+        return result is bool exists && exists;
+    }
+
 }
 
 public interface IContextInitializer

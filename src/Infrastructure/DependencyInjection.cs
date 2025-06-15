@@ -95,8 +95,8 @@ public static class DependencyInjection
                     npgsqlOptions.CommandTimeout(15);
                 }
             );
-            options.EnableDetailedErrors(true);
-            // options.EnableSensitiveDataLogging();
+            options.EnableDetailedErrors();
+            options.EnableSensitiveDataLogging();
         });
         
         services.AddIdentityCore<ApplicationUser>()

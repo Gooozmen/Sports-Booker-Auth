@@ -4,12 +4,8 @@ using CourtBooker.Auth.Infrastructure;
 using Serilog;
 
 try{
-    
-    AppContext.SetSwitch("Elastic.Extensions.Logging.EmitDebug", true);
-    AppContext.SetSwitch("Elastic.Extensions.Logging.EmitFailure", true);
-    
     var builder = WebApplication.CreateBuilder(args);
-        Console.WriteLine("Builder created");
+    Log.Information("Builder created");
         
     builder.SetupLoggingInfrastructure();
     Log.Information("Logging infrastructure set up");

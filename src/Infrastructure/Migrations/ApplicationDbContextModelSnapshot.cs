@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace CourtBooker.Auth.Infrastructure.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -17,13 +17,12 @@ namespace CourtBooker.Auth.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:DefaultSchema", "Identity")
                 .HasAnnotation("ProductVersion", "9.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Models.ApplicationRole", b =>
+            modelBuilder.Entity("CourtBooker.Auth.Domain.Models.ApplicationRole", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,10 +62,10 @@ namespace CourtBooker.Auth.Infrastructure.Migrations
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("AspNetRoles", "Identity");
+                    b.ToTable("aspnetroles", "identity");
                 });
 
-            modelBuilder.Entity("Domain.Models.ApplicationRoleClaim", b =>
+            modelBuilder.Entity("CourtBooker.Auth.Domain.Models.ApplicationRoleClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -106,10 +105,10 @@ namespace CourtBooker.Auth.Infrastructure.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims", "Identity");
+                    b.ToTable("aspnetroleclaims", "identity");
                 });
 
-            modelBuilder.Entity("Domain.Models.ApplicationUser", b =>
+            modelBuilder.Entity("CourtBooker.Auth.Domain.Models.ApplicationUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -225,10 +224,10 @@ namespace CourtBooker.Auth.Infrastructure.Migrations
                     b.HasIndex("UserName")
                         .IsUnique();
 
-                    b.ToTable("AspNetUsers", "Identity");
+                    b.ToTable("aspnetusers", "identity");
                 });
 
-            modelBuilder.Entity("Domain.Models.ApplicationUserClaim", b =>
+            modelBuilder.Entity("CourtBooker.Auth.Domain.Models.ApplicationUserClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -267,10 +266,10 @@ namespace CourtBooker.Auth.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims", "Identity");
+                    b.ToTable("aspnetuserclaims", "identity");
                 });
 
-            modelBuilder.Entity("Domain.Models.ApplicationUserLogin", b =>
+            modelBuilder.Entity("CourtBooker.Auth.Domain.Models.ApplicationUserLogin", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasMaxLength(450)
@@ -299,10 +298,10 @@ namespace CourtBooker.Auth.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins", "Identity");
+                    b.ToTable("aspnetuserlogins", "identity");
                 });
 
-            modelBuilder.Entity("Domain.Models.ApplicationUserRole", b =>
+            modelBuilder.Entity("CourtBooker.Auth.Domain.Models.ApplicationUserRole", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
@@ -325,10 +324,10 @@ namespace CourtBooker.Auth.Infrastructure.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles", "Identity");
+                    b.ToTable("aspnetuserroles", "identity");
                 });
 
-            modelBuilder.Entity("Domain.Models.ApplicationUserToken", b =>
+            modelBuilder.Entity("CourtBooker.Auth.Domain.Models.ApplicationUserToken", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
@@ -354,12 +353,12 @@ namespace CourtBooker.Auth.Infrastructure.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens", "Identity");
+                    b.ToTable("aspnetusertokens", "identity");
                 });
 
-            modelBuilder.Entity("Domain.Models.ApplicationRoleClaim", b =>
+            modelBuilder.Entity("CourtBooker.Auth.Domain.Models.ApplicationRoleClaim", b =>
                 {
-                    b.HasOne("Domain.Models.ApplicationRole", null)
+                    b.HasOne("CourtBooker.Auth.Domain.Models.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -367,9 +366,9 @@ namespace CourtBooker.Auth.Infrastructure.Migrations
                         .HasConstraintName("FK_AspNetRoleClaims_AspNetRoles_RoleId");
                 });
 
-            modelBuilder.Entity("Domain.Models.ApplicationUserClaim", b =>
+            modelBuilder.Entity("CourtBooker.Auth.Domain.Models.ApplicationUserClaim", b =>
                 {
-                    b.HasOne("Domain.Models.ApplicationUser", null)
+                    b.HasOne("CourtBooker.Auth.Domain.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -377,9 +376,9 @@ namespace CourtBooker.Auth.Infrastructure.Migrations
                         .HasConstraintName("FK_AspNetUserClaims_AspNetUsers_UserId");
                 });
 
-            modelBuilder.Entity("Domain.Models.ApplicationUserLogin", b =>
+            modelBuilder.Entity("CourtBooker.Auth.Domain.Models.ApplicationUserLogin", b =>
                 {
-                    b.HasOne("Domain.Models.ApplicationUser", null)
+                    b.HasOne("CourtBooker.Auth.Domain.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -387,24 +386,24 @@ namespace CourtBooker.Auth.Infrastructure.Migrations
                         .HasConstraintName("FK_AspNetUserLogins_AspNetUsers_UserId");
                 });
 
-            modelBuilder.Entity("Domain.Models.ApplicationUserRole", b =>
+            modelBuilder.Entity("CourtBooker.Auth.Domain.Models.ApplicationUserRole", b =>
                 {
-                    b.HasOne("Domain.Models.ApplicationRole", null)
+                    b.HasOne("CourtBooker.Auth.Domain.Models.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Models.ApplicationUser", null)
+                    b.HasOne("CourtBooker.Auth.Domain.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Models.ApplicationUserToken", b =>
+            modelBuilder.Entity("CourtBooker.Auth.Domain.Models.ApplicationUserToken", b =>
                 {
-                    b.HasOne("Domain.Models.ApplicationUser", null)
+                    b.HasOne("CourtBooker.Auth.Domain.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
