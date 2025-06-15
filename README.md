@@ -103,7 +103,7 @@ These PowerShell scripts live in the `/build` directory and must be executed **a
 | `setup.ps1`            | - Sets environment variables for local dev  <br> - Installs dependencies <br> - Loads toolkit and Psake |
 | `build-solution.ps1`   | Restores and builds the .NET solution                                                                   |
 | `build-image.ps1`      | Builds the Docker image                                                                                 |
-| `deploy-container.ps1` | Deploys the image to the local Docker engine                                                            |
+| `start-container.ps1` | Deploys the image to the local Docker engine                                                            |
 | `publish-image.ps1`    | Pushes the image to GitHub Container Registry                                                           |
 | `run-tests.ps1`        | Runs the test project in the solution                                                                   |
 
