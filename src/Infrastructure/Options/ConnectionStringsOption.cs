@@ -4,4 +4,5 @@ public class ConnectionStringsOption
 {
     public required string AuthDb { get; init; }
     public required string Redis { get; init; }
+    public required string Elastic { get; init; }
 }

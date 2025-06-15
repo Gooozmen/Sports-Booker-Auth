@@ -112,13 +112,7 @@ public static class DependencyInjection
     {
         var environmentValidator = app.Services.GetRequiredService<IEnvironmentValidator>();
         if (environmentValidator.IsDevelopment())
-        {
-            app.UseDeveloperExceptionPage();
-            await app.RunDatabaseInitialization();
-        }
-        
-        if(environmentValidator.IsStaging())
-            await app.RunDatabaseInitialization();
+            await SetUpDevelopmentEnvironment(app);
     }
     
     private static async Task RunDatabaseInitialization(this WebApplication app)
@@ -126,5 +120,11 @@ public static class DependencyInjection
         using var scope = app.Services.CreateScope();
         var initializer = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitializer>();
         await initializer.InitialiseAsync();
+    }
+
+    private static async Task SetUpDevelopmentEnvironment(this WebApplication app)
+    {
+        app.UseDeveloperExceptionPage();
+        await app.RunDatabaseInitialization();
     }
 }

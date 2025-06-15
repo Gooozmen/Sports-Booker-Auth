@@ -29,6 +29,8 @@
         <PackageReference Include="Elastic.Serilog.Sinks"/>
         <PackageReference Include="Elastic.Extensions.Logging"/>
         <PackageReference Include="Serilog.Sinks.Console"/>
+        <PackageReference Include="AspNetCore.HealthChecks.NpgSql"/>
+        <PackageReference Include="AspNetCore.HealthChecks.Elasticsearch"/>
 
         <ProjectReference Include="..\Application\Application.csproj"/>
         <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />

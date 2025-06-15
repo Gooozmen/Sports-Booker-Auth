@@ -33,6 +33,9 @@ try{
 
     builder.Services.AddPresentationServices();
     Log.Information("Presentation services added");
+    
+    builder.Services.AddAppHealthChecks(builder.Configuration);
+    Log.Information("Health checks configured");
 
     var app = builder.Build();
     Log.Information("Application built");
@@ -52,6 +55,7 @@ try{
     Log.Information("Authorization set up");
 
     app.MapControllers(); //Map controllers to endpoints.
+    app.MapAppHealthEndpoints();
     Log.Information("Controllers mapped to endpoints");
         
     await app.RunAsync();

@@ -59,6 +59,7 @@ function Set-DotnetSecrets {
         & dotnet user-secrets set "Jwt:Issuer" "$env:JWT_ISSUER"
         & dotnet user-secrets set "Jwt:Audience" "$env:JWT_AUDIENCE"
         & dotnet user-secrets set "ConnectionStrings:AuthDb" "$env:AUTH_DB"
+        & dotnet user-secrets set "ConnectionStrings:Elastic" "$env:ELASTICSEARCH_URL"
     }
     finally {
         Set-Location $CurrentPath

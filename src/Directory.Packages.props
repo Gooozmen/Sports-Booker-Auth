@@ -23,5 +23,7 @@
         <PackageVersion Include="Serilog.Enrichers.Environment" Version="3.0.1"/>
 
         <PackageVersion Include="Elastic.Extensions.Logging" Version="8.12.3" />
+        <PackageVersion Include="AspNetCore.HealthChecks.NpgSql" Version="9.0.0" />
+        <PackageVersion Include="AspNetCore.HealthChecks.Elasticsearch" Version="9.0.0" />
     </ItemGroup>
 </Project>
