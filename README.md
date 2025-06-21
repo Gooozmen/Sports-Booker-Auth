@@ -83,11 +83,13 @@ Used by `setup.ps1` to inject variables into the local development environment.
 
 $env:NUGET_PASSWORD = ""
 $env:NUGET_USERNAME = ""
-$env:AUTH_DB = "Host=localhost;Port=5432;Database=;Username=;Password=;" 
+$env:AUTH_DB = "Host=;Port=;Database=;Username=;Password=;" 
+$env:ELASTIC = "http://:"
+$env:KEYVAULT = "https://XXXXX.vault.azure.net/"
 $env:JWT_KEY = ""
-$env:JWT_ISSUER = ""
-$env:JWT_AUDIENCE = ""
-$env:ASPNETCORE_ENVIRONMENT = "Development"
+$env:JWT_ISSUER = "http://"
+$env:JWT_AUDIENCE = "http://"
+$env:ASPNETCORE_ENVIRONMENT = ""
 ```
 
 > Add this file manually. Do not commit to the repository.
