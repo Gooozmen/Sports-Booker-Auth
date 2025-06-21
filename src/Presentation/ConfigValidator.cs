@@ -18,6 +18,10 @@ public static class ConfigValidator
         if (string.IsNullOrWhiteSpace(config["Jwt:Audience"]))
             errors.Add("Jwt:Audience is missing or empty.");
         
+        //Key Vault
+        // if (string.IsNullOrWhiteSpace(config["AzureKeyVault:VaultUri"]))
+        //     errors.Add("AzureKeyVault:VaultUri missing or empty.");
+        
         if (errors.Count > 0)
         {
             throw new InvalidOperationException("Missing required configuration values:\n" + string.Join("\n", errors));

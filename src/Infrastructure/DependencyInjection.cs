@@ -1,130 +1,50 @@
-﻿using System.Text;
-using CourtBooker.Auth.Application.Interfaces;
-using CourtBooker.Auth.Domain.Models;
-using CourtBooker.Auth.Infrastructure.Database;
+﻿using CourtBooker.Auth.Application.Interfaces;
 using CourtBooker.Auth.Infrastructure.Database.Seeders;
 using CourtBooker.Auth.Infrastructure.Environments;
 using CourtBooker.Auth.Infrastructure.Factories;
 using CourtBooker.Auth.Infrastructure.IdentityManagers;
-using CourtBooker.Auth.Infrastructure.Options;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using Serilog;
+using CourtBooker.Auth.Infrastructure.Extensions;
 
 namespace CourtBooker.Auth.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static WebApplicationBuilder SetupLoggingInfrastructure(this WebApplicationBuilder builder)
+    public static void AddLoggingInfrastructure(this WebApplicationBuilder builder)
     {
-        builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
-        return builder;
+        builder.SetUpSerilog();
     }
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+    
+    public static void AddInfrastructure(this IServiceCollection services)
     {
-        SetupDatabase(services);
+        services.AddDatabase();
         
+        //Services Injection
         services.AddTransient<ITokenFactory, TokenFactory>();
-
         services.AddSingleton<IEnvironmentValidator, EnvironmentValidator>();
         services.AddScoped<IApplicationUserManager, ApplicationUserManager>();
         services.AddScoped<IApplicationRoleManager, ApplicationRoleManager>();
         services.AddScoped<ILoginManager, LoginManager>();
-        
-        
         services.AddTransient<ISeeder, ApplicationUserSeeder>();
         services.AddTransient<ISeeder, ApplicationRoleSeeder>();
-        
-        return services;
     }
-    public static IServiceCollection ConfigureJwt(this IServiceCollection services)
+    public static void AddJwt(this IServiceCollection services)
     {
-        var option = services.BuildServiceProvider().GetRequiredService<IOptions<JwtOption>>();
-
-        var jwt = option.Value;
-        services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(options =>
-            {
-                var key = Encoding.UTF8.GetBytes(jwt.Key);
-
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwt.Issuer,
-                    ValidAudience = jwt.Audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(key)
-                };
-            });
-
-        return services;
+        services.SetupJwt();
     }
-    public static IServiceCollection ConfigureOptions(this IServiceCollection services, IConfiguration configuration)
-    {
-        // Add configuration options
-        services.Configure<ConnectionStringsOption>(configuration.GetSection("ConnectionStrings"));
-        services.Configure<JwtOption>(configuration.GetSection("Jwt"));
-        services.Configure<EntityFrameworkOption>(configuration.GetSection("EntityFramework"));
-        return services;
-    }
-    private static void SetupDatabase(this IServiceCollection services)
-    {
-        var option = services.BuildServiceProvider().GetRequiredService<IOptions<ConnectionStringsOption>>();
-        services.AddDbContext<ApplicationDbContext>(options =>
-        {
-            options.UseNpgsql
-            (
-                option.Value.AuthDb,
-                npgsqlOptions =>
-                {
-                    npgsqlOptions.MigrationsHistoryTable("__EFMigrationsHistory",
-                        "Migrations"); // Store migration history in Migrations schema
-                    npgsqlOptions.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);
-                    npgsqlOptions.CommandTimeout(15);
-                }
-            );
-            options.EnableDetailedErrors();
-            options.EnableSensitiveDataLogging();
-        });
-        
-        services.AddIdentityCore<ApplicationUser>()
-            .AddRoles<ApplicationRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddDefaultTokenProviders();
-        
-        services.AddScoped<IDbContextFactory<ApplicationDbContext>, ApplicationDbContextFactory<ApplicationDbContext>>();
-        services.AddTransient<ApplicationDbContext>(provider => provider.GetRequiredService<IDbContextFactory<ApplicationDbContext>>().CreateDbContext());
-        services.AddScoped<ApplicationDbContextInitializer>();
-    }
+
+    public static void AddOptions(this IServiceCollection services, IConfiguration configuration)
+        => services.SetUpOptions(configuration);
+    
     public static async Task UseEnvironment(this WebApplication app)
     {
-        var environmentValidator = app.Services.GetRequiredService<IEnvironmentValidator>();
-        if (environmentValidator.IsDevelopment())
-            await SetUpDevelopmentEnvironment(app);
-    }
-    
-    private static async Task RunDatabaseInitialization(this WebApplication app)
-    {
-        using var scope = app.Services.CreateScope();
-        var initializer = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitializer>();
-        await initializer.InitialiseAsync();
+        await app.SetupApplicationEnvironment();
     }
 
-    private static async Task SetUpDevelopmentEnvironment(this WebApplication app)
+    public static void AddAppHealthChecks(this IServiceCollection services)
     {
-        app.UseDeveloperExceptionPage();
-        await app.RunDatabaseInitialization();
+        services.SetupAppHealthChecks();
     }
 }

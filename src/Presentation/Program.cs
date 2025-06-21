@@ -1,3 +1,6 @@
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+using Microsoft.Extensions.Configuration;
 using CourtBooker.Auth.Application;
 using CourtBooker.Auth.Presentation;
 using CourtBooker.Auth.Infrastructure;
@@ -7,7 +10,7 @@ try{
     var builder = WebApplication.CreateBuilder(args);
     Log.Information("Builder created");
         
-    builder.SetupLoggingInfrastructure();
+    builder.AddLoggingInfrastructure();
     Log.Information("Logging infrastructure set up");
     
     // Validar configuración antes de continuar
@@ -19,10 +22,10 @@ try{
     builder.Configuration.AddDefaultConfiguration<Program>();
     Log.Information("Default configuration added");
 
-    builder.Services.ConfigureOptions(builder.Configuration);
+    builder.Services.AddOptions(builder.Configuration);
     Log.Information("Options configured");
 
-    builder.Services.ConfigureJwt();
+    builder.Services.AddJwt();
     Log.Information("JWT configured");
 
     builder.Services.AddInfrastructure();
@@ -34,7 +37,7 @@ try{
     builder.Services.AddPresentationServices();
     Log.Information("Presentation services added");
     
-    builder.Services.AddAppHealthChecks(builder.Configuration);
+    builder.Services.AddAppHealthChecks();
     Log.Information("Health checks configured");
 
     var app = builder.Build();
