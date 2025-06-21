@@ -1,6 +1,4 @@
 using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
-using Microsoft.Extensions.Configuration;
 using CourtBooker.Auth.Application;
 using CourtBooker.Auth.Presentation;
 using CourtBooker.Auth.Infrastructure;
@@ -9,7 +7,7 @@ using Serilog;
 try{
     var builder = WebApplication.CreateBuilder(args);
     Log.Information("Builder created");
-        
+    
     builder.AddLoggingInfrastructure();
     Log.Information("Logging infrastructure set up");
     

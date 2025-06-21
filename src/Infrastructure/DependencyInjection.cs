@@ -1,5 +1,6 @@
 ﻿using CourtBooker.Auth.Application.Interfaces;
 using CourtBooker.Auth.Infrastructure.Database.Seeders;
+using CourtBooker.Auth.Application.Environments;
 using CourtBooker.Auth.Infrastructure.Environments;
 using CourtBooker.Auth.Infrastructure.Factories;
 using CourtBooker.Auth.Infrastructure.IdentityManagers;

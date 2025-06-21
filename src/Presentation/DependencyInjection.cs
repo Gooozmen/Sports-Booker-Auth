@@ -14,7 +14,7 @@ namespace CourtBooker.Auth.Presentation;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddPresentationServices(this IServiceCollection services)
+    public static void AddPresentationServices(this IServiceCollection services)
     {
         services.AddControllers(o => 
         { 
@@ -24,15 +24,13 @@ public static class DependencyInjection
         services.AddHttpContextAccessor();
         services.AddScoped<IUserIdentifyService, UserIdentifyService>();
         SetupAuthorization(services);
-        return services;
     }
     
    
-    public static IConfigurationBuilder AddDefaultConfiguration<T>(this IConfigurationBuilder configurationBuilder) where T : class
+    public static void AddDefaultConfiguration<T>(this IConfigurationBuilder configurationBuilder) where T : class
     {
         configurationBuilder.AddJsonFile("appsettings.json", true, true);
         configurationBuilder.AddUserSecrets<T>();
-        return configurationBuilder;
     }
     private static void SetupAuthorization(this IServiceCollection services)
     {
@@ -44,10 +42,12 @@ public static class DependencyInjection
         });
     }
 
-    public static IApplicationBuilder UsePresentationMiddlewares(this IApplicationBuilder app)
-        => app.UseMiddleware<UnauthorizeMiddleware>()
-              .UseMiddleware<CorrelationIdMiddleware>()
-              .UseMiddleware<RequestLoggingMiddleware>();
+    public static void UsePresentationMiddlewares(this IApplicationBuilder app)
+    {
+        app.UseMiddleware<UnauthorizeMiddleware>()
+           .UseMiddleware<CorrelationIdMiddleware>()
+           .UseMiddleware<RequestLoggingMiddleware>();
+    }
 
     public static void MapAppHealthEndpoints(this WebApplication app)
     {
