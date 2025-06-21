@@ -49,36 +49,10 @@ public static class DependencyInjection
               .UseMiddleware<CorrelationIdMiddleware>()
               .UseMiddleware<RequestLoggingMiddleware>();
 
-    public static IServiceCollection AddAppHealthChecks(this IServiceCollection services, IConfiguration configuration)
-    {
-        var option = services.BuildServiceProvider().GetRequiredService<IOptions<ConnectionStringsOption>>();
-        services.AddHealthChecks()
-            .AddNpgSql(
-                option.Value.AuthDb,
-                name: "postgresql",
-                tags: new[] { "db", "sql" }
-            )
-            .AddCheck("self", () => HealthCheckResult.Healthy(), tags: new[] { "self" });
-
-        return services;
-    }
-
     public static void MapAppHealthEndpoints(this WebApplication app)
     {
         app.MapHealthChecks("/api/health", new HealthCheckOptions
         {
-            ResponseWriter = WriteResponse
-        });
-
-        app.MapHealthChecks("/api/health/live", new HealthCheckOptions
-        {
-            Predicate = check => check.Tags.Contains("self"),
-            ResponseWriter = WriteResponse
-        });
-
-        app.MapHealthChecks("/api/health/ready", new HealthCheckOptions
-        {
-            Predicate = check => !check.Tags.Contains("self"),
             ResponseWriter = WriteResponse
         });
     }

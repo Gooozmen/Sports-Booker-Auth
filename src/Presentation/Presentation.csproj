@@ -5,11 +5,9 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UserSecretsId>9b7ce954-8914-4c01-b3ba-65e524588aaf</UserSecretsId>
-
         <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-
         <AssemblyName>CourtBooker.Auth.Presentation</AssemblyName>
         <OutputPath>..\..\Output\</OutputPath>
         <RestorePackagesPath>..\..\Dependencies\Packages\</RestorePackagesPath>
@@ -29,8 +27,6 @@
         <PackageReference Include="Elastic.Serilog.Sinks"/>
         <PackageReference Include="Elastic.Extensions.Logging"/>
         <PackageReference Include="Serilog.Sinks.Console"/>
-        <PackageReference Include="AspNetCore.HealthChecks.NpgSql"/>
-        <PackageReference Include="AspNetCore.HealthChecks.Elasticsearch"/>
 
         <ProjectReference Include="..\Application\Application.csproj"/>
         <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
