@@ -11,7 +11,7 @@ internal static class JwtExtensions
 {
     internal static IServiceCollection SetupJwt(this IServiceCollection services)
     {
-        var jwtSetting = services.GetJwtOption().Value;
+        var jwtSetting = services.GetJwtOption();
         
         services.AddAuthentication(options =>
         {
@@ -19,7 +19,7 @@ internal static class JwtExtensions
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(options =>
         {
-            var key = Encoding.UTF8.GetBytes(jwtSetting.Key);
+            var key = Encoding.UTF8.GetBytes(jwtSetting.JwtKey);
 
             options.TokenValidationParameters = new TokenValidationParameters
             {

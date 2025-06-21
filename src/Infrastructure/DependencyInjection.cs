@@ -36,8 +36,8 @@ public static class DependencyInjection
         services.SetupJwt();
     }
 
-    public static void AddOptions(this IServiceCollection services, IConfiguration configuration)
-        => services.SetUpOptions(configuration);
+    public static void AddAzureKeyVault(this IServiceCollection services, IConfiguration configuration)
+        => services.SetupAzureKeyVaultClient(configuration);
     
     public static async Task UseEnvironment(this WebApplication app)
     {

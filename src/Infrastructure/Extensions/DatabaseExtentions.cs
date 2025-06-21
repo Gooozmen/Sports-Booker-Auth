@@ -39,7 +39,7 @@ internal static class DatabaseExtensions
             {
                 options.UseNpgsql
                 (
-                    services.GetConnectionString().Value.AuthDb,
+                    services.GetConnectionString().AuthDb,
                     npgsqlOptions => SetupNpqslMigrations(npgsqlOptions)
                 );
                 options.EnableDetailedErrors();
