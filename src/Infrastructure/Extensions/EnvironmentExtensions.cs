@@ -1,4 +1,4 @@
-using CourtBooker.Auth.Infrastructure.Environments;
+using CourtBooker.Auth.Application.Environments;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
