@@ -81,8 +81,8 @@ function Verify-EnviromentVariables{
         exit 1
     }
 }
-Set-EnviromentVariables
-Set-DotnetSecrets
+# Set-EnviromentVariables
+# Set-DotnetSecrets
 Verify-EnviromentVariables
 Clear-NugetCache
 Set-PackageSource
