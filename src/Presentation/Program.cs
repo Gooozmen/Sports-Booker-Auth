@@ -2,6 +2,7 @@ using Azure.Identity;
 using CourtBooker.Auth.Application;
 using CourtBooker.Auth.Presentation;
 using CourtBooker.Auth.Infrastructure;
+using Microsoft.Extensions.Azure;
 using Serilog;
 
 try{
@@ -11,17 +12,14 @@ try{
     builder.AddLoggingInfrastructure();
     Log.Information("Logging infrastructure set up");
     
-    // Validar configuración antes de continuar
-    ConfigValidator.ValidateRequiredConfiguration(builder.Configuration);
-    
     builder.WebHost.UseUrls("http://0.0.0.0:80");
     Log.Information("URL Defined");
 
     builder.Configuration.AddDefaultConfiguration<Program>();
     Log.Information("Default configuration added");
-
-    builder.Services.AddOptions(builder.Configuration);
-    Log.Information("Options configured");
+    
+    builder.Services.AddAzureKeyVault(builder.Configuration);
+    Log.Information("Azure Key Vault Added");
 
     builder.Services.AddJwt();
     Log.Information("JWT configured");

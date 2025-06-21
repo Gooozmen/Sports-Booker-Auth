@@ -36,7 +36,7 @@ public class TokenFactory(IOptions<JwtOption> jwtOptions) : ITokenFactory
     }
     
     private SymmetricSecurityKey AssemblySecurityKey() 
-        =>new(Encoding.UTF8.GetBytes(_jwtOption.Key));
+        =>new(Encoding.UTF8.GetBytes(_jwtOption.JwtKey));
     
     private SigningCredentials AssemblySigningCredentials(SymmetricSecurityKey key)
         =>new(key,SecurityAlgorithms.HmacSha256);
