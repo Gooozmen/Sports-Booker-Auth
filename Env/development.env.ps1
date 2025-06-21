@@ -1,7 +1,9 @@
-$env:NUGET_PASSWORD = 
-$env:NUGET_USERNAME = 
-$env:AUTH_DB = 
-$env:JWT_KEY = 
-$env:JWT_ISSUER = 
-$env:JWT_AUDIENCE = 
-$env:ASPNETCORE_ENVIRONMENT = 
+$env:NUGET_PASSWORD = ""
+$env:NUGET_USERNAME = ""
+$env:AUTH_DB = "" 
+$env:ELASTIC = ""
+$env:KEYVAULT = ""
+$env:JWT_KEY = ""
+$env:JWT_ISSUER = "http://"
+$env:JWT_AUDIENCE = "http://"
+$env:ASPNETCORE_ENVIRONMENT = ""

@@ -14,7 +14,7 @@ internal static class HealthCheckExtensions
         
         services.AddHealthChecks()
             .AddNpgSql(
-                services.GetConnectionString().Value.AuthDb,
+                services.GetConnectionString().AuthDb,
                 name: "postgresql",
                 tags: new[] { "db", "sql" }
             )

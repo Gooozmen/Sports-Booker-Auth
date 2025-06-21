@@ -1,8 +1,11 @@
-﻿namespace CourtBooker.Auth.Infrastructure.Options;
+﻿using System.Diagnostics.CodeAnalysis;
 
-public class ConnectionStringsOption
+namespace CourtBooker.Auth.Infrastructure.Options;
+
+public sealed class ConnectionStringsOption
 {
-    public required string AuthDb { get; init; }
-    public required string Redis { get; init; }
-    public required string Elastic { get; init; }
+
+    public required string AuthDb { get; set; }
+    public required string Redis { get; set; }
+    public required string Elastic { get; set; }
 }

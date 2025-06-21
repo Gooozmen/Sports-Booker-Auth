@@ -1,6 +1,6 @@
 namespace CourtBooker.Auth.Infrastructure.Options;
 
-public class EntityFrameworkOption
+public sealed record EntityFrameworkOption
 {
-    public bool ExecuteRebuild { get; set; }
+    public required bool ExecuteRebuild { get; init; }
 }

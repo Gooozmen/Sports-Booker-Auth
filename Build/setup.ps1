@@ -55,11 +55,13 @@ function Set-DotnetSecrets {
         Set-Location $StartingProjectLocation
 
         & dotnet user-secrets clear
-        & dotnet user-secrets set "Jwt:Key" "$env:JWT_KEY"
-        & dotnet user-secrets set "Jwt:Issuer" "$env:JWT_ISSUER"
-        & dotnet user-secrets set "Jwt:Audience" "$env:JWT_AUDIENCE"
-        & dotnet user-secrets set "ConnectionStrings:AuthDb" "$env:AUTH_DB"
-        & dotnet user-secrets set "ConnectionStrings:Elastic" "$env:ELASTICSEARCH_URL"
+        & dotnet user-secrets set "Jwt:Key"                     "$env:JWT_KEY"
+        & dotnet user-secrets set "Jwt:Issuer"                  "$env:JWT_ISSUER"
+        & dotnet user-secrets set "Jwt:Audience"                "$env:JWT_AUDIENCE"
+        & dotnet user-secrets set "ConnectionStrings:AuthDb"    "$env:AUTH_DB"
+        & dotnet user-secrets set "ConnectionStrings:Elastic"   "$env:ELASTIC"
+        & dotnet user-secrets set "AzureKeyVault:VaultUri"      "$env:KEYVAULT"
+
     }
     finally {
         Set-Location $CurrentPath

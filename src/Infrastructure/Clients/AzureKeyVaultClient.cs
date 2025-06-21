@@ -4,7 +4,8 @@ using Microsoft.Extensions.Configuration;
 
 namespace CourtBooker.Auth.Infrastructure.Clients;
 
-public class AzureKeyVaultClient(IConfiguration configuration)
+
+internal class AzureKeyVaultClient(IConfiguration configuration)
 {
     private readonly SecretClient _secretClient = new
     (
@@ -12,7 +13,8 @@ public class AzureKeyVaultClient(IConfiguration configuration)
         new DefaultAzureCredential()
     );
 
-    public async Task<string> GetSecretAsync(string secretName)
+
+    internal async Task<string> GetSecretAsync(string secretName)
     {
         try
         {
