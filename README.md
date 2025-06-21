@@ -8,13 +8,14 @@ This repository provides an automated environment for building, testing, and dep
 
 Make sure the following tools are installed **before running any scripts**:
 
-| Tool            | Version / Notes                                     |
-|------------------|-----------------------------------------------------|
+| Tool             | Version / Notes                                         |
+|------------------|---------------------------------------------------------|
 | [Chocolatey](https://chocolatey.org/install) | Package manager for Windows |
-| NuGet CLI       | Install via `choco install nuget.commandline`       |
-| PowerShell Core | Recommended version: latest                         |
-| .NET SDK        | `9.0.205` or higher                                 |
-| GitHub Secrets  | Required to push Docker image — ask the repo owner |
+| NuGet CLI        | Install via `choco install nuget.commandline`           |
+| PowerShell Core  | Recommended version: latest                             |
+| .NET SDK         | `9.0.205` or higher                                     |
+| GitHub Secrets   | Required to push Docker image — ask the repo owner      |
+| GGSHIELD         | choco install ggshield -y                               |
 
 ---
 
@@ -62,13 +63,13 @@ Used for Docker builds and local container configuration.
 
 ```env
 ASPNETCORE_ENVIRONMENT=Docker
-JWT__KEY=
-JWT__ISSUER=http://
-JWT__AUDIENCE=http://
-CONNECTIONSTRINGS__AUTHDB="Host=;Port=;Database=;Username=;Password=;"
 IMAGE_IDENTIFIER=ghcr.io/username/repo-name
-IMAGE_TAG= integer
-CONTAINER_NAME=
+IMAGE_TAG=latest
+CONTAINER_NAME=courtbooker-auth
+AZUREKEYVAULT__KEYVAULTURI=https://your-keyvault.vault.azure.net/
+AZURE_CLIENT_ID=
+AZURE_CLIENT_SECRET=
+AZURE_TENANT_ID=
 ```
 
 > ⚠️ This file should be listed in `.gitignore` and **never committed** with real secrets.
