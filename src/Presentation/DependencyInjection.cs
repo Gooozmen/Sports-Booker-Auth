@@ -29,7 +29,7 @@ public static class DependencyInjection
    
     public static void AddDefaultConfiguration<T>(this IConfigurationBuilder configurationBuilder) where T : class
     {
-        configurationBuilder.AddJsonFile("appsettings.json", true, true);
+        configurationBuilder.AddJsonFile("appsettings.json", false, true);
         configurationBuilder.AddUserSecrets<T>();
     }
     private static void SetupAuthorization(this IServiceCollection services)

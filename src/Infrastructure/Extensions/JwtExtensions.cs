@@ -19,7 +19,7 @@ internal static class JwtExtensions
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(options =>
         {
-            var key = Encoding.UTF8.GetBytes(jwtSetting.JwtKey);
+            var key = Encoding.UTF8.GetBytes(jwtSetting.Key);
 
             options.TokenValidationParameters = new TokenValidationParameters
             {
