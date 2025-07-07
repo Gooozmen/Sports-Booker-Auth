@@ -1,9 +1,4 @@
-using System.Diagnostics;
-using System.Text.Json;
-using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
 using CourtBooker.Auth.Infrastructure.Options;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -12,49 +7,18 @@ namespace CourtBooker.Auth.Infrastructure.Extensions;
 
 internal static class OptionExtensions
 {
-    internal static void SetupAzureKeyVaultClient(this IServiceCollection services, IConfiguration configuration)
+    internal static void SetUpOptions(this IServiceCollection services, IConfiguration configuration)
     {
-        services.SetUpAzureKeyVaultOptions(configuration);
-        var keyVaultUri = services.GetAzureKeyVaultOptions().VaultUri;
-        var secretClient = new SecretClient(new Uri(keyVaultUri), new DefaultAzureCredential());
-        services.SetUpOptions(secretClient);
-    }
-    
-    private static void SetUpAzureKeyVaultOptions(this IServiceCollection services, IConfiguration configuration)
-    {
-        var section = configuration.GetSection("AzureKeyVault");
-        var ef = configuration.GetSection("EntityFramework");
+        // Bind Elastic options
+        services.Configure<ElasticOption>(configuration.GetSection("Elastic"));
 
-        var options = section.Get<AzureKeyVaultOption>();
-        if (options == null || string.IsNullOrWhiteSpace(options.VaultUri))
-            throw new InvalidOperationException("AzureKeyVaultOption.VaultUri is missing or empty.");
+        // Bind ConnectionStrings
+        services.Configure<ConnectionStringsOption>(configuration.GetSection("ConnectionStrings"));
 
-        services.Configure<AzureKeyVaultOption>(section);
-    }
+        // Bind Jwt
+        services.Configure<JwtOption>(configuration.GetSection("Jwt"));
 
-    
-    private static void SetUpOptions(this IServiceCollection services, SecretClient client)
-    {
-        // Add configuration options
-        var connectionStringsSecret = client.GetSecret("ConnectionStrings");
-        var connectionStringJson = JsonSerializer.Deserialize<ConnectionStringsOption>(connectionStringsSecret.Value.Value);
-        var jwtSecrets = client.GetSecret("Jwt");
-        var jwtJson = JsonSerializer.Deserialize<JwtOption>(jwtSecrets.Value.Value);
-        
-        services
-        .Configure<ConnectionStringsOption>(_ =>
-        {
-            _.AuthDb = connectionStringJson.AuthDb;
-            _.Elastic = connectionStringJson.Elastic;
-            _.Redis = connectionStringJson.Redis;
-        }).Configure<JwtOption>(_ =>
-        {
-            _.JwtKey = jwtJson.JwtKey;
-            _.Audience = jwtJson.Audience;
-            _.Issuer = jwtJson.Issuer;
-            _.ExpiryMinutes = jwtJson.ExpiryMinutes;
-        });
-
+        // Validate all options
         using var provider = services.BuildServiceProvider();
         provider.ValidateOptions();
     }
@@ -81,7 +45,7 @@ internal static class OptionExtensions
         {
             var jwt = provider.GetRequiredService<IOptions<JwtOption>>().Value;
 
-            if (string.IsNullOrWhiteSpace(jwt.JwtKey))
+            if (string.IsNullOrWhiteSpace(jwt.Key))
                 errors.Add("JwtOption.Key is missing or empty.");
             if (string.IsNullOrWhiteSpace(jwt.Issuer))
                 errors.Add("JwtOption.Issuer is missing or empty.");
@@ -100,13 +64,6 @@ internal static class OptionExtensions
     }
     
     //--------------------------------------------------------------------------------------------------
-    private static AzureKeyVaultOption GetAzureKeyVaultOptions(this IServiceCollection services)
-    {
-        using var serviceProvider = services.BuildServiceProvider();
-        return serviceProvider
-            .GetRequiredService<IOptions<AzureKeyVaultOption>>()
-            .Value;
-    }
     internal static ConnectionStringsOption GetConnectionString(this IServiceCollection services)
     {
         using var serviceProvider = services.BuildServiceProvider();
@@ -122,4 +79,13 @@ internal static class OptionExtensions
             .GetRequiredService<IOptions<JwtOption>>()
             .Value;
     }
+    
+    internal static ElasticOption GetElasticOption(this IServiceCollection services)
+    {
+        using var serviceProvider = services.BuildServiceProvider();
+        return serviceProvider
+            .GetRequiredService<IOptions<ElasticOption>>()
+            .Value;
+    }
+    //------------------------------------------------------------------------------------------------------
 }

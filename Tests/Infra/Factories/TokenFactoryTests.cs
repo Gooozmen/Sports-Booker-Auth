@@ -19,7 +19,7 @@ public class TokenFactoryTests
     {
         _jwtOptions = new JwtOption
         {
-            JwtKey = "9rJvMk2fZ6cWpL1xYtBnUcDeHsQgAaSd",
+            Key = "9rJvMk2fZ6cWpL1xYtBnUcDeHsQgAaSd",
             Issuer = "TestIssuer",
             Audience = "TestAudience",
             ExpiryMinutes = 60

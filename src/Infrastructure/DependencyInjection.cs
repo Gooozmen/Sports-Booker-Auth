@@ -14,9 +14,7 @@ namespace CourtBooker.Auth.Infrastructure;
 public static class DependencyInjection
 {
     public static void AddLoggingInfrastructure(this WebApplicationBuilder builder)
-    {
-        builder.SetUpSerilog();
-    }
+        => builder.SetUpSerilogSink();
     
     public static void AddInfrastructure(this IServiceCollection services)
     {
@@ -32,20 +30,17 @@ public static class DependencyInjection
         services.AddTransient<ISeeder, ApplicationRoleSeeder>();
     }
     public static void AddJwt(this IServiceCollection services)
-    {
-        services.SetupJwt();
-    }
-
-    public static void AddAzureKeyVault(this IServiceCollection services, IConfiguration configuration)
-        => services.SetupAzureKeyVaultClient(configuration);
+        => services.SetupJwt();
+    
+    public static void AddAzureKeyVault(this IConfigurationBuilder builder)
+        => builder.SetUpAzureKeyVault();
     
     public static async Task UseEnvironment(this WebApplication app)
-    {
-        await app.SetupApplicationEnvironment();
-    }
-
+        => await app.SetupApplicationEnvironment();
+    
     public static void AddAppHealthChecks(this IServiceCollection services)
-    {
-        services.SetupAppHealthChecks();
-    }
+        => services.SetupAppHealthChecks();
+    
+    public static void AddConfigurationOptions(this IServiceCollection services, IConfiguration configuration)
+        => services.SetUpOptions(configuration);
 }
