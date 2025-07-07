@@ -14,7 +14,7 @@ namespace CourtBooker.Auth.Infrastructure;
 public static class DependencyInjection
 {
     public static void AddLoggingInfrastructure(this WebApplicationBuilder builder)
-        => builder.SetUpSerilog();
+        => builder.SetUpSerilogSink();
     
     public static void AddInfrastructure(this IServiceCollection services)
     {

@@ -13,28 +13,10 @@ try{
     builder.Configuration.AddAzureKeyVault();
     Console.WriteLine("Azure Key Vault Added");
 
-    #region MyRegion
-    // var app = builder.Build();
-    //
-    // app.MapGet("/", (IConfiguration config) =>
-    // {
-    //     return Results.Ok(new
-    //     {
-    //         MySecretValue = config["MySection:MySecretValue2"]
-    //     });
-    // });
-    //
-    // app.Run();
-    
-
-    #endregion
-    
     builder.Services.AddConfigurationOptions(builder.Configuration);
     
     builder.AddLoggingInfrastructure();
     Log.Information("Logging infrastructure set up");
-    
-    Console.WriteLine($"Config[ConnectionStrings:Elastic] = {builder.Configuration["ConnectionStrings:Elastic"]}");
     
     builder.WebHost.UseUrls("http://0.0.0.0:80");
     Log.Information("URL Defined");

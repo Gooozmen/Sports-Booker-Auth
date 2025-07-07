@@ -79,5 +79,13 @@ internal static class OptionExtensions
             .GetRequiredService<IOptions<JwtOption>>()
             .Value;
     }
+    
+    internal static ElasticOption GetElasticOption(this IServiceCollection services)
+    {
+        using var serviceProvider = services.BuildServiceProvider();
+        return serviceProvider
+            .GetRequiredService<IOptions<ElasticOption>>()
+            .Value;
+    }
     //------------------------------------------------------------------------------------------------------
 }
