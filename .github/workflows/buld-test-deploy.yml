@@ -67,19 +67,19 @@ jobs:
 
           echo "Docker image pushed: $IMAGE_VERSIONED"
 
-      - name: Log in to Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      # - name: Log in to Azure
+      #   uses: azure/login@v1
+      #   with:
+      #     creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Deploy to Azure Container App
-        run: |
-          IMAGE_BASE=${{ env.REGISTRY }}/${{ env.USERNAME }}/${{ env.CONTAINER_NAME }}
-          IMAGE_LATEST=$IMAGE_BASE:latest
-          REV_SUFFIX="rev-${{ github.run_number }}"
+      # - name: Deploy to Azure Container App
+      #   run: |
+      #     IMAGE_BASE=${{ env.REGISTRY }}/${{ env.USERNAME }}/${{ env.CONTAINER_NAME }}
+      #     IMAGE_LATEST=$IMAGE_BASE:latest
+      #     REV_SUFFIX="rev-${{ github.run_number }}"
 
-          az containerapp update \
-            --name ${{ env.CONTAINER_NAME }} \
-            --resource-group ${{ env.RESOURCE_GROUP }} \
-            --image $IMAGE_LATEST \
-            --revision-suffix $REV_SUFFIX
+      #     az containerapp update \
+      #       --name ${{ env.CONTAINER_NAME }} \
+      #       --resource-group ${{ env.RESOURCE_GROUP }} \
+      #       --image $IMAGE_LATEST \
+      #       --revision-suffix $REV_SUFFIX

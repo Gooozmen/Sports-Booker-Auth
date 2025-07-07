@@ -1,4 +1,4 @@
-name: CICD - Staging
+name: courtbooker Auth - Build Docker Image
 
 on:
   push:
