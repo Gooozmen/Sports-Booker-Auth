@@ -29,8 +29,8 @@ jobs:
 
       - name: Clean artifacts
         run: |
-          rm -rf Artifacts/TestResults
-          mkdir -p Artifacts/TestResults
+          rm -rf ./Artifacts/TestResults
+          mkdir -p ./Artifacts/TestResults
 
       ########################
       # 0 Restore dependencies
@@ -53,7 +53,7 @@ jobs:
             --configuration Release \
             --no-build \
             --logger "trx;LogFileName=TestResults.trx" \
-            --results-directory Artifacts/TestResults
+            --results-directory ./Artifacts/TestResults
 
       ########################
       # 3 Report Test Results
@@ -63,5 +63,5 @@ jobs:
         if: always()
         with:
           name: Test Results
-          path: Artifacts/TestResults.trx
+          path: ./Artifacts/TestResults.trx
           reporter: dotnet-trx
