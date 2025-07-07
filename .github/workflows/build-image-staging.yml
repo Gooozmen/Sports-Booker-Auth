@@ -15,7 +15,7 @@ env:
   RESOURCE_GROUP: CourtBooker-App-Dev
 
 jobs:
-  build-and-deploy:
+  build-test-container:
     runs-on: ubuntu-latest
 
     steps:
