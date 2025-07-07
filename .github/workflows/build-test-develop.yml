@@ -2,9 +2,9 @@ name: courtbooker Auth - Build Docker Image
 
 on:
   push:
-    branches: [ "staging" ]
+    branches: [ "develop" ]
   pull_request:
-    branches: [ "staging" ]
+    branches: [ "develop" ]
   workflow_dispatch:
 
 env:
@@ -56,25 +56,12 @@ jobs:
             --results-directory Artifacts/TestResults
 
       ########################
-      # 3️ Build Docker Image
+      # 3 Report Test Results
       ########################
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
+      - name: Report Test Results
+        uses: dorny/test-reporter@v1
+        if: always()
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ env.USERNAME }}
-          password: ${{ secrets.NUGET_PASSWORD }}
-
-      - name: Build, tag and push Docker image
-        run: |
-          IMAGE_BASE=${{ env.REGISTRY }}/${{ env.USERNAME }}/${{ env.CONTAINER_NAME }}
-          IMAGE_LATEST=$IMAGE_BASE:latest
-          IMAGE_VERSIONED=$IMAGE_BASE:${{ env.IMAGE_VERSION }}
-
-          docker build -t $IMAGE_LATEST .
-          docker tag $IMAGE_LATEST $IMAGE_VERSIONED
-
-          docker push $IMAGE_LATEST
-          docker push $IMAGE_VERSIONED
-
-          echo "Docker image pushed: $IMAGE_VERSIONED"
+          name: Test Results
+          path: Artifacts/TestResults.trx
+          reporter: dotnet-trx
