@@ -13,7 +13,7 @@ env:
   USERNAME: gooozmen
   IMAGE_VERSION: 2.0.${{ github.run_number }}
   RESOURCE_GROUP: courtbooker-rg
-  APP_SERVICE_NAME: courtbooker-auth
+  APP_SERVICE_NAME: web-app-poc
 
 jobs:
   build-test-deploy:
@@ -78,4 +78,4 @@ jobs:
           az webapp config container set \
             --name ${{ env.APP_SERVICE_NAME }} \
             --resource-group ${{ env.RESOURCE_GROUP }} \
-            --docker-custom-image-name ${{ env.REGISTRY }}/${{ env.USERNAME }}/${{ env.CONTAINER_NAME }}:${{ env.IMAGE_VERSION }}
+            --container-image-name ${{ env.REGISTRY }}/${{ env.USERNAME }}/${{ env.CONTAINER_NAME }}:${{ env.IMAGE_VERSION }}
