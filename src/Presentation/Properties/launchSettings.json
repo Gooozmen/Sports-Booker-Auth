@@ -18,15 +18,6 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Staging"
       }
-    },
-    "Azure": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": false,
-      "applicationUrl": "http://localhost:5073",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Azure"
-      }
     }
   }
 }

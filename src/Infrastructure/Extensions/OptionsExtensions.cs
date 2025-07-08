@@ -10,6 +10,9 @@ internal static class OptionExtensions
     internal static void SetUpOptions(this IServiceCollection services, IConfiguration configuration)
     {
         // Bind Elastic options
+        services.Configure<EntityFrameworkOption>(configuration.GetSection("EntityFramework"));
+        
+        // Bind Elastic options
         services.Configure<ElasticOption>(configuration.GetSection("Elastic"));
 
         // Bind ConnectionStrings
