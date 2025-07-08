@@ -12,8 +12,7 @@ internal static class EnvironmentExtensions
         if (environmentValidator.IsDevelopment()) 
             await SetUpDevelopmentEnvironment(app);
         if (environmentValidator.IsStaging())
-        { //
-        }
+            await SetUpDevelopmentEnvironment(app);
     }
     
     private static async Task SetUpDevelopmentEnvironment(this WebApplication app)

@@ -54,14 +54,10 @@ function Set-DotnetSecrets {
     try {
         Set-Location $StartingProjectLocation
 
-        & dotnet user-secrets clear
-        & dotnet user-secrets set "Jwt:Key"                     "$env:JWT_KEY"
-        & dotnet user-secrets set "Jwt:Issuer"                  "$env:JWT_ISSUER"
-        & dotnet user-secrets set "Jwt:Audience"                "$env:JWT_AUDIENCE"
-        & dotnet user-secrets set "ConnectionStrings:AuthDb"    "$env:AUTH_DB"
-        & dotnet user-secrets set "ConnectionStrings:Elastic"   "$env:ELASTIC"
-        & dotnet user-secrets set "AzureKeyVault:VaultUri"      "$env:KEYVAULT"
-
+        # & dotnet user-secrets set "Serilog__WriteTo__1__Args__nodes__0"     "$env:ELASTIC_NODE"
+        # & dotnet user-secrets set "Serilog__WriteTo__1__Args__apiKey"       "$env:ELASTIC_API_KEY"
+        & dotnet user-secrets set "Serilog:WriteTo:1:Args:nodes:0"     "$env:ELASTIC_NODE"
+        & dotnet user-secrets set "Serilog:WriteTo:1:Args:apiKey"      "$env:ELASTIC_API_KEY"
     }
     finally {
         Set-Location $CurrentPath
@@ -81,8 +77,8 @@ function Verify-EnviromentVariables{
         exit 1
     }
 }
-# Set-EnviromentVariables
-# Set-DotnetSecrets
+Set-EnviromentVariables
+Set-DotnetSecrets
 Verify-EnviromentVariables
 Clear-NugetCache
 Set-PackageSource

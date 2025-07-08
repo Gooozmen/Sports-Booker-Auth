@@ -33,8 +33,20 @@ internal static class OptionExtensions
 
             if (string.IsNullOrWhiteSpace(connectionStrings.AuthDb))
                 errors.Add("ConnectionStringsOption.AuthDb is missing or empty.");
-            if (string.IsNullOrWhiteSpace(connectionStrings.Elastic))
-                errors.Add("ConnectionStringsOption.Elastic is missing or empty.");
+        }
+        catch (Exception ex)
+        {
+            errors.Add($"Failed to load ConnectionStringsOption: {ex.Message}");
+        }
+        
+        try
+        {
+            var elastic = provider.GetRequiredService<IOptions<ElasticOption>>().Value;
+
+            if (string.IsNullOrWhiteSpace(elastic.Node))
+                errors.Add("Elastic.Node is missing or empty.");
+            if (string.IsNullOrWhiteSpace(elastic.ApiKey))
+                errors.Add("Elastic.ApiKey is missing or empty.");
         }
         catch (Exception ex)
         {

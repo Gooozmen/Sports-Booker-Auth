@@ -7,5 +7,4 @@ public sealed class ConnectionStringsOption
 
     public required string AuthDb { get; set; }
     public required string Redis { get; set; }
-    public required string Elastic { get; set; }
 }
