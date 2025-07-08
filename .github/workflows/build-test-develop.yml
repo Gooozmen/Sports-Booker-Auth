@@ -7,6 +7,10 @@ on:
     branches: [ "develop" ]
   workflow_dispatch:
 
+permissions:
+  checks: write
+  contents: read
+
 env:
   CONTAINER_NAME: courtbooker-auth
   REGISTRY: ghcr.io
