@@ -12,10 +12,11 @@ env:
   REGISTRY: ghcr.io
   USERNAME: gooozmen
   IMAGE_VERSION: 2.0.${{ github.run_number }}
-  RESOURCE_GROUP: CourtBooker-App-azure
+  RESOURCE_GROUP: courtbooker-rg
+  APP_SERVICE_NAME: courtbooker-auth
 
 jobs:
-  build-test-container:
+  build-test-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -72,14 +73,9 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # - name: Deploy to Azure Container App
-      #   run: |
-      #     IMAGE_BASE=${{ env.REGISTRY }}/${{ env.USERNAME }}/${{ env.CONTAINER_NAME }}
-      #     IMAGE_LATEST=$IMAGE_BASE:latest
-      #     REV_SUFFIX="rev-${{ github.run_number }}"
-
-      #     az containerapp update \
-      #       --name ${{ env.CONTAINER_NAME }} \
-      #       --resource-group ${{ env.RESOURCE_GROUP }} \
-      #       --image $IMAGE_LATEST \
-      #       --revision-suffix $REV_SUFFIX
+      - name: Deploy to Azure App Service
+        run: |
+          az webapp config container set \
+            --name ${{ env.APP_SERVICE_NAME }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --docker-custom-image-name ${{ env.REGISTRY }}/${{ env.USERNAME }}/${{ env.CONTAINER_NAME }}:${{ env.IMAGE_VERSION }}
