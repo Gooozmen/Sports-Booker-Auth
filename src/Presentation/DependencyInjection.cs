@@ -59,7 +59,8 @@ public static class DependencyInjection
     {
         app.UseMiddleware<UnauthorizeMiddleware>()
            .UseMiddleware<CorrelationIdMiddleware>()
-           .UseMiddleware<RequestLoggingMiddleware>();
+           .UseMiddleware<RequestLoggingMiddleware>()
+           .UseMiddleware<HealthCheckTaggingMiddleware>();
     }
 
     public static void MapAppHealthEndpoints(this WebApplication app)
@@ -78,7 +79,7 @@ public static class DependencyInjection
     {
         context.Response.ContentType = "application/json";
 
-        var responseObject = (new
+        var responseObject = new
         {
             status = report.Status.ToString(),
             checks = report.Entries.Select(entry => new
@@ -88,11 +89,15 @@ public static class DependencyInjection
                 exception = entry.Value.Exception?.Message,
                 duration = entry.Value.Duration.ToString()
             })
-        });
-        
+        };
+
         var result = JsonSerializer.Serialize(responseObject);
-        logger.LogInformation("HealthCheck Response Status: {HealthCheckResult}", responseObject.status);
+        logger.LogInformation("HealthCheck Response Body: {HealthCheckResult}", result);
+        
+        context.Items["IsHealthCheck"] = true;
+        context.Items["HealthCheckStatus"] = report.Status.ToString();
 
         return context.Response.WriteAsync(result);
     }
+
 }
