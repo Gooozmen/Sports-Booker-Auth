@@ -78,7 +78,7 @@ public static class DependencyInjection
     {
         context.Response.ContentType = "application/json";
 
-        var result = JsonSerializer.Serialize(new
+        var responseObject = (new
         {
             status = report.Status.ToString(),
             checks = report.Entries.Select(entry => new
@@ -89,7 +89,9 @@ public static class DependencyInjection
                 duration = entry.Value.Duration.ToString()
             })
         });
-        logger.LogInformation("HealthCheck Response: {HealthCheckResult}", result);
+        
+        var result = JsonSerializer.Serialize(responseObject);
+        logger.LogInformation("HealthCheck Response Status: {HealthCheckResult}", responseObject.status);
 
         return context.Response.WriteAsync(result);
     }
