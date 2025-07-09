@@ -81,23 +81,22 @@ public static class DependencyInjection
 
         var responseObject = new
         {
-            status = report.Status.ToString(),
-            checks = report.Entries.Select(entry => new
+            RequestType = "HealthCheck",
+            HealthStatus = report.Status.ToString(),
+            Checks = report.Entries.Select(entry => new
             {
-                name = entry.Key,
-                status = entry.Value.Status.ToString(),
-                exception = entry.Value.Exception?.Message,
-                duration = entry.Value.Duration.ToString()
+                Name = entry.Key,
+                Status = entry.Value.Status.ToString(),
+                Exception = entry.Value.Exception?.Message,
+                Duration = entry.Value.Duration.ToString()
             })
         };
-
-        var result = JsonSerializer.Serialize(responseObject);
-        logger.LogInformation("HealthCheck Response Body: {HealthCheckResult}", result);
         
-        context.Items["IsHealthCheck"] = true;
-        context.Items["HealthCheckStatus"] = report.Status.ToString();
-
+        logger.LogInformation("HealthCheck result {@HealthCheck}", responseObject);
+        
+        var result = JsonSerializer.Serialize(responseObject);
         return context.Response.WriteAsync(result);
     }
+
 
 }
