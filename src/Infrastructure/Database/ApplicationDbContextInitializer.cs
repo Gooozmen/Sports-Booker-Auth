@@ -35,10 +35,8 @@ public class ApplicationDbContextInitializer : IContextInitializer
         {
             if (_entityFrameworkOption.ExecuteRebuild && IsPgSql())
             {
+                
                 await _context.Database.CanConnectAsync();
-                await ExecuteDatabaseDropAsync();
-                await ExecuteDatabaseBuildAsync();
-                await _context.Database.MigrateAsync();
                 await ExecuteSeedAsync();
             }
         }

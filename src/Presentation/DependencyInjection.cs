@@ -26,10 +26,26 @@ public static class DependencyInjection
         SetupAuthorization(services);
     }
     
+    public static IConfigurationBuilder AddDefaultConfiguration(this WebApplicationBuilder hostBuilder)
+    {
+        var envName = hostBuilder.Environment.EnvironmentName;  // e.g. "Development"
+        Console.WriteLine($"ENVIRONMENT {envName}");
+        return hostBuilder.Configuration
+            .SetBasePath(hostBuilder.Environment.ContentRootPath)
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{envName}.json", optional: true, reloadOnChange: true)
+            .AddEnvironmentVariables()
+            .AddUserSecrets<Program>(optional: envName == "Development");
+    }
+
+    
    
     public static void AddDefaultConfiguration<T>(this IConfigurationBuilder configurationBuilder) where T : class
     {
         configurationBuilder.AddJsonFile("appsettings.json", false, true);
+        configurationBuilder .AddJsonFile($"appsettings.{configurationBuilder}.json", optional: true, reloadOnChange: true)
+            .AddEnvironmentVariables();
+
         configurationBuilder.AddUserSecrets<T>();
     }
     private static void SetupAuthorization(this IServiceCollection services)
