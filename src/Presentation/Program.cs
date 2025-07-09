@@ -7,7 +7,7 @@ try{
     var builder = WebApplication.CreateBuilder(args);
     Console.WriteLine("Builder created");
     
-    builder.AddDefaultConfiguration();
+    builder.Configuration.AddDefaultConfiguration<Program>();
     Console.WriteLine("Default configuration added");
     
     builder.Configuration.AddAzureKeyVault();
