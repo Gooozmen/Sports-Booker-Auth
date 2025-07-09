@@ -11,13 +11,6 @@ permissions:
   checks: write
   contents: read
 
-env:
-  CONTAINER_NAME: courtbooker-auth
-  REGISTRY: ghcr.io
-  USERNAME: gooozmen
-  IMAGE_VERSION: 1.0.${{ github.run_number }}
-  RESOURCE_GROUP: CourtBooker-App-Dev
-
 jobs:
   build-test-report:
     runs-on: ubuntu-latest

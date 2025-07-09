@@ -13,7 +13,7 @@ env:
   USERNAME: gooozmen
   IMAGE_VERSION: 2.0.${{ github.run_number }}
   RESOURCE_GROUP: courtbooker-rg
-  APP_SERVICE_NAME: web-app-poc
+  APP_SERVICE_NAME: courtbooker-auth
 
 jobs:
   build-test-deploy:
@@ -75,7 +75,14 @@ jobs:
 
       - name: Deploy to Azure App Service
         run: |
+          IMAGE_BASE=${REGISTRY}/${USERNAME}/${CONTAINER_NAME}
+          IMAGE_VERSIONED=$IMAGE_BASE:${IMAGE_VERSION}
+
           az webapp config container set \
-            --name ${{ env.APP_SERVICE_NAME }} \
-            --resource-group ${{ env.RESOURCE_GROUP }} \
-            --container-image-name ${{ env.REGISTRY }}/${{ env.USERNAME }}/${{ env.CONTAINER_NAME }}:${{ env.IMAGE_VERSION }}
+            --name ${CONTAINER_NAME} \
+            --resource-group ${RESOURCE_GROUP} \
+            --docker-custom-image-name $IMAGE_VERSIONED
+
+          az webapp restart \
+            --name ${CONTAINER_NAME} \
+            --resource-group ${RESOURCE_GROUP}
