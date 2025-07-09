@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.ComTypes;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 
@@ -12,6 +13,7 @@ public static class AzureKeyVaultExtensions
     {
         var tempConfig = builder.Build();
         var keyVaultUri = tempConfig["AzureKeyVault:VaultUri"];
+        Console.WriteLine($"AzureKeyVault:VaultUri: {keyVaultUri}");
 
         if (string.IsNullOrWhiteSpace(keyVaultUri))
             throw new InvalidOperationException("AzureKeyVault:VaultUri is missing in configuration.");
