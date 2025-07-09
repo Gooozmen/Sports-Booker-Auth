@@ -54,7 +54,7 @@ public static class DependencyInjection
         app.MapHealthChecks("/api/health", new HealthCheckOptions
         {
             ResponseWriter = WriteResponse
-        });
+        }).AllowAnonymous();
     }
 
     private static Task WriteResponse(HttpContext context, HealthReport report)
