@@ -64,15 +64,20 @@ public static class DependencyInjection
 
     public static void MapAppHealthEndpoints(this WebApplication app)
     {
+        var logger = app.Services.GetRequiredService<ILoggerFactory>()
+            .CreateLogger("HealthCheck");
+        
         app.MapHealthChecks("/api/health", new HealthCheckOptions
-        {
-            ResponseWriter = WriteResponse
-        }).AllowAnonymous();
+            {
+                ResponseWriter = (context, report) => WriteResponse(context, report, logger)
+            })
+            .AllowAnonymous();
     }
-
-    private static Task WriteResponse(HttpContext context, HealthReport report)
+    
+    private static Task WriteResponse(HttpContext context, HealthReport report, ILogger logger)
     {
         context.Response.ContentType = "application/json";
+
         var result = JsonSerializer.Serialize(new
         {
             status = report.Status.ToString(),
@@ -84,6 +89,7 @@ public static class DependencyInjection
                 duration = entry.Value.Duration.ToString()
             })
         });
+        logger.LogInformation("HealthCheck Response: {HealthCheckResult}", result);
 
         return context.Response.WriteAsync(result);
     }

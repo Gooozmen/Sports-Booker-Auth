@@ -10,6 +10,6 @@ public class RequestLoggingMiddleware(RequestDelegate next, ILogger<RequestLoggi
         
         await next(context);
         
-        logger.LogInformation("Response: {context.Response.StatusCode}", context.Response.StatusCode);
+        logger.LogInformation("Response Status Code: {context.Response.StatusCode}", context.Response.StatusCode);
     }
 }
