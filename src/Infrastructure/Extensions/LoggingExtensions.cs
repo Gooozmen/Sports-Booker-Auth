@@ -9,14 +9,11 @@ internal static class LoggingExtensions
 {
     internal static void SetUpSerilogSink(this WebApplicationBuilder builder)
     {
-        
-        builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
-        
         builder.Host.UseSerilog((context, configuration) =>
         {
             // Try grab the first node from configuration:
             var firstNode = context.Configuration["Serilog:WriteTo:1:Args:nodes:0"];
-            Console.WriteLine($"NODE CHECk: {firstNode}");
+            Console.WriteLine($"Elastic Node: {firstNode}");
 
             if (string.IsNullOrWhiteSpace(firstNode))
             {

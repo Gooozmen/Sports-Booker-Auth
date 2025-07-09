@@ -36,8 +36,6 @@ internal static class OptionExtensions
 
             if (string.IsNullOrWhiteSpace(connectionStrings.AuthDb))
                 errors.Add("ConnectionStringsOption.AuthDb is missing or empty.");
-            
-            Console.WriteLine($"Connection string: {connectionStrings.AuthDb}");
         }
         catch (Exception ex)
         {
@@ -52,9 +50,6 @@ internal static class OptionExtensions
                 errors.Add("Elastic.Node is missing or empty.");
             if (string.IsNullOrWhiteSpace(elastic.ApiKey))
                 errors.Add("Elastic.ApiKey is missing or empty.");
-            
-            Console.WriteLine($"Elastic node: {elastic.Node}");
-            Console.WriteLine($"Elastic apiKey: {elastic.ApiKey}");
         }
         catch (Exception ex)
         {
@@ -73,11 +68,6 @@ internal static class OptionExtensions
                 errors.Add("JwtOption.Audience is missing or empty.");
             if (jwt.ExpiryMinutes <= 0)
                 errors.Add("JwtOption.ExpiryMinutes must be greater than 0.");
-            
-            Console.WriteLine($"JwtOption.ExpiryMinutes: {jwt.ExpiryMinutes}");
-            Console.WriteLine($"JwtOption.Issuer: {jwt.Issuer}");
-            Console.WriteLine($"JwtOption.Audience: {jwt.Audience}");
-            Console.WriteLine($"JwtOption.Key: {jwt.Key}");
         }
         catch (Exception ex)
         {
