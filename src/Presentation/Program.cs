@@ -61,6 +61,8 @@ try{
 }
 catch (Exception ex)
 {
+    Console.WriteLine($"NOT WORKING {ex.Message}");
+    Log.Fatal(ex, "Host terminated unexpectedly");  
     Log.Error(ex.Message);
     throw;
 }
