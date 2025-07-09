@@ -18,7 +18,11 @@ try{
     builder.AddLoggingInfrastructure();
     Log.Information("Logging infrastructure set up");
     
-    builder.WebHost.UseUrls("http://0.0.0.0:80");
+    builder.WebHost.ConfigureKestrel(options =>
+    {
+        options.ListenAnyIP(80);
+    });
+
     Log.Information("URL Defined");
     
     builder.Services.AddJwt();
