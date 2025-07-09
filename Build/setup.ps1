@@ -54,7 +54,7 @@ function Set-DotnetSecrets {
     try {
         Set-Location $StartingProjectLocation
 
-        # & dotnet user-secrets set "Serilog__WriteTo__1__Args__nodes__0"     "$env:ELASTIC_NODE"
+        # & dotnet user-secrets set "Serilog__WriteTo__1__Args__nodes__0"     "$env:ELASTIC_NOD E"
         # & dotnet user-secrets set "Serilog__WriteTo__1__Args__apiKey"       "$env:ELASTIC_API_KEY"
         & dotnet user-secrets set "Serilog:WriteTo:1:Args:nodes:0"     "$env:ELASTIC_NODE"
         & dotnet user-secrets set "Serilog:WriteTo:1:Args:apiKey"      "$env:ELASTIC_API_KEY"
