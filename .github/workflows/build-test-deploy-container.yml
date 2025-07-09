@@ -15,7 +15,7 @@ env:
   RESOURCE_GROUP: CourtBooker-App-azure
 
 jobs:
-  build-test-container:
+  build-test-deploy-container:
     runs-on: ubuntu-latest
 
     steps:
@@ -72,14 +72,16 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # - name: Deploy to Azure Container App
-      #   run: |
-      #     IMAGE_BASE=${{ env.REGISTRY }}/${{ env.USERNAME }}/${{ env.CONTAINER_NAME }}
-      #     IMAGE_LATEST=$IMAGE_BASE:latest
-      #     REV_SUFFIX="rev-${{ github.run_number }}"
+      - name: Deploy to Azure Web App
+        run: |
+          IMAGE_BASE=${REGISTRY}/${USERNAME}/${CONTAINER_NAME}
+          IMAGE_VERSIONED=$IMAGE_BASE:${IMAGE_VERSION}
 
-      #     az containerapp update \
-      #       --name ${{ env.CONTAINER_NAME }} \
-      #       --resource-group ${{ env.RESOURCE_GROUP }} \
-      #       --image $IMAGE_LATEST \
-      #       --revision-suffix $REV_SUFFIX
+          az webapp config container set \
+            --name ${CONTAINER_NAME} \
+            --resource-group ${RESOURCE_GROUP} \
+            --docker-custom-image-name $IMAGE_VERSIONED
+
+          az webapp restart \
+            --name ${CONTAINER_NAME} \
+            --resource-group ${RESOURCE_GROUP}
