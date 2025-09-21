@@ -26,6 +26,19 @@ public static class DependencyInjection
         SetupAuthorization(services);
     }
     
+    public static IConfigurationBuilder AddDefaultConfiguration(this WebApplicationBuilder hostBuilder)
+    {
+        var envName = hostBuilder.Environment.EnvironmentName;  // e.g. "Development"
+        Console.WriteLine($"ENVIRONMENT {envName}");
+        return hostBuilder.Configuration
+            .SetBasePath(hostBuilder.Environment.ContentRootPath)
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{envName}.json", optional: true, reloadOnChange: true)
+            .AddEnvironmentVariables()
+            .AddUserSecrets<Program>(optional: envName == "Development");
+    }
+
+    
    
     public static void AddDefaultConfiguration<T>(this IConfigurationBuilder configurationBuilder) where T : class
     {
@@ -46,32 +59,44 @@ public static class DependencyInjection
     {
         app.UseMiddleware<UnauthorizeMiddleware>()
            .UseMiddleware<CorrelationIdMiddleware>()
-           .UseMiddleware<RequestLoggingMiddleware>();
+           .UseMiddleware<RequestLoggingMiddleware>()
+           .UseMiddleware<HealthCheckTaggingMiddleware>();
     }
 
     public static void MapAppHealthEndpoints(this WebApplication app)
     {
+        var logger = app.Services.GetRequiredService<ILoggerFactory>()
+            .CreateLogger("HealthCheck");
+        
         app.MapHealthChecks("/api/health", new HealthCheckOptions
-        {
-            ResponseWriter = WriteResponse
-        });
+            {
+                ResponseWriter = (context, report) => WriteResponse(context, report, logger)
+            })
+            .AllowAnonymous();
     }
-
-    private static Task WriteResponse(HttpContext context, HealthReport report)
+    
+    private static Task WriteResponse(HttpContext context, HealthReport report, ILogger logger)
     {
         context.Response.ContentType = "application/json";
-        var result = JsonSerializer.Serialize(new
-        {
-            status = report.Status.ToString(),
-            checks = report.Entries.Select(entry => new
-            {
-                name = entry.Key,
-                status = entry.Value.Status.ToString(),
-                exception = entry.Value.Exception?.Message,
-                duration = entry.Value.Duration.ToString()
-            })
-        });
 
+        var responseObject = new
+        {
+            RequestType = "HealthCheck",
+            HealthStatus = report.Status.ToString(),
+            Checks = report.Entries.Select(entry => new
+            {
+                Name = entry.Key,
+                Status = entry.Value.Status.ToString(),
+                Exception = entry.Value.Exception?.Message,
+                Duration = entry.Value.Duration.ToString()
+            })
+        };
+        
+        logger.LogInformation("HealthCheck result {@HealthCheck}", responseObject);
+        
+        var result = JsonSerializer.Serialize(responseObject);
         return context.Response.WriteAsync(result);
     }
+
+
 }
